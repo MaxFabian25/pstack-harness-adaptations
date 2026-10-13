@@ -166,7 +166,7 @@ Neither harness has Cursor's sticky custom modes. The standing-instruction line 
 | Cursor term | Claude Code | Codex |
 |---|---|---|
 | `AskQuestion` | `AskUserQuestion`. A headless `claude -p` run has none, so decide per the Autonomy rules and report the call. | `request_user_input`. If it is unavailable, ask in chat and end the turn. |
-| todolist | `TodoWrite` when the tool exists. Otherwise a Markdown checklist (`- [ ]`, `- [x]`, `skip: <reason>`) at the top of each progress reply, mirrored to `todo.md` in the agent store for long runs. | `update_plan` when enabled (`[tools.update_plan] enabled = false` turns it off). Otherwise the same Markdown checklist. |
+| todolist | `TaskCreate` and `TaskUpdate`, which `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` in the settings `env` turns on, or `TodoWrite` where a build has it. Otherwise a Markdown checklist (`- [ ]`, `- [x]`, `skip: <reason>`) at the top of each progress reply, mirrored to `todo.md` in the agent store for long runs. | `update_plan` when enabled (`[tools.update_plan] enabled = false` turns it off). Otherwise the same Markdown checklist. |
 | `/loop` (self-paced) | `/loop <prompt>` with no interval | no command. Keep working in the turn and wait between checks with a bounded shell loop (`sleep`). In the Codex app, a heartbeat automation on the thread repeats the prompt. |
 | `/loop <interval>` | `/loop 1h <prompt>` | a heartbeat automation on the thread at that interval, or the bounded shell loop |
 | Restart of a loop | a `/loop` ends with its session. Re-arm it after a restart. | a shell loop or wait ends with its turn. Re-arm it after a restart. |
