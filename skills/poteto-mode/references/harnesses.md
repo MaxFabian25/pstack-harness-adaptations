@@ -174,6 +174,7 @@ Neither harness has Cursor's sticky custom modes. The standing-instruction line 
 | Watch a process or log | the `Monitor` tool, or `Bash` with `run_in_background: true` | a backgrounded command plus a bounded `sleep` loop |
 | List available MCPs | the `mcp__<server>__*` tools in your tool list, including deferred ones found with `ToolSearch`. `claude mcp list` from the shell. | the MCP tools in your tool list. `codex mcp list` from the shell. |
 | Image generation | the `imagegen` skill when installed. Otherwise draw SVG or Mermaid and render it to a file. | `$imagegen` |
+| `/visualize` | the `visualize` tools (`show_widget`) in the Claude desktop app. Otherwise draw SVG or Mermaid, or a chart following the `dataviz` skill, and render it to a file. | `$visualize` |
 | Built-in PR tool | `gh pr create` | `gh pr create` |
 | Restart | a new session, or context compaction | a new session, or context compaction |
 | Plan mode | Plan Mode (Shift+Tab cycles to it) | Plan mode, from the composer's collaboration-mode switch |
