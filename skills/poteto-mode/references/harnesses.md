@@ -10,7 +10,7 @@ A "spawn" or "Task call" in any skill means the harness's subagent tool.
 
 | Need | Claude Code | Codex |
 |---|---|---|
-| Spawn | `Agent` tool | `spawn_agent`, then `wait_agent` to collect, `close_agent` when done |
+| Spawn | `Agent` tool | `spawn_agent`, then `wait_agent` to collect. `interrupt_agent` stops one. Use `close_agent` when done if the tool exists. |
 | General-purpose agent | `subagent_type: "general-purpose"` | omit `agent_type` (built-in `default`) |
 | pstack delegate | `subagent_type: "pstack-plugin:poteto-agent"` | `agent_type: "poteto-agent"` |
 | Comment cleanup agent | `subagent_type: "pstack-plugin:comment-sicko"` | `agent_type: "comment-sicko"` |
@@ -25,6 +25,8 @@ The Codex custom agents (`poteto-agent`, `comment-sicko`, `pstack-reader`) are i
 A skill parameter named `readonly: true` means a read-only row. Pick the row by what the agent does. `readonly: false` or "agent mode" means the general-purpose row, which keeps MCP access. Neither harness has a `readonly` parameter. Never pass one.
 
 Both harnesses allow nested spawns. Claude Code allows three levels below the main chat by default. Codex agents can spawn their own agents.
+
+Both harnesses cap concurrent agents. Claude Code allows 20 background agents by default. Codex caps the open agent threads in a session and refuses the next spawn with `agent thread limit reached`. This machine allowed 19. Run a larger fan-out in waves, spawning the next agent as an earlier one finishes.
 
 ## Models
 
@@ -70,8 +72,8 @@ A skill's own text may still describe a role by its old meaning ("the fast code 
 
 | Value | Claude Code | Codex |
 |---|---|---|
-| `<model>@<effort>` | `Agent` with `model: "<model>"` and `effort: "<effort>"` | `spawn_agent` with `reasoning_effort: "<effort>"`. Pass `model` only when the tool exposes it. Otherwise the agent inherits the parent model. Say so once. |
-| `inherit-parent@<effort>` | omit `model`, pass `effort` | omit `model`, pass `reasoning_effort` |
+| `<model>@<effort>` | `Agent` with `model: "<model>"` and `effort: "<effort>"` | `spawn_agent` with `model` and `reasoning_effort` when the tool exposes them. They appear only with `features.multi_agent_v2.expose_spawn_agent_model_overrides = true`. Otherwise the agent inherits the parent session's model and effort, or `[agents] default_subagent_model` and `default_subagent_reasoning_effort` when set in `config.toml`. Say so once. |
+| `inherit-parent@<effort>` | omit `model`, pass `effort` | omit `model`. Pass `reasoning_effort` when the tool exposes it. |
 | `codex:<model>@<effort>` | Cross-harness seat, below | not used |
 | `claude:<model>@<effort>` | not used | Cross-harness seat, below |
 
