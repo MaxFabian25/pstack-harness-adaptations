@@ -116,7 +116,7 @@ A Cursor cloud agent is a worker in its own VM on its own branch. The equivalent
 | Isolated writer on its own branch | `Agent` with `isolation: "worktree"` and `run_in_background: true` | `git worktree add -b <branch> <path> <base>`, then `spawn_agent` told to work only in `<path>` |
 | Start from a non-default base branch | the brief's first step checks out `origin/<base>` (in a worktree agent) | `<base>` as the start point in `git worktree add`, or `--branch <base>` for `codex cloud exec` |
 | Remote cloud worker | `Agent` with `isolation: "remote"` when the tool offers it and the account has a cloud environment. Where the only environments are Remote Control bridges, a remote agent runs on this same machine in the same directory, so it isolates nothing. Probe with `pwd` and `uname -n` first, and use the worktree row for any writer. | `codex cloud exec --env <env-id> --branch <base> "<brief>"`, then `codex cloud status`, `diff`, `apply`. Needs a configured Codex Cloud environment. Otherwise the worktree row. |
-| Liveness of running workers | the background task list (`/tasks`), or `claude.ai/code` for remote sessions | `list_agents`, and `codex cloud list` for cloud tasks |
+| Liveness of running workers | the `ListAgents` tool for background agents, or `claude.ai/code` for remote sessions | `list_agents`, and `codex cloud list` for cloud tasks |
 | A cloud agent's URL to resume from | a `claude.ai/code` session link | a Codex Cloud task id or link |
 
 Local background agents end when the session ends. Cloud and remote work survives it. Plan resumes around that.
@@ -165,8 +165,8 @@ Neither harness has Cursor's sticky custom modes. The standing-instruction line 
 
 | Cursor term | Claude Code | Codex |
 |---|---|---|
-| `AskQuestion` | `AskUserQuestion` | `request_user_input`. If it is unavailable, ask in chat and end the turn. |
-| todolist | `TodoWrite` | `update_plan` |
+| `AskQuestion` | `AskUserQuestion`. A headless `claude -p` run has none, so decide per the Autonomy rules and report the call. | `request_user_input`. If it is unavailable, ask in chat and end the turn. |
+| todolist | `TodoWrite` when the tool exists. Otherwise a Markdown checklist (`- [ ]`, `- [x]`, `skip: <reason>`) at the top of each progress reply, mirrored to `todo.md` in the agent store for long runs. | `update_plan` when enabled (`[tools.update_plan] enabled = false` turns it off). Otherwise the same Markdown checklist. |
 | `/loop` (self-paced) | `/loop <prompt>` with no interval | no command. Keep working in the turn and wait between checks with a bounded shell loop (`sleep`). In the Codex app, a heartbeat automation on the thread repeats the prompt. |
 | `/loop <interval>` | `/loop 1h <prompt>` | a heartbeat automation on the thread at that interval, or the bounded shell loop |
 | Restart of a loop | a `/loop` ends with its session. Re-arm it after a restart. | a shell loop or wait ends with its turn. Re-arm it after a restart. |
