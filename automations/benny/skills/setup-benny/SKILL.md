@@ -35,7 +35,8 @@ If this file is already being read from the target destination, treat the copy a
 
 Make pstack load in every automation run for the target repository. Use the route that matches where the automation runs:
 
-- Claude Code routine. A cloud session does not install plugins that the repository's `.claude/settings.json` declares, and the docs name no personal route that installs one into a routine. Give the user these lines for the setup script of the cloud environment the routine will use, then have a test run confirm the skills load. A Team or Enterprise org can enable the plugin through server-managed settings instead. The user edits that environment on claude.ai. Tell them to keep every unrelated line of an existing script.
+- Claude Code routine. A routine loads only skills committed to the cloned repository's `.claude/skills/`. It does not load the user's installed plugins, or plugins the repository's `.claude/settings.json` turns on. Copy each shared pstack skill folder listed below, plus `poteto-mode` (its `references/` folder holds `harnesses.md`, which the others link to), from the installed pstack plugin's `skills/` folder into `<target-repository>/.claude/skills/`, keeping each folder whole. Commit them with the pack, and tell the user to refresh the copies after a pstack update. In a local Claude Code session in that repository they appear next to the plugin's `pstack-plugin:` skills. That duplication is expected.
+  A Team or Enterprise org can enable the plugin through server-managed settings instead. Installing it from the cloud environment's setup script is not documented to work. Offer these lines only as an option, and verify it with a test run whose `claude -p --output-format stream-json --verbose` `init` event lists the plugin. The user edits that environment on claude.ai and keeps every unrelated line of an existing script.
 
   ```bash
   claude plugin marketplace add <marketplace-source>

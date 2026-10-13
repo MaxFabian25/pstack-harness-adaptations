@@ -8,7 +8,7 @@ the files in this directory are dormant setup and automation sources. they do no
 
 1. point claude code or codex at [`FOR_AGENTS.md`](./FOR_AGENTS.md) and name the target repository.
 2. let setup merge this whole directory into the target at `.agents/automations/benny/`. it must preserve destination-only files and review conflicts instead of overwriting local edits.
-3. let setup make pstack's shared dependencies load in every automation run. a claude code routine runs on anthropic's cloud, clones its repositories on every run, and does not install plugins that the repository's `.claude/settings.json` declares. the docs name no personal route that installs a plugin into a routine. try these lines in the setup script of the routine's cloud environment, then confirm with a test run that the skills load (team and enterprise orgs can enable the plugin through server-managed settings instead):
+3. let setup make pstack's shared dependencies load in every automation run. a claude code routine runs on anthropic's cloud, clones its repositories on every run, and loads only skills committed to the cloned repository's `.claude/skills/`. it does not load your installed plugins or the ones the repository's `.claude/settings.json` turns on. so setup commits the pstack skill folders benny needs into the target's `.claude/skills/`, and you refresh them after a pstack update. team and enterprise orgs can enable the plugin through server-managed settings instead. installing it from the cloud environment's setup script is not documented to work. if you try it, confirm in a test run that the skills load:
 
 ```bash
 claude plugin marketplace add <marketplace-source>

@@ -64,7 +64,7 @@ the human enters setup by pointing claude code or codex at this file. do not loo
 6. verify that the copied `FOR_AGENTS.md` and `skills/setup-benny/SKILL.md` exist in the target repository.
 7. read and follow `.agents/automations/benny/skills/setup-benny/SKILL.md` directly from the target repository.
 
-i want pstack installed where each automation run can load it. a claude code routine runs on anthropic's cloud and clones its repositories on every run, and a cloud session does not install plugins that a repository's `.claude/settings.json` declares. the docs name no personal route that installs a plugin into a routine, so give me these lines for the setup script of the cloud environment the routine will use, and have a test run confirm the skills load. a team or enterprise org can enable the plugin through server-managed settings instead:
+i want pstack's shared skills available where each automation run can load them. a claude code routine runs on anthropic's cloud, clones its repositories on every run, and loads only skills committed to the cloned repository's `.claude/skills/`, not my installed plugins and not plugins a repository's `.claude/settings.json` turns on. so copy the pstack skill folders benny needs into `<target-repository>/.claude/skills/` and commit them, and remind me to refresh them after a pstack update. a team or enterprise org can enable the plugin through server-managed settings instead. installing the plugin from the cloud environment's setup script is not documented to work. offer it only as an option to verify with a test run:
 
 ```bash
 claude plugin marketplace add <marketplace-source>
