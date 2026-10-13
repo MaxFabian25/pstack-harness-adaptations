@@ -95,6 +95,7 @@ From Codex, run Claude Code:
 claude -p --model <model> --effort <effort> --permission-mode <mode> --output-format text < <brief.md> > <out.md>
 ```
 
+- `codex exec` appends piped stdin to its prompt and waits for end of input. Give it the brief on stdin (`- < brief.md`), or pass the prompt as an argument with `< /dev/null`. From a script or server with an open stdin pipe it otherwise hangs.
 - A read-only seat uses `-s read-only` (Codex) or `--permission-mode plan` (Claude Code). A read-only Codex seat can still run read-only commands. A plan-mode Claude seat cannot run commands at all, so put the evidence it needs (diffs, test output, logs) in its brief.
 - A writing seat works in its own git worktree. Create it with `git worktree add`, then pass `-s workspace-write -C <worktree>` (Codex) or run `claude` from inside the worktree with `--permission-mode acceptEdits`.
 - Launch panel seats in the background with the harness's background shell (Claude Code `Bash` with `run_in_background: true`; Codex a backgrounded command plus a `wait` loop), and read each `<out.md>` when it finishes.
