@@ -28,7 +28,7 @@ cd "$repo" || exit 1
 git rev-parse --git-dir >/dev/null 2>&1 || { echo "error: not a git repo: $repo" >&2; exit 1; }
 
 # Main worktree is the first entry; everything else is a candidate.
-main_wt=$(git worktree list --porcelain | awk '/^worktree /{print $2; exit}')
+main_wt=$(git worktree list --porcelain | sed -n 's/^worktree //p' | head -n 1)
 
 if [ -z "$base" ]; then
 	for cand in "$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null)" origin/main origin/master; do
@@ -58,7 +58,7 @@ gh pr list --author "@me" --state all --limit 1000 \
 # keeps rollouts under ~/.codex/sessions whose first line (session_meta) holds
 # the cwd. Collect the Claude Code dirs of the main worktree and every worktree,
 # plus the rollouts whose cwd is one of those paths or inside one.
-wts=$(git worktree list --porcelain | awk '/^worktree /{print $2}')
+wts=$(git worktree list --porcelain | sed -n 's/^worktree //p')
 transcripts=$(mktemp)
 {
 	printf '%s\n' "$wts" | while read -r p; do
@@ -79,7 +79,7 @@ now=$(date +%s)
 echo "# base: $base"
 printf "SIZE\tAGE\tMERGED\tDIRTY\tREMOTE\tPR\tLAST_CHAT\tBUCKET\tWORKTREE\n"
 
-git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt; do
+git worktree list --porcelain | sed -n 's/^worktree //p' | while read -r wt; do
 	[ "$wt" = "$main_wt" ] && continue
 
 	size=$(du -sh "$wt" 2>/dev/null | awk '{print $1}')
