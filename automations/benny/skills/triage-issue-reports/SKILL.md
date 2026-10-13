@@ -20,7 +20,7 @@ Load the external Benny configuration supplied by the automation. If the config 
 - Post one substantive verdict. Do not narrate progress.
 - The coordinator is the only Slack poster.
 - Delegated workers return findings only. They must be read-only and receive no Slack credentials or write actions.
-- Every child prompt must forbid the Slack connector's send, reply, and edit tools, `chat.postMessage`, and every other Slack write.
+- Every child prompt must forbid `SendSlackMessage`, `PostToSlack`, `chat.postMessage`, and every other Slack write.
 - If worker isolation cannot enforce those limits, do the work in the coordinator.
 - Never create an issue that cannot link back to the source thread.
 - Prefer no ticket over a guessed or duplicate ticket.
