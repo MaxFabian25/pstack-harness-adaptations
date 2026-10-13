@@ -85,7 +85,7 @@ Historical data showed humans sometimes dismiss security/data-flow comments. Tre
 
 ## Candidate learnings from recent babysits
 
-Append new candidate learnings here during or after babysitting when they look team-useful but not yet mature. Prefer promoting recurring candidates into the section above once several PRs confirm the pattern.
+Read the project's `bugbot-learnings.md` in the agent store per [harnesses.md](harnesses.md) (The agent store) alongside this file. Append new candidate learnings there during or after babysitting when they look team-useful but not yet mature, because this installed file is replaced on every plugin update. Prefer promoting recurring candidates into the section above, through a PR to the plugin's source, once several PRs confirm the pattern.
 
 ### Manual reimplementations of native browser behavior
 

@@ -17,7 +17,9 @@ Here's what you'll learn:
 
 Read the pages in order the first time. After that, each page stands alone.
 
-When you're stuck, or can't tell which skill fits, type [`/poteto-help`](../../skills/poteto-help/SKILL.md) with your question:
+Every example uses the Claude Code form, `/name`. In Codex, type `$name` instead, so `/poteto-mode` becomes `$poteto-mode`.
+
+When you're stuck, or can't tell which skill fits, type [`/poteto-help`](../../skills/poteto-help/SKILL.md) (Codex: `$poteto-help`) with your question:
 
 ```text
 /poteto-help which skill should i use to review this branch?

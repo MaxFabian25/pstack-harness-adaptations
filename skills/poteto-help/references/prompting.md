@@ -2,6 +2,8 @@
 
 A prompt states the intent and the check for done. The playbook supplies the steps, so a few plain sentences beat a spec.
 
+In Codex, type `$name` for each `/name` here. In Claude Code, type `/pstack-plugin:teach` and `/pstack-plugin:tdd`, because other plugins also export `teach` and `tdd`.
+
 ## Put in
 
 - The goal. Say what is wrong or what the user wants.
@@ -38,7 +40,7 @@ A prompt states the intent and the check for done. The playbook supplies the ste
 ## Before stepping away
 
 - Say "im going to bed" or "im stepping away" so the agent stops asking.
-- Write done as checks every iteration can run, and give `/loop` that predicate.
+- Write done as checks every iteration can run, and give `/loop` that predicate. Codex has no `/loop`. Use the equivalent in [harnesses.md](../../poteto-mode/references/harnesses.md) (Tools).
 - Ask for a fresh worktree off a named base.
 - Pre-answer what the agent would stop for, such as "don't ask me before committing".
 - Ask for a decision log to audit later.

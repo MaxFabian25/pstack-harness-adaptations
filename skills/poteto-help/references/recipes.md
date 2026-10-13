@@ -2,6 +2,8 @@
 
 Swap in the real paths, skills, and done checks. Informal wording works.
 
+In Codex, type `$name` for each `/name` here. In Claude Code, type `/pstack-plugin:teach` and `/pstack-plugin:tdd`, because other plugins also export `teach` and `tdd`.
+
 ## Understand
 
 - `/poteto-mode read <thread>. restate the underlying issue in your own words, in plain english.`
@@ -39,7 +41,7 @@ Swap in the real paths, skills, and done checks. Informal wording works.
 
 ## Away and back
 
-- `/poteto-mode im going to bed. <goal> in a fresh worktree off <base>. done means <checks>. keep a decision log. don't ask me before committing. /loop until done. if you're truly stuck after a few hours, stop and write up why.`
+- `/poteto-mode im going to bed. <goal> in a fresh worktree off <base>. done means <checks>. keep a decision log. don't ask me before committing. /loop until done. if you're truly stuck after a few hours, stop and write up why.` Codex has no `/loop`, so say "keep going until done" instead, per [harnesses.md](../../poteto-mode/references/harnesses.md) (Tools).
 - `/show-me-your-work catch me up on what you did last night.` Read its Attention section first.
 - `/poteto-mode full autopilot on this queue. each item is independent.`
 - `/poteto-mode autopilot these changes but stack them, don't ship. i'll land the stack.`

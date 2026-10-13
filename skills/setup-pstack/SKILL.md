@@ -1,74 +1,107 @@
 ---
 name: setup-pstack
-description: Configure which models pstack uses per role and at what reasoning budget. Detects your available models and writes an always-applied rule that overrides the skill defaults. Use for /setup-pstack, "configure pstack models", "pstack budget", or changing pstack's model choices.
+description: Configure which models pstack uses per role and at what reasoning budget, in Claude Code and Codex. Detects your available models, writes the shared pstack model config, and installs pstack's Codex custom agents. Use for /setup-pstack, "configure pstack models", "pstack budget", or changing pstack's model choices.
 ---
 
 # Setup pstack
 
-Write `~/.cursor/rules/pstack-models.mdc`, an always-applied rule that sets pstack's model per role.
+Write `~/.config/pstack/models.md`, the config that sets pstack's model per role in both harnesses, and install pstack's Codex custom agents. Role names, value syntax, and defaults are in [harnesses.md](../poteto-mode/references/harnesses.md) (Models). Read it first.
 
 ## Steps
 
 ### 1. Detect available models
 
-Enumerate the model slugs you can pass to a `Task` subagent in this session. That is the dependable source. If Cursor also exposes a models API or CLI that lists the user's entitled models, prefer it for completeness. If you cannot detect any, ask the user to paste the slugs they have access to. Never write a real slug you have not confirmed is available. The aliases `inherit-parent` and `auto` are always valid even though they are not detected slugs.
+Detect what each harness can run. Never write a real model you have not confirmed is available. `inherit-parent` and `auto` are always valid even though they are not detected models.
+
+- **Claude Code.** The `Agent` tool's `model` parameter lists the aliases it accepts (`opus`, `sonnet`, `haiku`, `fable`). Full IDs such as `claude-opus-5-5` are also accepted. Confirm a full ID by running `claude -p --model <id> --output-format json "reply ok"` once, or by a spawn that succeeds.
+- **Codex.** Read the model list from `~/.codex/models_cache.json` (entries with `visibility` `list`) or run `codex debug models` if it exists. Note whether `spawn_agent` exposes a `model` parameter in this session. Without it, native Codex seats inherit the parent model and only the effort applies.
+- **Cross-harness CLIs.** Run `codex --version` and `claude --version`. A missing CLI means `codex:` or `claude:` values cannot run. Mark those roles as needing a choice.
+
+If you cannot detect anything for a harness, ask the user to paste the models they have access to.
 
 ### 2. Load current state
 
-The default role-to-model mapping is the rule shape shown in step 5 below. If `~/.cursor/rules/pstack-models.mdc` already exists, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from those defaults. A line whose role is not in step 5, such as `how critics`, is from a retired role. Drop it.
+Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.md` exists, read it and treat its `# budget:` line and its role values as the current choices. If the legacy Cursor rule `~/.cursor/rules/pstack-models.mdc` exists and the new file does not, read its role lines as hints for the user, but never copy a Grok or other unavailable model into the new file. A line whose role is not in the Defaults table, such as `how critics`, is from a retired role. Drop it.
 
 ### 3. Budget, map, and confirm
 
-**(a) Ask for a budget.** Prefer AskQuestion over free text. Offer these four options with these exact labels, and name the current budget when the rule records one. With no rule, say that `large` matches the skill defaults.
+**(a) Ask for a budget.** Use the question tool (Claude Code `AskUserQuestion`, Codex `request_user_input`) over free text. Offer these four options with these exact labels, and name the current budget when the config records one. With no config, say that `large` matches the defaults.
 
 - `unlimited — max reasoning`
 - `large — xhigh reasoning`
 - `medium — high reasoning`
 - `small — medium reasoning`
 
-**(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by family, list, or alias (`inherit-parent`, `auto`). `unlimited`, `large`, `medium`, and `small` set the effort token of every real slug, panel entries included, to `max`, `xhigh`, `high`, or `medium`. The effort token is the last token, or the one before a trailing `fast`, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. If the result is not a detected slug, use the same family's detected slug with the highest effort at or below the target, else mark the role as needing a choice. `inherit-parent` and `auto` do not change. So `unlimited` turns `claude-opus-5-5-xhigh` into `claude-opus-5-5-max`. Grok slugs top out at `xhigh`, so under `unlimited` the fallback puts Grok at `xhigh` and keeps `grok-4.7-xhigh-fast` as it is. `large` keeps both defaults. `small` turns them into `claude-opus-5-5-medium` and `grok-4.7-medium-fast`.
+**(b) Apply it.** Build the working table from the defaults, and on a re-run keep any role the user changed. `unlimited`, `large`, `medium`, and `small` set the `@<effort>` of every value, panel entries and cross-harness entries included, to `max`, `xhigh`, `high`, or `medium`. A model that cannot run at that effort uses its highest effort below it. `inherit-parent` and `auto` keep their meaning and take the new effort.
 
-**(c) Show the roles and confirm.** Show every role with its model, marking any real slug not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model, which is how Auto users stay on Auto) as the options. Prefer AskQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena selects one value from it whose model family differs from the parent's when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
+**(c) Show the roles and confirm.** Show every role with its Claude Code value and its Codex value, marking any value that step 1 could not confirm as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models, the cross-harness forms (`codex:<model>` from Claude Code, `claude:<model>` from Codex), and `inherit-parent` as the options. Use the question tool over free text.
+
+- Panel roles (`arena runners`, `architect runners`, `interrogate reviewers`) take a list. One seat runs per entry, alias entries included, so the list length sets the count. Keep at least one entry from each model family unless the user chooses a single family. A single-family panel gives weaker agreement signal. Say so when the user picks it.
+- `arena cross-judge pool` is also a list. Arena picks the entry whose family differs from the parent's when possible.
+- `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ### 4. Validate
 
-Every real slug written must be in the detected set. `inherit-parent` and `auto` always pass. If a chosen real slug is not available, stop and ask again.
+Every real model written must be in the detected set for its harness. Every `codex:` or `claude:` value needs that CLI installed. `inherit-parent` and `auto` always pass. If a chosen value is not available, stop and ask again.
 
-### 5. Write the rule
+### 5. Write the config
 
-Write `~/.cursor/rules/pstack-models.mdc` with `alwaysApply: true`, a `# budget` line with the chosen label and its target effort, and one line per role, using the same labels poteto-mode uses. Overwrite the whole file so re-runs stay idempotent. Shape:
+Write `~/.config/pstack/models.md`. Create `~/.config/pstack/` if needed. Overwrite the whole file so re-runs stay idempotent. Shape:
 
 ```
----
-description: pstack per-role model choices (overrides skill defaults)
-alwaysApply: true
----
-# pstack model configuration. One line per role. Delete a line to fall back to the skill default.
-# `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Task `model`). Alias entries in a panel list still count toward its fan-out.
+# pstack model configuration. Read by pstack skills in Claude Code and Codex.
+# One line per role. Delete a line to fall back to the default in harnesses.md.
+# Value: <model>@<effort>, or a comma list for a panel. inherit-parent runs on the parent chat model.
+# codex:<model> (from Claude Code) and claude:<model> (from Codex) run the seat in the other harness's CLI.
 # budget: large (xhigh)
-feature, refactoring: grok-4.7-xhigh-fast
-bug-fix: grok-4.7-xhigh-fast
-perf-issue: grok-4.7-xhigh-fast
-hillclimb: grok-4.7-xhigh-fast
-judgment and prose: claude-opus-5-5-xhigh
-hardest tasks: claude-opus-5-5-xhigh
-how explorer: grok-4.7-xhigh-fast
-how explainer: claude-opus-5-5-xhigh
-why investigators: grok-4.7-xhigh-fast
-why synthesizer: claude-opus-5-5-xhigh
-reflect tooling: grok-4.7-xhigh-fast
-reflect judgment, divergent, synthesizer: claude-opus-5-5-xhigh
-arena runners: claude-opus-5-5-xhigh, grok-4.7-xhigh-fast
-arena cross-judge pool: claude-opus-5-5-xhigh, grok-4.7-xhigh-fast
-swarm workers: grok-4.7-xhigh-fast
-architect runners: claude-opus-5-5-xhigh, grok-4.7-xhigh-fast
-interrogate reviewers: claude-opus-5-5-xhigh, grok-4.7-xhigh-fast
+
+## claude-code
+feature, refactoring: claude-sonnet-5-5@xhigh
+bug-fix: claude-sonnet-5-5@xhigh
+perf-issue: claude-sonnet-5-5@xhigh
+hillclimb: claude-sonnet-5-5@xhigh
+judgment and prose: claude-opus-5-5@xhigh
+hardest tasks: claude-opus-5-5@xhigh
+how explorer: claude-sonnet-5-5@xhigh
+how explainer: claude-opus-5-5@xhigh
+why investigators: claude-sonnet-5-5@xhigh
+why synthesizer: claude-opus-5-5@xhigh
+reflect tooling: claude-sonnet-5-5@xhigh
+reflect judgment, divergent, synthesizer: claude-opus-5-5@xhigh
+arena runners: claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh
+arena cross-judge pool: claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh
+swarm workers: claude-sonnet-5-5@xhigh
+architect runners: claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh
+interrogate reviewers: claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh
+
+## codex
+feature, refactoring: inherit-parent@xhigh
+bug-fix: inherit-parent@xhigh
+perf-issue: inherit-parent@xhigh
+hillclimb: inherit-parent@xhigh
+judgment and prose: inherit-parent@xhigh
+hardest tasks: inherit-parent@xhigh
+how explorer: inherit-parent@xhigh
+how explainer: inherit-parent@xhigh
+why investigators: inherit-parent@xhigh
+why synthesizer: inherit-parent@xhigh
+reflect tooling: inherit-parent@xhigh
+reflect judgment, divergent, synthesizer: inherit-parent@xhigh
+arena runners: inherit-parent@xhigh, claude:claude-opus-5-5@xhigh
+arena cross-judge pool: inherit-parent@xhigh, claude:claude-opus-5-5@xhigh
+swarm workers: inherit-parent@xhigh
+architect runners: inherit-parent@xhigh, claude:claude-opus-5-5@xhigh
+interrogate reviewers: inherit-parent@xhigh, claude:claude-opus-5-5@xhigh
 ```
 
-### 6. Confirm
+### 6. Install the Codex custom agents
 
-Tell the user the rule was written and that it applies to new sessions. Re-running this skill updates it.
+pstack's skills spawn three Codex custom agents: `poteto-agent`, `comment-sicko`, and `pstack-reader`. Their definitions ship in this plugin's `agents/codex/` folder, two levels above this skill's directory. Copy each `.toml` file to `~/.codex/agents/`, creating the folder if needed. Before overwriting an existing file with the same name, compare it. If it differs from the shipped file and pstack did not write it, ask before replacing it. Re-run this step after a pstack update so the agents track the plugin. Claude Code needs no install step, because the plugin registers its agents as `pstack-plugin:poteto-agent` and `pstack-plugin:comment-sicko`.
 
-### 7. Offer a verification skill (optional)
+### 7. Confirm
 
-Check whether the project has a way to drive the real app for proof (a `verify-*` skill, or an existing harness). If not, offer once: "want a project-local verification skill, so agents can drive the app the way a user does and prove changes work? I can generate one with /create-verification-skill." On yes, invoke `/create-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin). On no, move on without pushing.
+Tell the user the config was written, which Codex agents were installed or left unchanged, and that both apply to new sessions and new subagents. Re-running this skill updates them.
+
+### 8. Offer a verification skill (optional)
+
+Check whether the project has a way to drive the real app for proof (a `verify-*` skill, or an existing harness). If not, offer once: "want a project-local verification skill, so agents can drive the app the way a user does and prove changes work? I can generate one with /create-verification-skill." (In Codex, `$create-verification-skill`.) On yes, invoke the create-verification-skill skill. On no, move on without pushing.

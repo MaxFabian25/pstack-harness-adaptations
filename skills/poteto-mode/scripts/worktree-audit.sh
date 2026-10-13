@@ -52,9 +52,28 @@ prs=$(mktemp)
 gh pr list --author "@me" --state all --limit 1000 \
 	--json number,state,headRefName 2>/dev/null > "$prs" || echo "[]" > "$prs"
 
-# Transcripts dir: ~/.cursor/projects/<slugified-repo-path>/agent-transcripts.
-slug=$(printf '%s' "$main_wt" | sed 's#^/##; s#/#-#g')
-transcripts="$HOME/.cursor/projects/$slug/agent-transcripts"
+# Transcripts of this repo only, per harnesses.md (Transcripts). Claude Code
+# keeps one dir per working directory at ~/.claude/projects/<slug>, where the
+# slug is the path with every non-alphanumeric character replaced by "-". Codex
+# keeps rollouts under ~/.codex/sessions whose first line (session_meta) holds
+# the cwd. Collect the Claude Code dirs of the main worktree and every worktree,
+# plus the rollouts whose cwd is one of those paths or inside one.
+wts=$(git worktree list --porcelain | awk '/^worktree /{print $2}')
+transcripts=$(mktemp)
+{
+	printf '%s\n' "$wts" | while read -r p; do
+		d="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/projects/$(printf '%s' "$p" | sed 's/[^A-Za-z0-9]/-/g')"
+		[ -d "$d" ] && find "$d" -type f -name '*.jsonl'
+	done
+	sessions="${CODEX_HOME:-$HOME/.codex}/sessions"
+	[ -d "$sessions" ] && find "$sessions" -type f -name 'rollout-*.jsonl' \
+		-exec awk 'FNR==1{print FILENAME "\t" $0; nextfile}' {} + 2>/dev/null \
+		| jq -Rr --arg wts "$wts" '
+			index("\t") as $i | .[:$i] as $f | (.[$i+1:] | fromjson? // {}) as $m
+			| select($m.type == "session_meta") | ($m.payload.cwd // "") as $cwd
+			| select(any($wts | split("\n")[] | select(. != ""); $cwd == . or ($cwd | startswith(. + "/"))))
+			| $f' 2>/dev/null
+} | sort -u > "$transcripts"
 now=$(date +%s)
 
 echo "# base: $base"
@@ -92,10 +111,12 @@ git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt;
 	[ -z "$pr" ] && pr="-"
 
 	# Most recent chat whose transcript operated in this worktree. Match path
-	# followed by "/" or a quote so glint-482 does not match glint-482-r37.
+	# followed by "/", a quote, or an escaped quote (Codex nests tool arguments
+	# as JSON strings) so glint-482 does not match glint-482-r37.
 	last="-"; last_ts=0
-	if [ -d "$transcripts" ]; then
-		f=$(rg -l -e "${wt}/" -e "${wt}\"" "$transcripts" 2>/dev/null \
+	if [ -s "$transcripts" ]; then
+		f=$(tr '\n' '\0' < "$transcripts" \
+			| xargs -0 rg -l -F -e "${wt}/" -e "${wt}\"" -e "${wt}\\\"" 2>/dev/null \
 			| xargs stat -f '%m %N' 2>/dev/null | sort -rn | head -1)
 		if [ -n "$f" ]; then last_ts=$(echo "$f" | awk '{print $1}')
 			last=$(date -r "$last_ts" '+%Y-%m-%d' 2>/dev/null); fi
@@ -114,4 +135,4 @@ git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt;
 		"$size" "$age" "$merged" "$dirty" "$remote" "$pr" "$last" "$bucket" "$wt"
 done | sort -t$'\t' -k1,1 -rh
 
-rm -f "$prs"
+rm -f "$prs" "$transcripts"

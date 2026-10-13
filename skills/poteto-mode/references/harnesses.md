@@ -14,15 +14,15 @@ A "spawn" or "Task call" in any skill means the harness's subagent tool.
 | General-purpose agent | `subagent_type: "general-purpose"` | omit `agent_type` (built-in `default`) |
 | pstack delegate | `subagent_type: "pstack-plugin:poteto-agent"` | `agent_type: "poteto-agent"` |
 | Comment cleanup agent | `subagent_type: "pstack-plugin:comment-sicko"` | `agent_type: "comment-sicko"` |
-| Read-only agent | `subagent_type: "Explore"` (search and read only) | `agent_type: "pstack-reader"` (read-only sandbox) |
-| Read-only agent that needs MCP or shell | `general-purpose`, and put "do not edit files" in the prompt | `pstack-reader` (keeps MCP), or `default` with "do not edit files" |
+| Read-only agent that locates code or gathers facts | `subagent_type: "Explore"` (read-only built-in) | `agent_type: "pstack-reader"` (read-only sandbox) |
+| Read-only agent that reviews, judges, explains, or needs MCP | `general-purpose`, and put "Do not edit files." in the prompt | `agent_type: "pstack-reader"` (keeps MCP) |
 | Background | `run_in_background: true` | always asynchronous; collect with `wait_agent` |
 | Fresh context | default for a new `Agent` call | `fork_turns: "none"` |
 | Resume an agent | `SendMessage` to its id | `followup_task` to its id |
 
 The Codex custom agents (`poteto-agent`, `comment-sicko`, `pstack-reader`) are installed into `~/.codex/agents/` by `/setup-pstack` from this plugin's `agents/codex/` folder. If `spawn_agent` rejects one as an unknown `agent_type`, spawn without `agent_type` and start the message with the matching instruction: for `poteto-agent`, "Read the pstack plugin's `agents/poteto-agent.md` and follow it"; for `comment-sicko`, "Read the pstack plugin's `agents/comment-sicko.md` and follow it"; for `pstack-reader`, "Read-only task. Do not create, edit, or delete files." Then tell the user once that `/setup-pstack` installs the real agents.
 
-A skill parameter named `readonly: true` means the read-only row. `readonly: false` or "agent mode" means the general-purpose row, which keeps MCP access. Neither harness has a `readonly` parameter. Never pass one.
+A skill parameter named `readonly: true` means a read-only row. Pick the row by what the agent does. `readonly: false` or "agent mode" means the general-purpose row, which keeps MCP access. Neither harness has a `readonly` parameter. Never pass one.
 
 Both harnesses allow nested spawns. Claude Code allows three levels below the main chat by default. Codex agents can spawn their own agents.
 
@@ -97,6 +97,8 @@ claude -p --model <model> --effort <effort> --permission-mode <mode> --output-fo
 - A writing seat works in its own git worktree. Create it with `git worktree add`, then pass `-s workspace-write -C <worktree>` (Codex) or run `claude` from inside the worktree with `--permission-mode acceptEdits`.
 - Launch panel seats in the background with the harness's background shell (Claude Code `Bash` with `run_in_background: true`; Codex a backgrounded command plus a `wait` loop), and read each `<out.md>` when it finishes.
 - The CLI needs network access. In a sandboxed session, request the escalation the harness offers for that command.
+- A seat that needs MCP gets the other CLI's servers, not yours. List them (`codex mcp list` or `claude mcp list`) and name the ones the seat should use in its brief.
+- When a later step reads the seat's transcript (Eval), drop `--ephemeral` so Codex keeps the rollout. Its `session_meta` cwd is the `-C` directory. A `claude -p` run keeps its transcript by default.
 - If the CLI is missing or not signed in, run the seat in this harness on the strongest native model, say so, and mark the panel as single-family in the reply. Agreement between same-family seats is weaker evidence.
 
 ### Budget
@@ -110,11 +112,14 @@ A Cursor cloud agent is a worker in its own VM on its own branch. The equivalent
 | Need | Claude Code | Codex |
 |---|---|---|
 | Isolated writer on its own branch | `Agent` with `isolation: "worktree"` and `run_in_background: true` | `git worktree add -b <branch> <path> <base>`, then `spawn_agent` told to work only in `<path>` |
+| Start from a non-default base branch | the brief's first step checks out `origin/<base>` (in a worktree agent) | `<base>` as the start point in `git worktree add`, or `--branch <base>` for `codex cloud exec` |
 | Remote cloud worker | `Agent` with `isolation: "remote"` when the tool offers it. Otherwise the worktree row. | `codex cloud exec --env <env-id> --branch <base> "<brief>"`, then `codex cloud status`, `diff`, `apply`. Needs a configured Codex Cloud environment. Otherwise the worktree row. |
 | Liveness of running workers | the background task list (`/tasks`), or `claude.ai/code` for remote sessions | `list_agents`, and `codex cloud list` for cloud tasks |
 | A cloud agent's URL to resume from | a `claude.ai/code` session link | a Codex Cloud task id or link |
 
 Local background agents end when the session ends. Cloud and remote work survives it. Plan resumes around that.
+
+Parallel local workers share one machine where Cursor gave each its own VM. Give each worker that starts a server its own ports and browser profile directory.
 
 ## The agent store
 
@@ -133,12 +138,15 @@ The current session is the newest transcript for this workspace by modification 
 
 | Need | Claude Code | Codex |
 |---|---|---|
+| Install the plugin | `/plugin install pstack-plugin@<marketplace>` | `codex plugin add pstack-plugin@<marketplace>` |
+| Installed plugin files | `~/.claude/plugins/cache/<marketplace>/pstack-plugin/<version>/` | `~/.codex/plugins/cache/<marketplace>/pstack-plugin/<version>/` |
 | Invoke a pstack skill | `/name`, or `/pstack-plugin:name` when another plugin has the same name (for example `tdd`, `teach`) | `$name` |
 | Load a skill from inside another | the `Skill` tool | open the skill's `SKILL.md` and follow it |
 | Project skill location | `.claude/skills/<name>/` | `.agents/skills/<name>/` |
 | User skill location | `~/.claude/skills/<name>/` | `~/.codex/skills/<name>/` |
 | Explicit-only skill | frontmatter `disable-model-invocation: true` | `agents/openai.yaml` with `policy: allow_implicit_invocation: false` |
 | Author or edit a skill | the `skill-creator` skill | `$skill-creator` |
+| A path a skill names (`scripts/...`, `playbooks/...`, `references/...`) | relative to that skill's installed directory, printed as its base directory when the skill loads | relative to that skill's installed directory, the folder of the `SKILL.md` path in the skills list |
 
 To make one project skill serve both harnesses, write it to `.agents/skills/<name>/` and symlink `.claude/skills/<name>` to `../../.agents/skills/<name>`. Do the same for user skills between `~/.codex/skills/` and `~/.claude/skills/`.
 
@@ -159,11 +167,15 @@ Neither harness has Cursor's sticky custom modes. The standing-instruction line 
 | todolist | `TodoWrite` | `update_plan` |
 | `/loop` (self-paced) | `/loop <prompt>` with no interval | no command. Keep working in the turn and wait between checks with a bounded shell loop (`sleep`). In the Codex app, a heartbeat automation on the thread repeats the prompt. |
 | `/loop <interval>` | `/loop 1h <prompt>` | a heartbeat automation on the thread at that interval, or the bounded shell loop |
+| Restart of a loop | a `/loop` ends with its session. Re-arm it after a restart. | a shell loop or wait ends with its turn. Re-arm it after a restart. |
 | Watch a process or log | the `Monitor` tool, or `Bash` with `run_in_background: true` | a backgrounded command plus a bounded `sleep` loop |
 | List available MCPs | the `mcp__<server>__*` tools in your tool list, including deferred ones found with `ToolSearch`. `claude mcp list` from the shell. | the MCP tools in your tool list. `codex mcp list` from the shell. |
 | Image generation | the `imagegen` skill when installed. Otherwise draw SVG or Mermaid and render it to a file. | `$imagegen` |
 | Built-in PR tool | `gh pr create` | `gh pr create` |
 | Restart | a new session, or context compaction | a new session, or context compaction |
+| Plan mode | Plan Mode (Shift+Tab cycles to it) | Plan mode, from the composer's collaboration-mode switch |
+| Question with several choices allowed | `AskUserQuestion` with `multiSelect: true`. It caps options per question, so split long lists across questions. | `request_user_input`, or a numbered list in chat |
+| App state to reclaim disk from | `~/Library/Application Support/Claude` (`Cache`, `vm_bundles`) and old transcripts | `~/.codex/worktrees/` and old rollouts under `~/.codex/sessions/` |
 
 ## Skills from other Cursor plugins
 

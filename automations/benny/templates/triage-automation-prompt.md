@@ -1,8 +1,8 @@
 # Triage automation prompt
 
-> Source material for the copied setup workflow. Paraphrase this intent into a built-in `automate` draft after `automate` confirms that the copied pack is committed in the repository where the automation will run.
+> Source material for the copied setup workflow. Paraphrase this intent into the routine or Codex automation draft after you confirm that the copied pack is committed on the branch the automation will run from.
 
-Read and follow `.cursor/automations/benny/skills/triage-issue-reports/SKILL.md` for this run.
+Read and follow `.agents/automations/benny/skills/triage-issue-reports/SKILL.md` for this run.
 
 Configuration source. Include this repository-relative path only when it is committed in the same target repository. Otherwise paraphrase the configured values. Never use a plugin source or cache path:
 
@@ -19,6 +19,8 @@ Trigger:
 	"thread_ts": "{{SLACK_THREAD_TS_OR_EMPTY}}"
 }
 ```
+
+For a routine with an API trigger, this JSON arrives in the `<routine-fire-payload>` block. Read the trigger from that block. A polling run builds the same values for each report it handles.
 
 The creation intent should describe this as a new top-level report in the configured source Slack channel.
 
