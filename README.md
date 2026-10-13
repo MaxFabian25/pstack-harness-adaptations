@@ -261,7 +261,7 @@ twenty-four short skills, one principle each. `poteto-mode` indexes them inline 
 
 a few things `poteto-mode` references but doesn't bundle. each maps to a tool your harness already has, listed in [harnesses.md](skills/poteto-mode/references/harnesses.md) (Skills from other Cursor plugins):
 
-- for deslop, claude code runs the built-in `/simplify` on the diff, then pstack's `/no-comments`. codex runs `$no-comments`, then a self-review of the diff for dead code, needless abstraction, and defensive noise.
+- for deslop, both harnesses run pstack's `no-comments` (`/no-comments`, codex `$no-comments`), then a self-review of the diff for dead code, needless abstraction, and defensive noise.
 - `tmux` drives clis and tuis in either harness. a browser, electron, or web app runs through the claude code browser pane, the chrome devtools mcp, or the `agent-browser` skill. in codex, use the `playwright` or `agent-browser` skill, or computer use.
 - skill authoring goes through the `skill-creator` skill (codex: `$skill-creator`). for pr-status requests, the [babysit playbook](./skills/poteto-mode/playbooks/babysit.md) inside `poteto-mode` is the only babysit.
 

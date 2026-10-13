@@ -184,7 +184,7 @@ Neither harness has Cursor's sticky custom modes. The standing-instruction line 
 | Cursor skill | Claude Code | Codex |
 |---|---|---|
 | `create-skill` (built-in) | `skill-creator` | `$skill-creator` |
-| `deslop` (`cursor-team-kit`) | `/simplify` on the diff, then pstack's `no-comments` | pstack's `no-comments`, then a self-review of the diff for dead code, needless abstraction, and defensive noise |
+| `deslop` (`cursor-team-kit`) | pstack's `no-comments`, then a self-review of the diff for dead code, needless abstraction, and defensive noise. Not `/simplify`, which spawns its own reviewers. | pstack's `no-comments`, then a self-review of the diff for dead code, needless abstraction, and defensive noise |
 | `control-ui` (`cursor-team-kit`) | the built-in browser pane, the Chrome DevTools MCP (CDP, also for Electron), or the `agent-browser` skill | the `playwright` or `agent-browser` skill, or computer use |
 | `control-cli` (`cursor-team-kit`) | `tmux`: `new-session -d`, `send-keys`, `capture-pane -p` | the same `tmux` commands |
 | Cursor's built-in babysit skill | none. pstack's Babysit playbook is the only one. | none |

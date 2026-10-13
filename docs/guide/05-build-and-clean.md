@@ -56,7 +56,7 @@ In context, that's enough. [`/tdd`](../../skills/tdd/SKILL.md) writes the smalle
 
 ## Clean before you commit
 
-The [Opening a PR playbook](../../skills/poteto-mode/playbooks/opening-a-pr.md) runs a deslop pass on the diff before each commit and applies [`/unslop`](../../skills/unslop/SKILL.md) to the PR description and commit bodies. Deslop isn't a pstack skill. In Claude Code it's the built-in `/simplify` on the diff, then `/no-comments`. In Codex it's `$no-comments`, then a self-review of the diff for dead code, needless abstraction, and defensive noise. You can also ask for the same outcome in plain words: remove narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
+The [Opening a PR playbook](../../skills/poteto-mode/playbooks/opening-a-pr.md) runs a deslop pass on the diff before each commit and applies [`/unslop`](../../skills/unslop/SKILL.md) to the PR description and commit bodies. Deslop isn't a pstack skill. In both harnesses it's `/no-comments` (Codex: `$no-comments`), then a self-review of the diff for dead code, needless abstraction, and defensive noise. You can also ask for the same outcome in plain words: remove narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
 
 For prose, `/unslop` takes a target and any extra rules you have:
 
