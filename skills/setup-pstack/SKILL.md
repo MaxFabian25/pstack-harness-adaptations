@@ -13,7 +13,7 @@ Write `~/.config/pstack/models.md`, the config that sets pstack's model per role
 
 Detect what each harness can run. Never write a real model you have not confirmed is available. `inherit-parent` and `auto` are always valid even though they are not detected models.
 
-- **Claude Code.** The `Agent` tool's `model` parameter lists the aliases it accepts (`opus`, `sonnet`, `haiku`, `fable`). Full IDs such as `claude-opus-5-5` are also accepted. Confirm a full ID by running `claude -p --model <id> --output-format json "reply ok"` once, or by a spawn that succeeds.
+- **Claude Code.** The `Agent` tool's `model` parameter lists the values it accepts, usually the aliases `opus`, `sonnet`, `haiku`, and `fable`. Write only values it lists. The `claude` CLI accepts the same aliases for a `claude:` seat, and `claude auth status` shows whether it is signed in.
 - **Codex.** Read the model list from `~/.codex/models_cache.json` (entries with `visibility` `list`) or run `codex debug models` if it exists. Note whether `spawn_agent` exposes a `model` parameter in this session. Without it, native Codex seats inherit the parent model and only the effort applies.
 - **Cross-harness CLIs.** Run `codex --version` and `claude --version`. A missing CLI means `codex:` or `claude:` values cannot run. Mark those roles as needing a choice.
 
@@ -56,23 +56,23 @@ Write `~/.config/pstack/models.md`. Create `~/.config/pstack/` if needed. Overwr
 # budget: large (xhigh)
 
 ## claude-code
-feature, refactoring: claude-sonnet-5-5@xhigh
-bug-fix: claude-sonnet-5-5@xhigh
-perf-issue: claude-sonnet-5-5@xhigh
-hillclimb: claude-sonnet-5-5@xhigh
-judgment and prose: claude-opus-5-5@xhigh
-hardest tasks: claude-opus-5-5@xhigh
-how explorer: claude-sonnet-5-5@xhigh
-how explainer: claude-opus-5-5@xhigh
-why investigators: claude-sonnet-5-5@xhigh
-why synthesizer: claude-opus-5-5@xhigh
-reflect tooling: claude-sonnet-5-5@xhigh
-reflect judgment, divergent, synthesizer: claude-opus-5-5@xhigh
-arena runners: claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh
-arena cross-judge pool: claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh
-swarm workers: claude-sonnet-5-5@xhigh
-architect runners: claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh
-interrogate reviewers: claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh
+feature, refactoring: sonnet@xhigh
+bug-fix: sonnet@xhigh
+perf-issue: sonnet@xhigh
+hillclimb: sonnet@xhigh
+judgment and prose: opus@xhigh
+hardest tasks: opus@xhigh
+how explorer: sonnet@xhigh
+how explainer: opus@xhigh
+why investigators: sonnet@xhigh
+why synthesizer: opus@xhigh
+reflect tooling: sonnet@xhigh
+reflect judgment, divergent, synthesizer: opus@xhigh
+arena runners: opus@xhigh, codex:gpt-6.1-sol@xhigh
+arena cross-judge pool: opus@xhigh, codex:gpt-6.1-sol@xhigh
+swarm workers: sonnet@xhigh
+architect runners: opus@xhigh, codex:gpt-6.1-sol@xhigh
+interrogate reviewers: opus@xhigh, codex:gpt-6.1-sol@xhigh
 
 ## codex
 feature, refactoring: inherit-parent@xhigh
@@ -87,11 +87,11 @@ why investigators: inherit-parent@xhigh
 why synthesizer: inherit-parent@xhigh
 reflect tooling: inherit-parent@xhigh
 reflect judgment, divergent, synthesizer: inherit-parent@xhigh
-arena runners: inherit-parent@xhigh, claude:claude-opus-5-5@xhigh
-arena cross-judge pool: inherit-parent@xhigh, claude:claude-opus-5-5@xhigh
+arena runners: inherit-parent@xhigh, claude:opus@xhigh
+arena cross-judge pool: inherit-parent@xhigh, claude:opus@xhigh
 swarm workers: inherit-parent@xhigh
-architect runners: inherit-parent@xhigh, claude:claude-opus-5-5@xhigh
-interrogate reviewers: inherit-parent@xhigh, claude:claude-opus-5-5@xhigh
+architect runners: inherit-parent@xhigh, claude:opus@xhigh
+interrogate reviewers: inherit-parent@xhigh, claude:opus@xhigh
 ```
 
 ### 6. Install the Codex custom agents

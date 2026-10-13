@@ -28,8 +28,8 @@ Launch all reviewers in a single message with the subagent tool, one per entry o
 
 | Subagent | Claude Code default | Codex default |
 |----------|---------------------|---------------|
-| Reviewer A | `claude-opus-5-5@xhigh` | `inherit-parent@xhigh` |
-| Reviewer B | `codex:gpt-6.1-sol@xhigh` | `claude:claude-opus-5-5@xhigh` |
+| Reviewer A | `opus@xhigh` | `inherit-parent@xhigh` |
+| Reviewer B | `codex:gpt-6.1-sol@xhigh` | `claude:opus@xhigh` |
 
 Each reviewer is a read-only agent per [harnesses.md](../poteto-mode/references/harnesses.md) (Subagents), on its configured entry, or its table default when there is no configured line, applied per [harnesses.md](../poteto-mode/references/harnesses.md) (Models). An `auto` or `inherit-parent` entry runs that reviewer on the parent model. A `codex:` or `claude:` entry runs as a read-only cross-harness seat, launched in the background alongside the subagents.
 

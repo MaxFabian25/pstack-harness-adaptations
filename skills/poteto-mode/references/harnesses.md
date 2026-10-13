@@ -32,11 +32,11 @@ A role is a named seat such as `how explorer` or `interrogate reviewers`. Resolv
 
 ### Configuration
 
-`/setup-pstack` writes `~/.config/pstack/models.md`. Read it when a skill names a role. It has one section per harness, `## claude-code` and `## codex`, and one line per role, for example `how explorer: claude-sonnet-5-5@xhigh`. Use the section for the harness you run in. A missing file, section, or line means the default below.
+`/setup-pstack` writes `~/.config/pstack/models.md`. Read it when a skill names a role. It has one section per harness, `## claude-code` and `## codex`, and one line per role, for example `how explorer: sonnet@xhigh`. Use the section for the harness you run in. A missing file, section, or line means the default below.
 
 Each value is `<model>@<effort>` or a comma list of them for a panel role. The effort ladder is `max` > `xhigh` > `high` > `medium` > `low`.
 
-- A plain model runs in this harness. In Claude Code it is a Claude model ID (`claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-5-5`, `claude-fable-5-1`) or alias (`opus`, `sonnet`, `haiku`, `fable`). In Codex it is a model slug such as `gpt-6.1-sol`.
+- A plain model runs in this harness. In Claude Code it is an alias the `Agent` tool accepts (`opus`, `sonnet`, `haiku`, `fable`). Some Claude Code versions also accept full IDs such as `claude-opus-5-5`. Use one only when the tool lists it. In Codex it is a model slug such as `gpt-6.1-sol`.
 - `inherit-parent` runs the role on the parent chat's model. `auto` means the same.
 - `codex:<model>` (from Claude Code) or `claude:<model>` (from Codex) runs the seat in the other harness's CLI. This is how a panel gets a second model family. See Cross-harness seats.
 
@@ -44,23 +44,23 @@ Each value is `<model>@<effort>` or a comma list of them for a panel role. The e
 
 | Role | Claude Code | Codex |
 |---|---|---|
-| `feature, refactoring` | `claude-sonnet-5-5@xhigh` | `inherit-parent@xhigh` |
-| `bug-fix` | `claude-sonnet-5-5@xhigh` | `inherit-parent@xhigh` |
-| `perf-issue` | `claude-sonnet-5-5@xhigh` | `inherit-parent@xhigh` |
-| `hillclimb` | `claude-sonnet-5-5@xhigh` | `inherit-parent@xhigh` |
-| `judgment and prose` | `claude-opus-5-5@xhigh` | `inherit-parent@xhigh` |
-| `hardest tasks` | `claude-opus-5-5@xhigh` | `inherit-parent@xhigh` |
-| `how explorer` | `claude-sonnet-5-5@xhigh` | `inherit-parent@xhigh` |
-| `how explainer` | `claude-opus-5-5@xhigh` | `inherit-parent@xhigh` |
-| `why investigators` | `claude-sonnet-5-5@xhigh` | `inherit-parent@xhigh` |
-| `why synthesizer` | `claude-opus-5-5@xhigh` | `inherit-parent@xhigh` |
-| `reflect tooling` | `claude-sonnet-5-5@xhigh` | `inherit-parent@xhigh` |
-| `reflect judgment, divergent, synthesizer` | `claude-opus-5-5@xhigh` | `inherit-parent@xhigh` |
-| `arena runners` | `claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:claude-opus-5-5@xhigh` |
-| `arena cross-judge pool` | `claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:claude-opus-5-5@xhigh` |
-| `swarm workers` | `claude-sonnet-5-5@xhigh` | `inherit-parent@xhigh` |
-| `architect runners` | `claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:claude-opus-5-5@xhigh` |
-| `interrogate reviewers` | `claude-opus-5-5@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:claude-opus-5-5@xhigh` |
+| `feature, refactoring` | `sonnet@xhigh` | `inherit-parent@xhigh` |
+| `bug-fix` | `sonnet@xhigh` | `inherit-parent@xhigh` |
+| `perf-issue` | `sonnet@xhigh` | `inherit-parent@xhigh` |
+| `hillclimb` | `sonnet@xhigh` | `inherit-parent@xhigh` |
+| `judgment and prose` | `opus@xhigh` | `inherit-parent@xhigh` |
+| `hardest tasks` | `opus@xhigh` | `inherit-parent@xhigh` |
+| `how explorer` | `sonnet@xhigh` | `inherit-parent@xhigh` |
+| `how explainer` | `opus@xhigh` | `inherit-parent@xhigh` |
+| `why investigators` | `sonnet@xhigh` | `inherit-parent@xhigh` |
+| `why synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` |
+| `reflect tooling` | `sonnet@xhigh` | `inherit-parent@xhigh` |
+| `reflect judgment, divergent, synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` |
+| `arena runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` |
+| `arena cross-judge pool` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` |
+| `swarm workers` | `sonnet@xhigh` | `inherit-parent@xhigh` |
+| `architect runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` |
+| `interrogate reviewers` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` |
 
 The fast-code roles map to Sonnet in Claude Code. The judgment roles map to Opus. Panel roles mix families through the other harness's CLI, so "two models agree" still means two model families agree.
 
