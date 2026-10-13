@@ -12,7 +12,7 @@ The human enters setup by pointing Claude Code or Codex at the pack's `FOR_AGENT
 
 Benny needs external configuration and two live automations.
 
-An automation here is a Claude Code routine or a Codex automation. A routine runs in a fresh cloud clone. It is created with `/schedule` and edited at claude.ai/code/routines. A Codex automation runs on the user's machine. It is saved in the Codex app, or it is a `codex exec` job that cron or launchd starts. pstack's `poteto-mode/references/harnesses.md` (Automations and webhooks) maps both.
+An automation here is a Claude Code routine or a Codex automation. A routine runs on Anthropic's cloud and clones its repositories on every run. It is created with `/schedule` and edited at claude.ai/code/routines. A Codex automation runs on the user's machine. It is saved in the Codex app, or it is a `codex exec` job that cron or launchd starts. pstack's `poteto-mode/references/harnesses.md` (Automations and webhooks) maps both.
 
 Do not create or update an automation until the user explicitly asks. Never put a secret value in plugin files, prompts, or committed configuration.
 
@@ -35,7 +35,7 @@ If this file is already being read from the target destination, treat the copy a
 
 Make pstack load in every automation run for the target repository. Use the route that matches where the automation runs:
 
-- Claude Code routine. A cloud session does not install plugins that the repository's `.claude/settings.json` declares. Give the user these lines for the setup script of the cloud environment the routine will use. The user edits that environment on claude.ai. Tell them to keep every unrelated line of an existing script.
+- Claude Code routine. A cloud session does not install plugins that the repository's `.claude/settings.json` declares, and the docs name no personal route that installs one into a routine. Give the user these lines for the setup script of the cloud environment the routine will use, then have a test run confirm the skills load. A Team or Enterprise org can enable the plugin through server-managed settings instead. The user edits that environment on claude.ai. Tell them to keep every unrelated line of an existing script.
 
   ```bash
   claude plugin marketplace add <marketplace-source>
@@ -153,7 +153,7 @@ If no routing map is configured, triage may classify a report but must not guess
 
 Read `../reproduce-and-fix-issues/references/control-adapter.md` and the user's completed feature map.
 
-The adapter runs where the automation runs. A routine's cloud container has no display, so a routine needs a headless browser driver that records video, or a virtual display that the environment's setup script starts. A Codex automation can drive the user's desktop. pstack's `poteto-mode/references/harnesses.md` (Skills from other Cursor plugins) lists building blocks per harness, such as `tmux` for CLIs and TUIs, and a browser driver or computer use for web, Electron, and desktop apps.
+The adapter runs where the automation runs. The docs do not say whether a routine's cloud container has a display, so plan for none. A routine needs a headless browser driver that records video, or a virtual display that the environment's setup script starts. A Codex automation can drive the user's desktop. pstack's `poteto-mode/references/harnesses.md` (Skills from other Cursor plugins) lists building blocks per harness, such as `tmux` for CLIs and TUIs, and a browser driver or computer use for web, Electron, and desktop apps.
 
 Confirm that the named skill can:
 

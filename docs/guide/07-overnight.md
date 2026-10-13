@@ -96,7 +96,7 @@ A [Claude Code project](https://code.claude.com/docs/en/claude-projects) gives o
 A few habits help:
 
 - Give each body of work its own Project, such as a feature, a migration, a perf push, or a tech-debt cleanup. Several can run side by side.
-- Bring related cloud sessions into the project with Move to project, finished ones included. Their work becomes context for the project.
+- Bring related cloud sessions into the project with Move to project. Claude reads each session and continues its work there.
 - Give each PR a verification swarm before it merges, and let Autopilot-stack or Autopilot-full carry the queue.
 - Ask the coordinator for a plan backed by data, and have it answer open questions with prototypes before it asks you.
 

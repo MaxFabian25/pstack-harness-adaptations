@@ -197,6 +197,6 @@ A Cursor routine is an agent woken by a schedule or a webhook.
 |---|---|---|
 | Scheduled agent | a routine (`/schedule`, or the `RemoteTrigger` tool) | a Codex app automation |
 | Agent woken by an HTTP POST | a routine with an API trigger. The user adds it at claude.ai/code/routines (routine, Edit, Add another trigger, API) and generates its token there. | a local server that runs `codex exec "<prompt>"`, or `codex exec resume <session-id> "<prompt>"` to wake one thread |
-| Wake payload | the POST body `{"text": "..."}` arrives in a `<routine-fire-payload>` block. The routine prompt must refer to that block. | the prompt argument the local server builds |
+| Wake payload | the fire returns HTTP 200 with the run's session id. The POST body `{"text": "..."}` arrives as a separate message after the routine prompt, in a `<routine-fire-payload>` block. The prompt must say to wait for that block. A run always ends with a visible reply, so a no-op replies with one short line. | the prompt argument the local server builds |
 
 Neither harness has Cursor's secret-request card. When the user must supply a key, give them a command to run in their own terminal that writes it to a file with mode `600` (for example `read -rs KEY && printf %s "$KEY" > ~/.config/<app>/key && chmod 600 ~/.config/<app>/key`). Read the file from code. Never ask for the value in chat, and never print it.

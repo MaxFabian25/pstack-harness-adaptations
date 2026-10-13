@@ -4,7 +4,7 @@ Benny does not know how to start or drive every app. The user must configure one
 
 Set its skill name in `control.skill_name`.
 
-The adapter must work where the automation runs. A Claude Code routine runs in a cloud container with no display, so its adapter drives a headless browser that records video, or a virtual display started by the cloud environment's setup script. A Codex automation runs on the user's machine and can drive the desktop. Common building blocks are `tmux` for CLIs and TUIs, and a browser driver such as Playwright or the Chrome DevTools Protocol for web and Electron apps.
+The adapter must work where the automation runs. A Claude Code routine runs in a cloud container, and the docs do not say it has a display. Plan for none, so its adapter drives a headless browser that records video, or a virtual display started by the cloud environment's setup script. A Codex automation runs on the user's machine and can drive the desktop. Common building blocks are `tmux` for CLIs and TUIs, and a browser driver such as Playwright or the Chrome DevTools Protocol for web and Electron apps.
 
 Set the completed user-facing feature map path in `control.feature_map_path`. Copy and fill [`feature-map.example.md`](./feature-map.example.md) outside `.agents/automations/benny/` instead of editing the copied example.
 
