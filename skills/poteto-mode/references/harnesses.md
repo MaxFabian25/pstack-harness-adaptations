@@ -115,7 +115,7 @@ A Cursor cloud agent is a worker in its own VM on its own branch. The equivalent
 |---|---|---|
 | Isolated writer on its own branch | `Agent` with `isolation: "worktree"` and `run_in_background: true` | `git worktree add -b <branch> <path> <base>`, then `spawn_agent` told to work only in `<path>` |
 | Start from a non-default base branch | the brief's first step checks out `origin/<base>` (in a worktree agent) | `<base>` as the start point in `git worktree add`, or `--branch <base>` for `codex cloud exec` |
-| Remote cloud worker | `Agent` with `isolation: "remote"` when the tool offers it. Otherwise the worktree row. | `codex cloud exec --env <env-id> --branch <base> "<brief>"`, then `codex cloud status`, `diff`, `apply`. Needs a configured Codex Cloud environment. Otherwise the worktree row. |
+| Remote cloud worker | `Agent` with `isolation: "remote"` when the tool offers it and the account has a cloud environment. Where the only environments are Remote Control bridges, a remote agent runs on this same machine in the same directory, so it isolates nothing. Probe with `pwd` and `uname -n` first, and use the worktree row for any writer. | `codex cloud exec --env <env-id> --branch <base> "<brief>"`, then `codex cloud status`, `diff`, `apply`. Needs a configured Codex Cloud environment. Otherwise the worktree row. |
 | Liveness of running workers | the background task list (`/tasks`), or `claude.ai/code` for remote sessions | `list_agents`, and `codex cloud list` for cloud tasks |
 | A cloud agent's URL to resume from | a `claude.ai/code` session link | a Codex Cloud task id or link |
 
