@@ -15,7 +15,7 @@
     "unslop"
   ],
   "name": "pstack-plugin",
-  "version": "0.15.23+upstream.dbf49813a39c.codex1",
+  "version": "0.15.24+upstream.1e5c90a4b6f2.codex1",
   "skills": [
     "./skills/"
   ],

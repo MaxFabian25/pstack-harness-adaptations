@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Investigate the motivation and intent behind code. The companion `how` skill answers what the code does and how it works. `why` answers what forces led to its shape.
 
-Each spawn below names a role. Resolve it from `~/.config/pstack/models.md` and apply it per [harnesses.md](../poteto-mode/references/harnesses.md) (Models), which holds the defaults.
+Each spawn below names a role. Resolve it from `~/.config/pstack/models.md` and apply it per [harnesses.md](../poteto-mode/references/harnesses.md) (Models), which holds the defaults. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 Every spawn is a read-only agent that keeps MCP access, per [harnesses.md](../poteto-mode/references/harnesses.md) (Subagents). That is `general-purpose` in Claude Code, and `pstack-reader` (which keeps MCP) or `default` in Codex. **Do not use the search-only agent (Claude Code `Explore`).** It strips MCP access, which disables the MCP-backed investigators and the synthesizer's citation spot-checks. Investigators still shouldn't write anything, so every prompt says "do not edit files".
 

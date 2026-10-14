@@ -35,7 +35,7 @@ Each reviewer is a read-only agent per [harnesses.md](../poteto-mode/references/
 
 If a tool rejects a configured entry, run that reviewer on its family's table default and say so. Families are Claude and GPT, read from the model after any `codex:` or `claude:` prefix. Claude models start with `claude-` or are the `opus`, `sonnet`, `haiku`, or `fable` alias. A table `inherit-parent` is the parent's family. With no family match, use Reviewer A's default. If it rejects a table default, resolve and apply per [harnesses.md](../poteto-mode/references/harnesses.md) (Models). Open a separate PR to update this default table and that row of harnesses.md only when the harness's own model list no longer offers that default. A missing CLI, a sign-in failure, or a transient error is not a stale default. Do not block the review on the model issue. Never treat an alias entry as a rejected slug or apply either fallback to it.
 
-Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`.
+Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 ## Step 4, Synthesize
 

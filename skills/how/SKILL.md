@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
 
-Every spawn is a subagent on the read-only agent row of [harnesses.md](../poteto-mode/references/harnesses.md) (Subagents). Explorers use the `how explorer` role, and every explainer uses the `how explainer` role. Resolve each role from `~/.config/pstack/models.md` and apply it per [harnesses.md](../poteto-mode/references/harnesses.md) (Models), which holds the defaults and what to do when a tool rejects a model.
+Every spawn is a subagent on the read-only agent row of [harnesses.md](../poteto-mode/references/harnesses.md) (Subagents). Explorers use the `how explorer` role, and every explainer uses the `how explainer` role. Resolve each role from `~/.config/pstack/models.md` and apply it per [harnesses.md](../poteto-mode/references/harnesses.md) (Models), which holds the defaults and what to do when a tool rejects a model. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 ## 1. Assess complexity
 

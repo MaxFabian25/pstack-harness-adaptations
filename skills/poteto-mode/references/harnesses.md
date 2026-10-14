@@ -104,6 +104,10 @@ claude -p --model <model> --effort <effort> --permission-mode <mode> --output-fo
 - When a later step reads the seat's transcript (Eval), drop `--ephemeral` so Codex keeps the rollout. Its `session_meta` cwd is the `-C` directory. A `claude -p` run keeps its transcript by default.
 - If the CLI is missing or not signed in, run the seat in this harness on the strongest native model, say so, and mark the panel as single-family in the reply. Agreement between same-family seats is weaker evidence.
 
+### Speed
+
+Cursor's `-fast` model variants have no per-subagent equivalent. Claude Code's fast mode (`/fast`) is a session setting, and Codex's spawn tool takes only a model and a reasoning effort. Run every subagent at standard speed on the role's model, and never change a session setting for one subagent. A playbook's fast-mode exception therefore changes nothing here.
+
 ### Budget
 
 `/setup-pstack` stores a `# budget:` line. `unlimited` sets every effort to `max`, `large` to `xhigh`, `medium` to `high`, and `small` to `medium`. A model that cannot run at that effort uses its highest effort below it.
@@ -186,9 +190,9 @@ Neither harness has Cursor's sticky custom modes. The standing-instruction line 
 | Cursor skill | Claude Code | Codex |
 |---|---|---|
 | `create-skill` (built-in) | `skill-creator` | `$skill-creator` |
-| `deslop` (`cursor-team-kit`) | pstack's `no-comments`, then a self-review of the diff for dead code, needless abstraction, and defensive noise. Not `/simplify`, which spawns its own reviewers. | pstack's `no-comments`, then a self-review of the diff for dead code, needless abstraction, and defensive noise |
-| `control-ui` (`cursor-team-kit`) | the built-in browser pane, the Chrome DevTools MCP (CDP, also for Electron), or the `agent-browser` skill | the `playwright` or `agent-browser` skill, or computer use |
-| `control-cli` (`cursor-team-kit`) | `tmux`: `new-session -d`, `send-keys`, `capture-pane -p` | the same `tmux` commands |
+| `deslop` (`cursor-team-kit`) | `/deslop` from the installed `cursor-team-kit` plugin (`/cursor-team-kit:deslop` if another plugin uses the name). Not `/simplify`, which spawns its own reviewers. Without the plugin, pstack's `no-comments`, then a self-review of the diff for dead code, needless abstraction, and defensive noise. | `$deslop` from the installed `cursor-team-kit` plugin. Without it, pstack's `no-comments`, then the same self-review. |
+| `control-ui` (`cursor-team-kit`) | `/control-ui` from the installed `cursor-team-kit` plugin. Its harness can drive the built-in browser pane, the Chrome DevTools MCP (CDP, also for Electron), or the `agent-browser` skill. | `$control-ui` from the installed `cursor-team-kit` plugin, driving the `playwright` or `agent-browser` skill, or computer use |
+| `control-cli` (`cursor-team-kit`) | `/control-cli` from the installed `cursor-team-kit` plugin. Without it, `tmux`: `new-session -d`, `send-keys`, `capture-pane -p` | `$control-cli` from the installed `cursor-team-kit` plugin. Without it, the same `tmux` commands |
 | Cursor's built-in babysit skill | none. pstack's Babysit playbook is the only one. | none |
 
 ## Automations and webhooks
