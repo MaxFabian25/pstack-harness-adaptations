@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { type CliRuntime, main, parseArgs } from "./cli.ts";
 import { fakeReader, passingCheck } from "./fakes.test-helper.ts";
+import { WatcherQueryError } from "./github.ts";
 import { renderJson, renderPretty } from "./render.ts";
 import type { GitHubReader, WatcherVerdict } from "./types.ts";
 import { parsePrNumber } from "./types.ts";
@@ -189,6 +190,76 @@ describe("main", () => {
       mode: "queued-stack",
     });
     expect(harness.stdout[0]).not.toContain('"kind":"QUEUE"');
+  });
+
+  describe("on a PR with no checks reported", () => {
+    const pr = ["--owner", "owner", "--repo", "repo", "--pr", "1"];
+    const noChecks = () =>
+      fakeReader({
+        fastPath: {
+          kind: "unusable",
+          exitCode: 1,
+          stderr: "no checks reported on the 'feature' branch",
+        },
+      });
+
+    it("prints one status and exits 0 under --status-only", async () => {
+      const json = testRuntime(noChecks());
+      expect(await main([...pr, "--status-only"], json.runtime)).toBe(0);
+      expect(json.stdout).toHaveLength(1);
+      expect(JSON.parse(json.stdout[0])).toMatchObject({
+        kind: "STATUS",
+        terminal: true,
+        exitCode: 0,
+        rows: [{ kind: "open", ci: { kind: "ci-none" } }],
+      });
+
+      const pretty = testRuntime(noChecks());
+      expect(
+        await main([...pr, "--status-only", "--pretty"], pretty.runtime)
+      ).toBe(0);
+      expect(pretty.stdout.join("")).toContain("| no checks reported |");
+    });
+
+    it("still fails closed while polling", async () => {
+      const harness = testRuntime(noChecks());
+      expect(
+        await main([...pr, "--max-query-errors", "1"], harness.runtime)
+      ).toBe(7);
+      expect(JSON.parse(harness.stdout[0])).toMatchObject({
+        kind: "BLOCKER",
+        blocker: {
+          kind: "status-query",
+          failure: { kind: "checks-unavailable" },
+        },
+      });
+    });
+  });
+
+  it("reads once under --status-only when GitHub cannot be read", async () => {
+    const reader = {
+      ...fakeReader(),
+      async pullRequest(): Promise<never> {
+        throw new WatcherQueryError({
+          kind: "command-exit",
+          retryable: true,
+          detail: "rate limited",
+          code: 1,
+        });
+      },
+    } satisfies GitHubReader;
+    const harness = testRuntime(reader);
+    expect(
+      await main(
+        ["--owner", "owner", "--repo", "repo", "--pr", "1", "--status-only"],
+        harness.runtime
+      )
+    ).toBe(7);
+    expect(harness.stdout).toHaveLength(1);
+    expect(JSON.parse(harness.stdout[0])).toMatchObject({
+      kind: "BLOCKER",
+      blocker: { kind: "status-query", failures: 1 },
+    });
   });
 
   it("returns exit 4 for a hidden GitHub-side CI refusal", async () => {
