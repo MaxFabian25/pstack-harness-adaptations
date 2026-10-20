@@ -141,7 +141,16 @@ export type CiClean = CiBase & {
   readonly pending: readonly [];
   readonly github: GitHubMergeAllowed;
 };
-export type CiState = CiFailing | CiGithubRejected | CiPending | CiClean;
+export type CiNone = {
+  readonly kind: "ci-none";
+  readonly detail: string;
+};
+export type CiState =
+  | CiFailing
+  | CiGithubRejected
+  | CiPending
+  | CiClean
+  | CiNone;
 export type PrSnapshot =
   | {
       readonly kind: "merged" | "closed";

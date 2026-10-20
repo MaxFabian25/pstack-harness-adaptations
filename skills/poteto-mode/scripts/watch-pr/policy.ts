@@ -1,4 +1,5 @@
 import {
+  ChecksUnavailable,
   WatcherQueryError,
   resolveChecks,
   resolveReviewThreads,
@@ -61,6 +62,7 @@ export async function readSnapshot(args: {
   readonly context: T.PrContext;
   readonly pendingHistory: "include" | "omit";
   readonly allowDraft: boolean;
+  readonly reportMissingChecks?: boolean;
 }): Promise<T.PrSnapshot> {
   const facts = await args.reader.pullRequest(args.context);
   if (facts.state === "MERGED" || facts.mergedAt !== null)
@@ -68,7 +70,21 @@ export async function readSnapshot(args: {
   if (facts.state === "CLOSED")
     return { kind: "closed", context: args.context, facts };
   const threads = await resolveReviewThreads(args.reader, args.context);
-  const checks = await resolveChecks(args.reader, args.context);
+  let checks: T.CheckRead;
+  try {
+    checks = await resolveChecks(args.reader, args.context);
+  } catch (error) {
+    if (!(error instanceof ChecksUnavailable) || !args.reportMissingChecks)
+      throw error;
+    return {
+      kind: "open",
+      context: args.context,
+      facts,
+      threads,
+      ci: { kind: "ci-none", detail: error.failure.detail },
+      reviewAutomationRunning: false,
+    };
+  }
   const failed = nonEmpty(
     checks.checks.filter(
       (check): check is T.FailedCheck => check.kind === "failed"
@@ -431,6 +447,7 @@ export async function runSimple(args: {
           context,
           pendingHistory: "include",
           allowDraft: args.options.allowDraft,
+          reportMissingChecks: args.statusOnly,
         })
       );
     const complete = nonEmpty(rows);
@@ -512,7 +529,9 @@ export async function runSimple(args: {
   };
   return pollUntilTerminal({
     dependencies: args.dependencies,
-    options: args.options,
+    options: args.statusOnly
+      ? { ...args.options, maxQueryErrors: 1 }
+      : args.options,
     stamp,
     step,
   });
