@@ -90,7 +90,7 @@ export function parseArgs(
     .configureOutput({ writeOut: io.stdout, writeErr: io.stderr })
     .exitOverride()
     .option("--owner <owner>", "GitHub repository owner")
-    .option("--repo <repo>", "GitHub repository name")
+    .option("--repo <repo>", "GitHub repository name, or owner/name")
     .option("--pr <number>", "pull request number", prNumber)
     .addOption(
       new Option("--stack", "watch the connected open stack")
@@ -137,9 +137,20 @@ export function parseArgs(
   const raw = program.opts<RawOptions>();
   if (raw.stackPrs !== undefined && !raw.queuedStack)
     program.error("error: --stack-prs requires --queued-stack");
+  let owner = raw.owner ?? null;
+  let repo = raw.repo ?? null;
+  if (repo?.includes("/")) {
+    const match = /^([^/\s]+)\/([^/\s]+)$/.exec(repo);
+    if (owner !== null || match === null)
+      return program.error(
+        "error: --repo takes a name, or owner/name without --owner"
+      );
+    owner = match[1];
+    repo = match[2];
+  }
   return {
-    owner: raw.owner ?? null,
-    repo: raw.repo ?? null,
+    owner,
+    repo,
     pr: raw.pr ?? null,
     mode: raw.queuedStack ? "queued-stack" : raw.stack ? "stack" : "single",
     stackPrs: raw.stackPrs ?? [],
