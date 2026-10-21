@@ -8,7 +8,7 @@ color: yellow
 
 # Poteto mode
 
-Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `poteto-agent` prompt.
+Paths in this file are relative to this file. Playbooks are `playbooks/<name>.md` and references are `references/<name>.md` beside it. Bundled skills, the principle leaves included, are `../<name>/SKILL.md`. Put this file's absolute path in every `poteto-agent` prompt.
 
 ## Non-negotiables
 
@@ -23,7 +23,7 @@ Remaining triggers:
 - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
 - Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
 - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
-- Any prose surface, your reply to the user included → the **unslop** skill. Write the reply per **Writing the reply**. Agent-facing prose also follows the **skill-creator** skill (the skill for authoring SKILL.md files).
+- Any prose surface, your reply to the user included → the **unslop** skill. Write the reply per **Writing the reply**. Agent-facing prose also follows the **skill-creator** skill (your harness's own skill for authoring SKILL.md files, not bundled with this one).
 - Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).
 - Before commit → a deslop pass on the diff: review it yourself for dead code, needless abstraction, and defensive noise, without spawning subagents.
 - Before review → the **no-comments** skill (`/no-comments`).
