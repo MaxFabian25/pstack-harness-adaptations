@@ -218,7 +218,9 @@ describe("main", () => {
       expect(
         await main([...pr, "--status-only", "--pretty"], pretty.runtime)
       ).toBe(0);
-      expect(pretty.stdout.join("")).toContain("| no checks reported |");
+      expect(pretty.stdout.join("")).toContain(
+        "| no checks reported | no review checks |"
+      );
     });
 
     it("still fails closed while polling", async () => {
