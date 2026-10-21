@@ -23,6 +23,7 @@ function ciCell(row: T.PrSnapshot): string {
 function reviewCell(row: T.PrSnapshot): string {
   if (row.kind !== "open") return "\u2014";
   const open = row.threads.length;
+  if (row.ci.kind === "ci-none") return open ? `📝 ${open} open` : "no review checks";
   return row.reviewAutomationRunning
     ? open
       ? `🤖 running, ${open} open`
