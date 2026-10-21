@@ -3,7 +3,7 @@ import { type CliRuntime, main, parseArgs } from "./cli.ts";
 import { fakeReader, passingCheck } from "./fakes.test-helper.ts";
 import { WatcherQueryError } from "./github.ts";
 import { renderJson, renderPretty } from "./render.ts";
-import type { GitHubReader, WatcherVerdict } from "./types.ts";
+import type { GitHubReader, ReviewThread, WatcherVerdict } from "./types.ts";
 import { parsePrNumber } from "./types.ts";
 
 const silentIo = { stdout: () => {}, stderr: () => {} };
@@ -50,6 +50,13 @@ describe("parseArgs", () => {
         maxQueryErrors: 5,
         allowDraft: false,
       },
+    });
+  });
+
+  it("takes --repo as owner/name when --owner is absent", () => {
+    expect(parseArgs(["--repo", "acme/widgets"], silentIo)).toMatchObject({
+      owner: "acme",
+      repo: "widgets",
     });
   });
 
@@ -192,15 +199,27 @@ describe("main", () => {
     expect(harness.stdout[0]).not.toContain('"kind":"QUEUE"');
   });
 
+  it("rejects an ambiguous --repo as a usage error", async () => {
+    for (const argv of [
+      ["--owner", "acme", "--repo", "acme/widgets"],
+      ["--repo", "acme/widgets/extra"],
+      ["--repo", "/widgets"],
+    ]) {
+      const harness = testRuntime(fakeReader());
+      expect(await main([...argv, "--pr", "1"], harness.runtime)).toBe(64);
+    }
+  });
+
   describe("on a PR with no checks reported", () => {
     const pr = ["--owner", "owner", "--repo", "repo", "--pr", "1"];
-    const noChecks = () =>
+    const noChecks = (threads: readonly ReviewThread[] = []) =>
       fakeReader({
         fastPath: {
           kind: "unusable",
           exitCode: 1,
           stderr: "no checks reported on the 'feature' branch",
         },
+        threads,
       });
 
     it("prints one status and exits 0 under --status-only", async () => {
@@ -220,6 +239,22 @@ describe("main", () => {
       ).toBe(0);
       expect(pretty.stdout.join("")).toContain(
         "| no checks reported | no review checks |"
+      );
+    });
+
+    it("counts open review threads in place of a review state", async () => {
+      const thread = {
+        id: "t1",
+        firstComment: null,
+        isBugbot: false,
+        bugbotReviewPasses: 0,
+      };
+      const pretty = testRuntime(noChecks([thread]));
+      expect(
+        await main([...pr, "--status-only", "--pretty"], pretty.runtime)
+      ).toBe(0);
+      expect(pretty.stdout.join("")).toContain(
+        "| no checks reported | 📝 1 open |"
       );
     });
 
