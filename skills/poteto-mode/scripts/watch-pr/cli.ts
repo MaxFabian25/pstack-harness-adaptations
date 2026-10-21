@@ -126,7 +126,11 @@ export function parseArgs(
       positiveInteger,
       5
     )
-    .option("--status-only", "print one status table and exit 0", false)
+    .option(
+      "--status-only",
+      "read GitHub once and print one status table; a query error exits 7 without retrying",
+      false
+    )
     .option("--allow-draft", "do not treat a draft as a merge gate", false)
     .option("--pretty", "render human text instead of JSON", false);
   program.parse(argv, { from: "user" });
