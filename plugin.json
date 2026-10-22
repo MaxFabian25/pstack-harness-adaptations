@@ -14,7 +14,7 @@
     "subagents",
     "unslop"
   ],
-  "name": "pstack-plugin",
+  "name": "pstack",
   "version": "0.15.30+upstream.eb4db2b55b2b.codex1",
   "skills": [
     "./skills/"
