@@ -38,13 +38,15 @@ You only override what you care about. A role with no line in the file keeps the
 
 You might be wondering how to keep a role on whatever model your chat uses. Set a role to `inherit-parent` or `auto` and pstack omits the subagent `model` field, so the subagent inherits your parent chat model. Both values mean the same thing, and neither is a model slug. The Codex defaults already work this way. For a panel role the value is a list, and one subagent runs per entry, so the list length sets the panel size. A panel entry can also name a seat in the other harness, such as `codex:gpt-6.1-sol@xhigh` from Claude Code or `claude:opus@xhigh` from Codex. That seat runs through the other harness's CLI, which is how a panel gets a second model family. Setup also configures `swarm workers`, the default model for every `/swarm` worker unless a race names a model for each arm. [harnesses.md](../../skills/poteto-mode/references/harnesses.md) (Models) has the defaults for both harnesses.
 
-## Accept the verification offer, or don't
+## Accept the verification offers, or don't
 
 At the end of setup, `/setup-pstack` looks for a way to prove app behavior in your project, either a `verify-*` skill or an existing harness. If it finds neither, it offers once to generate one with [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md).
 
 Say yes and it writes a project-local skill at `.agents/skills/verify-<app>/`, linked from `.claude/skills/` so both harnesses find it. The skill teaches agents to drive your app the way a user does. It proves the skill works once before handing it over. Say no and setup moves on. You can run `/create-verification-skill` yourself any time. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers it in depth.
 
 If you're new to pstack, say yes. An agent that can check its own work keeps going until the check passes. An agent that can't hands every result back to you to check by hand. Of everything in this guide, the verification skill pays off the most.
+
+Then setup offers once to generate a formal verification skill with [`/create-formal-verification-skill`](../../skills/create-formal-verification-skill/SKILL.md) (Codex: `$create-formal-verification-skill`), unless the project already has one. Tests check the cases someone thought to write. A formal verification skill checks one key property of your code, such as "a job never runs twice at once", in every case within a stated scope. Say yes when your code has concurrency, retries, a state machine, or a parser, where a bug is costly and tests rarely reach the case that breaks. Otherwise say no, and run it later if that changes. [Verify and ship](./06-verify-and-ship.md#prove-a-property-with-a-formal-verification-skill) covers it.
 
 After setup, start a new chat. The model file applies to new sessions.
 
