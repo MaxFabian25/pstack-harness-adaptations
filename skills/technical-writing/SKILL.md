@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Technical writing
 
+Load or invoke the pstack skills named here as [harnesses.md](../poteto-mode/references/harnesses.md) (Skills) says for your harness.
+
 Write so a tired engineer understands on the first read. Apply all four layers.
 
 Three rules sit above the layers:

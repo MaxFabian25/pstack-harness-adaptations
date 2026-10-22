@@ -2,7 +2,7 @@
 
 A prompt states the intent and the check for done. The playbook supplies the steps, so a few plain sentences beat a spec.
 
-In Codex, type `$name` for each `/name` here. In Claude Code, type `/pstack-plugin:teach` and `/pstack-plugin:tdd`, because other plugins also export `teach` and `tdd`.
+In Codex, type `$name` for each `/name` here. In Claude Code, type `/pstack:teach` and `/pstack:tdd`, because other plugins also export `teach` and `tdd`.
 
 ## Put in
 

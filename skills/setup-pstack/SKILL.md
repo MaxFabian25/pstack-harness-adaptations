@@ -96,7 +96,7 @@ interrogate reviewers: inherit-parent@xhigh, claude:opus@xhigh
 
 ### 6. Install the Codex custom agents
 
-pstack's skills spawn three Codex custom agents: `poteto-agent`, `comment-sicko`, and `pstack-reader`. Their definitions ship in this plugin's `agents/codex/` folder, two levels above this skill's directory. Copy each `.toml` file to `~/.codex/agents/`, creating the folder if needed. Before overwriting an existing file with the same name, compare it. If it differs from the shipped file and pstack did not write it, ask before replacing it. Re-run this step after a pstack update so the agents track the plugin. Claude Code needs no install step, because the plugin registers its agents as `pstack-plugin:poteto-agent` and `pstack-plugin:comment-sicko`.
+pstack's skills spawn three Codex custom agents: `poteto-agent`, `comment-sicko`, and `pstack-reader`. Their definitions ship in this plugin's `agents/codex/` folder, two levels above this skill's directory. Copy each `.toml` file to `~/.codex/agents/`, creating the folder if needed. Before overwriting an existing file with the same name, compare it. If it differs from the shipped file and pstack did not write it, ask before replacing it. Re-run this step after a pstack update so the agents track the plugin. Claude Code needs no install step, because the plugin registers its agents as `pstack:poteto-agent` and `pstack:comment-sicko`.
 
 ### 7. Confirm
 

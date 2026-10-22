@@ -2,7 +2,7 @@
 
 Swap in the real paths, skills, and done checks. Informal wording works.
 
-In Codex, type `$name` for each `/name` here. In Claude Code, type `/pstack-plugin:teach` and `/pstack-plugin:tdd`, because other plugins also export `teach` and `tdd`.
+In Codex, type `$name` for each `/name` here. In Claude Code, type `/pstack:teach` and `/pstack:tdd`, because other plugins also export `teach` and `tdd`.
 
 ## Understand
 

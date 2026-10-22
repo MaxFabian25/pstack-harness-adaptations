@@ -4,18 +4,18 @@ In this page you install the plugin, pick which models pstack uses, and run your
 
 ## Install the plugin
 
-Add the marketplace that carries this build, then install `pstack-plugin` from it. In Claude Code, run:
+Add the marketplace that carries this build, then install `pstack` from it. In Claude Code, run:
 
 ```text
 /plugin marketplace add <marketplace-source>
-/plugin install pstack-plugin@<marketplace>
+/plugin install pstack@<marketplace>
 ```
 
 In Codex, run this in your terminal:
 
 ```bash
 codex plugin marketplace add <marketplace-source>
-codex plugin add pstack-plugin@<marketplace>
+codex plugin add pstack@<marketplace>
 ```
 
 Start a new session so the skills load. Every harness-specific term the skills use maps to Claude Code and Codex in [harnesses.md](../../skills/poteto-mode/references/harnesses.md).

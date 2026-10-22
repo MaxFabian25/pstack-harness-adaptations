@@ -12,7 +12,7 @@ A message that asks for work, such as "use pstack to fix this bug", is not a hel
 
 This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here are relative to the installed plugin, so give the user the absolute path of the file you read.
 
-This file writes each skill as `/name`, the Claude Code form. In Codex the user types `$name`. In Claude Code, `tdd` and `teach` are `/pstack-plugin:tdd` and `/pstack-plugin:teach`, because other installed plugins also export those names. Give every command in the form the user's harness takes, per [harnesses.md](../poteto-mode/references/harnesses.md) (Skills).
+This file writes each skill as `/name`, the Claude Code form. In Codex the user types `$name`. In Claude Code, `tdd` and `teach` are `/pstack:tdd` and `/pstack:teach`, because other installed plugins also export those names. Give every command in the form the user's harness takes, per [harnesses.md](../poteto-mode/references/harnesses.md) (Skills).
 
 ## Find out what they need
 
@@ -37,7 +37,7 @@ When the models file is missing and it matters, ask whether the user wants to pi
 
 ## Get set up
 
-1. Install `pstack-plugin` through your plugin marketplace. In Claude Code, run `/plugin install pstack-plugin@<marketplace>`, where `<marketplace>` is the one that lists pstack, such as `codex-aligned`. In Codex, run `codex plugin add pstack-plugin@<marketplace>` in a shell, with that marketplace's name, such as `personal`.
+1. Install `pstack` through your plugin marketplace. In Claude Code, run `/plugin install pstack@<marketplace>`, where `<marketplace>` is the one that lists pstack, such as `codex-aligned`. In Codex, run `codex plugin add pstack@<marketplace>` in a shell, with that marketplace's name, such as `personal`.
 2. Run [`/setup-pstack`](../setup-pstack/SKILL.md) (Codex: `$setup-pstack`). It asks for a reasoning budget, maps a model to each role, and writes `~/.config/pstack/models.md`. It also installs pstack's Codex custom agents. The config applies to new chats. Then it offers once each to generate a verification skill and a formal verification skill for the project, unless the project already has one.
 3. Start a real task with `/poteto-mode` (Codex: `$poteto-mode`), a goal, and a check that can pass or fail.
 
@@ -57,7 +57,7 @@ Whether `/poteto-mode` stays on depends on how the user starts it:
 - A standing-instruction line in `CLAUDE.md` (Claude Code) or `AGENTS.md` (Codex) keeps it on. It applies every turn until the user removes the line, and it stays out of casual turns.
 - Without that line, start each new task with `/poteto-mode`.
 
-Give the user the exact line from [harnesses.md](../poteto-mode/references/harnesses.md) (Standing instructions and modes) when this comes up. Mid-chat, "new task" makes the mode match a fresh playbook. `/poteto-mode` already uses `poteto-agent` for the subagents its playbook steps spawn. To get the same style from a subagent of your own, spawn the pstack delegate (Claude Code `subagent_type: "pstack-plugin:poteto-agent"`, Codex `agent_type: "poteto-agent"`). In Codex, `$setup-pstack` installs that agent.
+Give the user the exact line from [harnesses.md](../poteto-mode/references/harnesses.md) (Standing instructions and modes) when this comes up. Mid-chat, "new task" makes the mode match a fresh playbook. `/poteto-mode` already uses `poteto-agent` for the subagents its playbook steps spawn. To get the same style from a subagent of your own, spawn the pstack delegate (Claude Code `subagent_type: "pstack:poteto-agent"`, Codex `agent_type: "poteto-agent"`). In Codex, `$setup-pstack` installs that agent.
 
 ## Pick a skill
 

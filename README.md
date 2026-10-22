@@ -14,20 +14,20 @@ fork it. improve it. make it yours. PRs are welcome!
 
 ## install
 
-add the marketplace that carries this build, then install `pstack-plugin` from it.
+add the marketplace that carries this build, then install `pstack` from it.
 
 claude code:
 
 ```text
 /plugin marketplace add <marketplace-source>
-/plugin install pstack-plugin@<marketplace>
+/plugin install pstack@<marketplace>
 ```
 
 codex:
 
 ```bash
 codex plugin marketplace add <marketplace-source>
-codex plugin add pstack-plugin@<marketplace>
+codex plugin add pstack@<marketplace>
 ```
 
 every harness-specific term the skills use maps to claude code and codex in [harnesses.md](skills/poteto-mode/references/harnesses.md).
@@ -222,11 +222,11 @@ help:              /poteto-help which skill should i use to review this branch?
 
 [`/poteto-mode`](./skills/poteto-mode/SKILL.md) runs in the chat that receives it. that chat owns the playbook, the todo list, and every subagent spawn.
 
-pstack also ships [`poteto-agent`](./agents/poteto-agent.md) as the wrapper for delegates spawned during a run (claude code `subagent_type: "pstack-plugin:poteto-agent"`, codex `agent_type: "poteto-agent"`). it reads `poteto-mode` in full, including its inline principles index, before doing any work. substituting the general-purpose agent skips that read and drifts. do not spawn `poteto-agent` to run the playbook itself.
+pstack also ships [`poteto-agent`](./agents/poteto-agent.md) as the wrapper for delegates spawned during a run (claude code `subagent_type: "pstack:poteto-agent"`, codex `agent_type: "poteto-agent"`). it reads `poteto-mode` in full, including its inline principles index, before doing any work. substituting the general-purpose agent skips that read and drifts. do not spawn `poteto-agent` to run the playbook itself.
 
 [`/poteto-mode`](./skills/poteto-mode/SKILL.md) and the [`poteto-agent`](./agents/poteto-agent.md) delegate route through the same wrapper.
 
-pstack also ships [Comment Sicko](./agents/comment-sicko.md), a read-only comment reviewer available as claude code `subagent_type: "pstack-plugin:comment-sicko"` or codex `agent_type: "comment-sicko"`. usually invoke it through [`/no-comments`](./skills/no-comments/SKILL.md), not directly.
+pstack also ships [Comment Sicko](./agents/comment-sicko.md), a read-only comment reviewer available as claude code `subagent_type: "pstack:comment-sicko"` or codex `agent_type: "comment-sicko"`. usually invoke it through [`/no-comments`](./skills/no-comments/SKILL.md), not directly.
 
 ## principles
 

@@ -12,8 +12,8 @@ A "spawn" or "Task call" in any skill means the harness's subagent tool.
 |---|---|---|
 | Spawn | `Agent` tool | `spawn_agent`, then `wait_agent` to collect. `interrupt_agent` stops one. Use `close_agent` when done if the tool exists. |
 | General-purpose agent | `subagent_type: "general-purpose"` | omit `agent_type` (built-in `default`) |
-| pstack delegate | `subagent_type: "pstack-plugin:poteto-agent"` | `agent_type: "poteto-agent"` |
-| Comment cleanup agent | `subagent_type: "pstack-plugin:comment-sicko"` | `agent_type: "comment-sicko"` |
+| pstack delegate | `subagent_type: "pstack:poteto-agent"` | `agent_type: "poteto-agent"` |
+| Comment cleanup agent | `subagent_type: "pstack:comment-sicko"` | `agent_type: "comment-sicko"` |
 | Read-only agent that locates code or gathers facts | `subagent_type: "Explore"` (read-only built-in) | `agent_type: "pstack-reader"` (read-only sandbox) |
 | Read-only agent that reviews, judges, explains, or needs MCP | `general-purpose`, and put "Do not edit files." in the prompt | `agent_type: "pstack-reader"` (keeps MCP) |
 | Background | `run_in_background: true` | always asynchronous; collect with `wait_agent` |
@@ -145,10 +145,10 @@ The current session is the newest transcript for this workspace by modification 
 
 | Need | Claude Code | Codex |
 |---|---|---|
-| Install the plugin | `/plugin install pstack-plugin@<marketplace>` | `codex plugin add pstack-plugin@<marketplace>` |
-| Installed plugin files | `~/.claude/plugins/cache/<marketplace>/pstack-plugin/<version>/` | `~/.codex/plugins/cache/<marketplace>/pstack-plugin/<version>/` |
-| Invoke a pstack skill | `/name`, or `/pstack-plugin:name` when another plugin has the same name (for example `tdd`, `teach`) | `$name` |
-| Load a skill from inside another | the `Skill` tool | open the skill's `SKILL.md` and follow it |
+| Install the plugin | `/plugin install pstack@<marketplace>` | `codex plugin add pstack@<marketplace>` |
+| Installed plugin files | `~/.claude/plugins/cache/<marketplace>/pstack/<version>/` | `~/.codex/plugins/cache/<marketplace>/pstack/<version>/` |
+| Invoke a pstack skill | `/name`, or `/pstack:name` when another plugin has the same name (for example `tdd`, `teach`) | `$name` |
+| Load a skill from inside another | `Read` its `SKILL.md` and follow it. The `Skill` tool refuses explicit-only skills, and every pstack skill is explicit-only. | open the skill's `SKILL.md` and follow it |
 | Project skill location | `.claude/skills/<name>/` | `.agents/skills/<name>/` |
 | User skill location | `~/.claude/skills/<name>/` | `~/.codex/skills/<name>/` |
 | Explicit-only skill | frontmatter `disable-model-invocation: true` | `agents/openai.yaml` with `policy: allow_implicit_invocation: false` |
