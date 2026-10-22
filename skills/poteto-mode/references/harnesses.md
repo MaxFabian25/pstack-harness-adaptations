@@ -148,7 +148,7 @@ The current session is the newest transcript for this workspace by modification 
 | Install the plugin | `/plugin install pstack@<marketplace>` | `codex plugin add pstack@<marketplace>` |
 | Installed plugin files | `~/.claude/plugins/cache/<marketplace>/pstack/<version>/` | `~/.codex/plugins/cache/<marketplace>/pstack/<version>/` |
 | Invoke a pstack skill | `/name`, or `/pstack:name` when another plugin has the same name (for example `tdd`, `teach`) | `$name` |
-| Load a skill from inside another | `Read` its `SKILL.md` and follow it. The `Skill` tool refuses explicit-only skills, and every pstack skill is explicit-only. | open the skill's `SKILL.md` and follow it |
+| Load a skill from inside another | `Read` its `SKILL.md` and follow it. The `Skill` tool refuses explicit-only skills. | open the skill's `SKILL.md` and follow it |
 | Project skill location | `.claude/skills/<name>/` | `.agents/skills/<name>/` |
 | User skill location | `~/.claude/skills/<name>/` | `~/.codex/skills/<name>/` |
 | Explicit-only skill | frontmatter `disable-model-invocation: true` | `agents/openai.yaml` with `policy: allow_implicit_invocation: false` |
