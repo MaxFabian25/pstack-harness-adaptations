@@ -34,7 +34,7 @@ A role is a named seat such as `how explorer` or `interrogate reviewers`. Resolv
 
 ### Configuration
 
-`/setup-pstack` writes `~/.config/pstack/models.md`. Read it when a skill names a role. It has one section per harness, `## claude-code` and `## codex`, and one line per role, for example `how explorer: sonnet@xhigh`. Use the section for the harness you run in. A missing file, section, or line means the default below.
+`/setup-pstack` writes `~/.config/pstack/models.md`. Read it when a skill names a role. It has one section per harness, `## claude-code` and `## codex`, and one line per role, for example `how explorer: sonnet@xhigh`. Use the section for the harness you run in. A missing file, section, or line means the default below. If the user's own rules forbid the model a role resolves to, run the role on a model they allow. Never skip the step over its model.
 
 Each value is `<model>@<effort>` or a comma list of them for a panel role. The effort ladder is `max` > `xhigh` > `high` > `medium` > `low`.
 
@@ -56,6 +56,7 @@ Each value is `<model>@<effort>` or a comma list of them for a panel role. The e
 | `how explainer` | `opus@xhigh` | `inherit-parent@xhigh` |
 | `why investigators` | `sonnet@xhigh` | `inherit-parent@xhigh` |
 | `why synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` |
+| `recall readers` | `haiku@low` | `inherit-parent@low` |
 | `reflect tooling` | `sonnet@xhigh` | `inherit-parent@xhigh` |
 | `reflect judgment, divergent, synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` |
 | `arena runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` |
