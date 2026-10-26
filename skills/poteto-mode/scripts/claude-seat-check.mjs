@@ -30,6 +30,9 @@ const reason = (result) => {
 	return null;
 };
 
+// Windows otherwise runs a claude.exe from the working directory, often an untrusted repository, before PATH.
+process.env.NoDefaultCurrentDirectoryInExePath = "1";
+
 const result = spawnSync(
 	"claude",
 	[
