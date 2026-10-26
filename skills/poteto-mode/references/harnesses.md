@@ -150,6 +150,8 @@ Some playbooks keep durable state in "the agent store". Use `${PSTACK_STORE:-$HO
 
 The current session is the newest transcript for this workspace by modification time. Stay inside this workspace's transcripts. Reading other projects' transcripts crosses into unrelated private work.
 
+Some hosts archive idle transcripts and delete the plaintext, so a dated folder that is missing does not mean the session never existed. Search through the host's archive tool or skill before you report a transcript as unavailable.
+
 ## Skills
 
 | Need | Claude Code | Codex |
