@@ -90,7 +90,15 @@ From Claude Code, run Codex:
 codex exec -m <model> -c model_reasoning_effort=<effort> -s <sandbox> -C <repo> --skip-git-repo-check --ephemeral -o <out.md> - < <brief.md>
 ```
 
-From Codex, run Claude Code:
+From Codex, check the Claude seat first, as a command of its own:
+
+```bash
+node "<poteto-mode>/scripts/claude-seat-check.mjs" <model>
+```
+
+`<poteto-mode>` is the poteto-mode skill's installed directory, the folder that holds this `references/` folder. The check sends the seat's model one short prompt with tools, MCP servers and skills off (about 3k input tokens), and prints one line. Run it in the foreground once for each Claude model in the panel or second opinion, before dispatching any seat. Exit 1 means the seat cannot run, and the line gives the reason in the CLI's own words, for example `You've hit your weekly limit · resets 1pm (UTC)`. Then, before dispatching anything, put that line in your next message to the user, record it with the fallback wherever the run records its decisions, and follow the fallback in the last bullet below.
+
+Only after exit 0, run Claude Code:
 
 ```bash
 claude -p --model <model> --effort <effort> --permission-mode <mode> --output-format text < <brief.md> > <out.md>
@@ -103,7 +111,7 @@ claude -p --model <model> --effort <effort> --permission-mode <mode> --output-fo
 - The CLI needs network access. In a sandboxed session, request the escalation the harness offers for that command.
 - A seat that needs MCP gets the other CLI's servers, not yours. List them (`codex mcp list` or `claude mcp list`) and name the ones the seat should use in its brief.
 - When a later step reads the seat's transcript (Eval), drop `--ephemeral` so Codex keeps the rollout. Its `session_meta` cwd is the `-C` directory. A `claude -p` run keeps its transcript by default.
-- If the CLI is missing or not signed in, run the seat in this harness on the strongest native model, say so, and mark the panel as single-family in the reply. Agreement between same-family seats is weaker evidence.
+- When the check exits 1, a Claude seat that did start fails the same way, or the `codex` CLI is missing or not signed in, run the seat in this harness on the strongest native model, say so, and mark the panel as single-family in the reply. Agreement between same-family seats is weaker evidence.
 
 ### Speed
 
