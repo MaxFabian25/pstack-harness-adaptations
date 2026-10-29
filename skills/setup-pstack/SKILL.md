@@ -37,7 +37,7 @@ Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.
 **(c) Show the roles and confirm.** Show every role with its Claude Code value and its Codex value, marking any value that step 1 could not confirm as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models, the cross-harness forms (`codex:<model>` from Claude Code, `claude:<model>` from Codex), and `inherit-parent` as the options. Use the question tool over free text.
 
 - Panel roles (`arena runners`, `architect runners`, `interrogate reviewers`) take a list. One seat runs per entry, alias entries included, so the list length sets the count. Keep at least one entry from each model family unless the user chooses a single family. A single-family panel gives weaker agreement signal. Say so when the user picks it.
-- `arena cross-judge pool` is also a list. Arena picks the entry whose family differs from the parent's when possible.
+- `arena cross-judge pool` is also a list. Arena runs one judge and tries only entries whose family differs from the parent's, in list order. An `auto` or `inherit-parent` entry never judges.
 - `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ### 4. Validate
