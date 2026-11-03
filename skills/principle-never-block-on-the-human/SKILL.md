@@ -1,6 +1,6 @@
 ---
 name: principle-never-block-on-the-human
-description: "Apply when tempted to ask 'should I do X?' on reversible work."
+description: "Apply when tempted to ask 'should I do X?' on reversible work, or to recommend holding, waiting, or keeping something as is when you could fix it now."
 disable-model-invocation: true
 ---
 
