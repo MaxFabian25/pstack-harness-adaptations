@@ -1,6 +1,6 @@
 ---
 name: unslop
-description: Cut AI tells from any writing.
+description: Cut AI tells from any writing, in any language. Use when asked to remove AI slop, AI tells, em dashes, stock phrasing or "not X but Y" lines, when text sounds AI-generated, and for the words in pages, slides, charts and images, also when a design skill covers their visual side.
 disable-model-invocation: true
 ---
 
