@@ -121,7 +121,7 @@ Cursor's `-fast` model variants have no per-subagent equivalent. Claude Code's f
 
 ### Budget
 
-`/setup-pstack` stores a `# budget:` line. `unlimited` sets every effort to `max`, `large` to `xhigh`, `medium` to `high`, and `small` to `medium`. A model that cannot run at that effort uses its highest effort below it.
+`/setup-pstack` stores a `# budget:` line. `unlimited` means `max`, `large` `xhigh`, `medium` `high`, and `small` `medium`. Its step 3(b) says which roles a preset changes. A model that cannot run at that effort uses its highest effort below it.
 
 ## Cloud and isolated work
 

@@ -34,7 +34,7 @@ Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.
 
 When the current config has roles whose values differ from the defaults, or records a custom budget, put `keep current mix` first and drop the preset farthest from the current efforts, so keeping the user's choices takes one click within the tool's option limit.
 
-**(b) Apply it.** Build the working table from the defaults, then lay the current config's role values over it. A preset (`unlimited`, `large`, `medium`, or `small`) sets the `@<effort>` of each value still at its default, panel entries and cross-harness entries included, to `max`, `xhigh`, `high`, or `medium`. It leaves each role the user changed as it is, because a re-run is usually about one setting, not a reset. Name the changed roles it left alone, and change them too only when the user asks for the preset on every role. A model that cannot run at that effort uses its highest effort below it. `inherit-parent` and `auto` keep their meaning and take the new effort. `keep current mix` changes nothing.
+**(b) Apply it.** Build the working table from the defaults, then lay the current config's role values over it. A preset (`unlimited`, `large`, `medium`, or `small`) sets the `@<effort>` of each value still at its default, panel entries and cross-harness entries included, to `max`, `xhigh`, `high`, or `medium`. `recall readers` keeps its default effort under every preset, because `recall` runs several readers at once and each only searches and summarizes. It leaves each role the user changed as it is, because a re-run is usually about one setting, not a reset. Name the changed roles it left alone, and change them too only when the user asks for the preset on every role. A model that cannot run at that effort uses its highest effort below it. `inherit-parent` and `auto` keep their meaning and take the new effort. `keep current mix` changes nothing.
 
 **(c) Show the roles and confirm.** Ask this as its own question after (b), so the user confirms the values step 5 will write, not a table the budget then changes. Show one row per role, never grouped, because the user edits by role: its Claude Code value, its Codex value, and what it runs, from the Defaults table in harnesses.md. Mark `(was X)` on each value that differs from the current config, and mark any value that step 1 could not confirm as needing a choice. Also list each line step 2 dropped. If the existing file's header names other readers of the file, such as a hook that limits which models subagents may use, state how the new values affect them. Ask whether to accept as-is or change specific roles, offering the detected models, the cross-harness forms (`codex:<model>` from Claude Code, `claude:<model>` from Codex), and `inherit-parent` as the options. Use the question tool over free text. After any change, show the updated table again before writing.
 
@@ -68,6 +68,7 @@ how explorer: sonnet@xhigh
 how explainer: opus@xhigh
 why investigators: sonnet@xhigh
 why synthesizer: opus@xhigh
+recall readers: haiku@low
 reflect tooling: sonnet@xhigh
 reflect judgment, divergent, synthesizer: opus@xhigh
 arena runners: opus@xhigh, codex:gpt-6.1-sol@xhigh
@@ -87,6 +88,7 @@ how explorer: inherit-parent@xhigh
 how explainer: inherit-parent@xhigh
 why investigators: inherit-parent@xhigh
 why synthesizer: inherit-parent@xhigh
+recall readers: inherit-parent@low
 reflect tooling: inherit-parent@xhigh
 reflect judgment, divergent, synthesizer: inherit-parent@xhigh
 arena runners: inherit-parent@xhigh, claude:opus@xhigh
