@@ -56,7 +56,7 @@ Each value is `<model>@<effort>` or a comma list of them for a panel role. The e
 | `how explainer` | `opus@xhigh` | `inherit-parent@xhigh` | `how`'s explainer, which writes the explanation |
 | `why investigators` | `sonnet@xhigh` | `inherit-parent@xhigh` | `why`'s evidence gatherers, one per source |
 | `why synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` | `why`'s synthesizer, which writes the cited answer |
-| `recall readers` | `haiku@low` | `inherit-parent@low` | `recall`'s parallel transcript readers, which search and summarize |
+| `recall readers` | `haiku@medium` | `inherit-parent@medium` | `recall`'s parallel transcript readers, which search and summarize |
 | `reflect tooling` | `sonnet@xhigh` | `inherit-parent@xhigh` | `reflect`'s tooling reviewer |
 | `reflect judgment, divergent, synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` | `reflect`'s judgment and divergent reviewers and its synthesizer |
 | `arena runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | One `arena` candidate per entry, all given the same task |

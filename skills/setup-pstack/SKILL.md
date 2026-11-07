@@ -68,7 +68,7 @@ how explorer: sonnet@xhigh
 how explainer: opus@xhigh
 why investigators: sonnet@xhigh
 why synthesizer: opus@xhigh
-recall readers: haiku@low
+recall readers: haiku@medium
 reflect tooling: sonnet@xhigh
 reflect judgment, divergent, synthesizer: opus@xhigh
 arena runners: opus@xhigh, codex:gpt-6.1-sol@xhigh
@@ -88,7 +88,7 @@ how explorer: inherit-parent@xhigh
 how explainer: inherit-parent@xhigh
 why investigators: inherit-parent@xhigh
 why synthesizer: inherit-parent@xhigh
-recall readers: inherit-parent@low
+recall readers: inherit-parent@medium
 reflect tooling: inherit-parent@xhigh
 reflect judgment, divergent, synthesizer: inherit-parent@xhigh
 arena runners: inherit-parent@xhigh, claude:opus@xhigh
