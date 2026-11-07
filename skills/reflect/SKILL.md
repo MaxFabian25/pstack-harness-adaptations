@@ -45,13 +45,17 @@ One subagent call on the same MCP-keeping agent, `model` from the `reflect judgm
 
 Move any Accepted item that a lint rule, script, metadata flag, or runtime check would enforce more reliably to Backlog. See the **encode-lessons-in-structure** principle skill.
 
+Also move to Backlog, with its target path, any Accepted item that can't land here: one whose skill exists only as a locked installed copy with no editable source, or one routed through `skill-creator` where the project doesn't permit that skill.
+
+On a second pass over a session an earlier reflect already reviewed, read that pass's rows and their status first, and give them to the synthesizer, so it rejects repeats as duplicates.
+
 ## 5. Apply
 
 Present the synthesizer's full Accepted / Rejected / Backlog output and wait for explicit approval before applying any Accepted edit. The user picks the subset and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
 
 File each Backlog item to your team's devex or backlog tracker without waiting. Only the Accepted list waits for approval.
 
-Never edit a skill under `plugins/cache/`. Before approval, show its destination, `.cursor/skills/<skill>/` or `~/.cursor/skills/<skill>/`. After approval, copy the skill folder there and edit the copy. Never open a PR or push.
+Never edit an installed plugin copy, such as one under `plugins/cache/` or `marketplaces/`. Before approval, show each row's real destination: the skill's source repository or fork when one exists, otherwise a user or project skill folder per [harnesses.md](../poteto-mode/references/harnesses.md) (Skills), such as `.claude/skills/<skill>/`, `~/.claude/skills/<skill>/`, `.cursor/skills/<skill>/` or `~/.cursor/skills/<skill>/`. After approval, edit the source, or copy the skill folder to that folder and edit the copy. Never open a PR or push.
 
 Follow each approved row's Routing exactly:
 
@@ -62,11 +66,13 @@ Follow each approved row's Routing exactly:
 
 If your environment ships a SKILL.md validator, run it on every touched skill before declaring done.
 
+When the user holds rows, follow them as working rules for the rest of the task anyway, because holding the edit doesn't stop the failure it describes.
+
 ## 6. Summarize for the user
 
 Short list, no preamble:
 
-- Edits applied: `<skill path>`. What changed, one line each.
+- Edits applied: `<skill path>`. What changed, one line each, and whether it is installed, committed but not released, or held.
 - New skills created: `<skill path>`. One line each (rare).
 - Backlog filed to the devex tracker: `<issue title>` (`<tags>`). One line each.
 - Dropped: one line per rejected finding + reason from the synthesizer.
