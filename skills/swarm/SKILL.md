@@ -1,6 +1,6 @@
 ---
 name: swarm
-description: "Fan out N parallel workers, drain them, and return one report. Use for /swarm, 'swarm this', or parallel coverage, races, gauntlets, and exploration."
+description: "Fan out N parallel workers, drain them, and return one report. Use for /swarm, 'swarm this', parallel coverage, races, gauntlets, and exploration, and when a data set is too big for one pass, such as hundreds of rows, accounts or items to research, match, classify or enrich in batches."
 disable-model-invocation: true
 ---
 
