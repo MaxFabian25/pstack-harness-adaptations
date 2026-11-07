@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Unslop
 
-Edit text to remove AI patterns. For a pass over a whole repository, first read the current [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), because its lists change. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone.
+Edit text to remove AI patterns. For a pass over a whole repository, and before a public draft such as a post, thread, reply or email goes to the user for approval, have a fresh reviewer check the text against the current [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) and the [tropes.fyi directory](https://tropes.fyi/directory), because their lists change. When the text promotes or rewrites the author's own published writing, start from their approved sentences rather than writing new ones. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone.
 
 ## Patterns to detect and fix
 
@@ -54,7 +54,7 @@ Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 ### Plain speech
 
 27. **Say what it does, not how it feels.** "the database stays close at hand", "SQL you can read", "types that follow your schema" name a feeling. The fix names the mechanism or a number: "`.toSQL()` returns the exact string sent to the database", "a column rename fails the build". Ask what the sentence tells the reader to do or know, then write that. If you can't restate it as a concrete instruction, fact, or number, cut it. One more check: if the sentence could appear unchanged in another project's docs, it says nothing about this one. Cut it.
-28. **Shorten or split dense sentences.** If the reader has to backtrack to parse a sentence, break it in two or drop clauses. One idea per sentence.
+28. **Shorten or split dense sentences.** If the reader has to backtrack to parse a sentence, break it in two or drop clauses. One idea per sentence. When you split, keep the connectives that carry cause, contrast and sequence, so the sentences still read as one argument rather than a list of claims.
 29. **Active voice.** Prefer it. Catch "is/are/was/were + past participle" and name the actor: "queries are validated" becomes "the compiler validates queries", "the file is parsed by the loader" becomes "the loader parses the file". Passive is fine only when the actor is unknown or genuinely doesn't matter.
 30. **Cut adverbs, or use a stronger verb.** "runs quickly" becomes "is fast" or the number, and "significantly improves" becomes the measured delta. An adverb propping up a weak verb means the verb is wrong.
 31. **Prefer the plain word.** "utilize" and "leverage" become "use", "facilitate" becomes "help", "numerous" becomes "many", "in the event that" becomes "if". The fancier synonym is rarely clearer.

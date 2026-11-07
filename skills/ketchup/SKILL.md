@@ -1,6 +1,6 @@
 ---
 name: ketchup
-description: "Catch the user up on what changed in this chat since their last message, in plain words and small visuals. List every item waiting on them with what they need to decide it from the reply alone. Use for /ketchup, when the user asks \"so what\" or \"what's next\", and when questions from earlier reports are still unanswered."
+description: "Catch the user up on what changed in this chat since their last message, in plain words and small visuals. List every item waiting on them with what they need to decide it from the reply alone. Use for /ketchup, when the user asks \"so what\" or \"what's next\", and when questions from earlier reports are still unanswered, including before you act on a bare \"proceed\" that answered only the latest one."
 disable-model-invocation: true
 ---
 
