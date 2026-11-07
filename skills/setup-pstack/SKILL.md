@@ -32,21 +32,23 @@ Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.
 - `medium — high reasoning`
 - `small — medium reasoning`
 
-**(b) Apply it.** Build the working table from the defaults, and on a re-run keep any role the user changed. `unlimited`, `large`, `medium`, and `small` set the `@<effort>` of every value, panel entries and cross-harness entries included, to `max`, `xhigh`, `high`, or `medium`. A model that cannot run at that effort uses its highest effort below it. `inherit-parent` and `auto` keep their meaning and take the new effort.
+When the current config has roles whose values differ from the defaults, or records a custom budget, put `keep current mix` first and drop the preset farthest from the current efforts, so keeping the user's choices takes one click within the tool's option limit.
 
-**(c) Show the roles and confirm.** Show every role with its Claude Code value and its Codex value, marking any value that step 1 could not confirm as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models, the cross-harness forms (`codex:<model>` from Claude Code, `claude:<model>` from Codex), and `inherit-parent` as the options. Use the question tool over free text.
+**(b) Apply it.** Build the working table from the defaults, then lay the current config's role values over it. A preset (`unlimited`, `large`, `medium`, or `small`) sets the `@<effort>` of each value still at its default, panel entries and cross-harness entries included, to `max`, `xhigh`, `high`, or `medium`. It leaves each role the user changed as it is, because a re-run is usually about one setting, not a reset. Name the changed roles it left alone, and change them too only when the user asks for the preset on every role. A model that cannot run at that effort uses its highest effort below it. `inherit-parent` and `auto` keep their meaning and take the new effort. `keep current mix` changes nothing.
 
-- Panel roles (`arena runners`, `architect runners`, `interrogate reviewers`) take a list. One seat runs per entry, alias entries included, so the list length sets the count. Keep at least one entry from each model family unless the user chooses a single family. A single-family panel gives weaker agreement signal. Say so when the user picks it.
+**(c) Show the roles and confirm.** Ask this as its own question after (b), so the user confirms the values step 5 will write, not a table the budget then changes. Show one row per role, never grouped, because the user edits by role: its Claude Code value, its Codex value, and what it runs, from the Defaults table in harnesses.md. Mark `(was X)` on each value that differs from the current config, and mark any value that step 1 could not confirm as needing a choice. Also list each line step 2 dropped. If the existing file's header names other readers of the file, such as a hook that limits which models subagents may use, state how the new values affect them. Ask whether to accept as-is or change specific roles, offering the detected models, the cross-harness forms (`codex:<model>` from Claude Code, `claude:<model>` from Codex), and `inherit-parent` as the options. Use the question tool over free text. After any change, show the updated table again before writing.
+
+- Panel roles (`arena runners`, `architect runners`, `interrogate reviewers`) take a list. One seat runs per entry, alias entries included, so the list length sets the count and multiplies the role's cost. Say each panel's seat count. Keep at least one entry from each model family unless the user chooses a single family. A single-family panel gives weaker agreement signal. Say so when the user picks it.
 - `arena cross-judge pool` is also a list. Arena runs one judge and tries only entries whose family differs from the parent's, in list order. An `auto` or `inherit-parent` entry never judges.
 - `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ### 4. Validate
 
-Every real model written must be in the detected set for its harness. Every `codex:` or `claude:` value needs that CLI installed. `inherit-parent` and `auto` always pass. If a chosen value is not available, stop and ask again.
+Every real model written must be in the detected set for its harness. Every `codex:` or `claude:` value needs that CLI installed. `inherit-parent` and `auto` always pass. If a chosen value is not available, stop and ask again. A probe that exits 0, such as a one-prompt CLI run with the model and effort, shows the harness accepted that pair, not that it ran at that effort. Report it as accepted.
 
 ### 5. Write the config
 
-Write `~/.config/pstack/models.md`. Create `~/.config/pstack/` if needed. Overwrite the whole file so re-runs stay idempotent. Shape:
+If the existing file's header names a source that manages it, such as a dotfiles repository that installs it, edit that source and deliver it the way the header says, keeping the header. A direct write to the live file would show up as drift in that tool and could block its next install. Otherwise write `~/.config/pstack/models.md`. Create `~/.config/pstack/` if needed. Overwrite the whole file so re-runs stay idempotent. Shape:
 
 ```
 # pstack model configuration. Read by pstack skills in Claude Code and Codex.
@@ -100,7 +102,7 @@ pstack's skills spawn three Codex custom agents: `poteto-agent`, `comment-sicko`
 
 ### 7. Confirm
 
-Tell the user the config was written, which Codex agents were installed or left unchanged, and that both apply to new sessions and new subagents. Re-running this skill updates them.
+Show the final table from step 3(c), one row per role with `(was X)` on each changed value. Tell the user the config was written or where its source change was delivered, which Codex agents were installed or left unchanged, and that both apply to new sessions and new subagents. Re-running this skill updates them.
 
 ### 8. Offer a verification skill (optional)
 

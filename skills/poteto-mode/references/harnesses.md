@@ -44,26 +44,26 @@ Each value is `<model>@<effort>` or a comma list of them for a panel role. The e
 
 ### Defaults
 
-| Role | Claude Code | Codex |
-|---|---|---|
-| `feature, refactoring` | `sonnet@xhigh` | `inherit-parent@xhigh` |
-| `bug-fix` | `sonnet@xhigh` | `inherit-parent@xhigh` |
-| `perf-issue` | `sonnet@xhigh` | `inherit-parent@xhigh` |
-| `hillclimb` | `sonnet@xhigh` | `inherit-parent@xhigh` |
-| `judgment and prose` | `opus@xhigh` | `inherit-parent@xhigh` |
-| `hardest tasks` | `opus@xhigh` | `inherit-parent@xhigh` |
-| `how explorer` | `sonnet@xhigh` | `inherit-parent@xhigh` |
-| `how explainer` | `opus@xhigh` | `inherit-parent@xhigh` |
-| `why investigators` | `sonnet@xhigh` | `inherit-parent@xhigh` |
-| `why synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` |
-| `recall readers` | `haiku@low` | `inherit-parent@low` |
-| `reflect tooling` | `sonnet@xhigh` | `inherit-parent@xhigh` |
-| `reflect judgment, divergent, synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` |
-| `arena runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` |
-| `arena cross-judge pool` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` |
-| `swarm workers` | `sonnet@xhigh` | `inherit-parent@xhigh` |
-| `architect runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` |
-| `interrogate reviewers` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` |
+| Role | Claude Code | Codex | What it runs |
+|---|---|---|---|
+| `feature, refactoring` | `sonnet@xhigh` | `inherit-parent@xhigh` | The code-writing subagent of poteto-mode's Feature and Refactoring playbooks |
+| `bug-fix` | `sonnet@xhigh` | `inherit-parent@xhigh` | The code-writing subagent of the Bug fix playbook |
+| `perf-issue` | `sonnet@xhigh` | `inherit-parent@xhigh` | The subagent that implements a fix in the Perf issue playbook |
+| `hillclimb` | `sonnet@xhigh` | `inherit-parent@xhigh` | One subagent per attempt in the Hillclimb loop, often several in parallel |
+| `judgment and prose` | `opus@xhigh` | `inherit-parent@xhigh` | poteto-mode subagents that write prose or make a judgment call |
+| `hardest tasks` | `opus@xhigh` | `inherit-parent@xhigh` | Code delegates for the hardest changes: cross-cutting design, concurrency, subtle algorithms |
+| `how explorer` | `sonnet@xhigh` | `inherit-parent@xhigh` | `how`'s parallel code readers, one per area |
+| `how explainer` | `opus@xhigh` | `inherit-parent@xhigh` | `how`'s explainer, which writes the explanation |
+| `why investigators` | `sonnet@xhigh` | `inherit-parent@xhigh` | `why`'s evidence gatherers, one per source |
+| `why synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` | `why`'s synthesizer, which writes the cited answer |
+| `recall readers` | `haiku@low` | `inherit-parent@low` | `recall`'s parallel transcript readers, which search and summarize |
+| `reflect tooling` | `sonnet@xhigh` | `inherit-parent@xhigh` | `reflect`'s tooling reviewer |
+| `reflect judgment, divergent, synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` | `reflect`'s judgment and divergent reviewers and its synthesizer |
+| `arena runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | One `arena` candidate per entry, all given the same task |
+| `arena cross-judge pool` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | `arena`'s one judge: the first entry from a family other than the parent's |
+| `swarm workers` | `sonnet@xhigh` | `inherit-parent@xhigh` | Every `swarm` worker, and poteto-mode's verification lanes |
+| `architect runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | One `architect` design sketch per entry |
+| `interrogate reviewers` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | One `interrogate` adversary per entry, each trying to break the change |
 
 The fast-code roles map to Sonnet in Claude Code. The judgment roles map to Opus. Panel roles mix families through the other harness's CLI, so "two models agree" still means two model families agree.
 

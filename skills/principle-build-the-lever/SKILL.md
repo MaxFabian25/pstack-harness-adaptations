@@ -1,6 +1,6 @@
 ---
 name: principle-build-the-lever
-description: "Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun. Also apply before you defer, drop or shrink work because doing it by hand would be slow or risky: look for a tool the repository already has, or build one."
+description: "Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun. Also apply when you are about to paste the same shell loop, snippet or check a second time, and before you defer, drop or shrink work because doing it by hand would be slow or risky: look for a tool the repository already has, or build one."
 disable-model-invocation: true
 ---
 # Build the Lever
