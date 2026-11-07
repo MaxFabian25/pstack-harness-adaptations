@@ -113,6 +113,8 @@ claude -p --model <model> --effort <effort> --permission-mode <mode> --output-fo
 - When a later step reads the seat's transcript (Eval), drop `--ephemeral` so Codex keeps the rollout. Its `session_meta` cwd is the `-C` directory. A `claude -p` run keeps its transcript by default.
 - When the check exits 1, a Claude seat that did start fails the same way, or the `codex` CLI is missing or not signed in, run the seat in this harness on the strongest native model, say so, and mark the panel as single-family in the reply. Agreement between same-family seats is weaker evidence.
 
+In a T3 Code session, the T3 `delegate_task` tool is the cross-family seat. Resolve the model and its effort values with `orchestrator_capabilities` first, then pass them in `target`. The child runs with full access, and no sandbox setting exists. A "read-only" brief holds only by its words, so prove it afterwards by diffing the target against a saved copy.
+
 ### Speed
 
 Cursor's `-fast` model variants have no per-subagent equivalent. Claude Code's fast mode (`/fast`) is a session setting, and Codex's spawn tool takes only a model and a reasoning effort. Run every subagent at standard speed on the role's model, and never change a session setting for one subagent. A playbook's fast-mode exception therefore changes nothing here.

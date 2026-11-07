@@ -16,9 +16,13 @@ Check the real thing, not a proxy:
 - Check process liveness directly, not indirectly through derived state
 - Read the actual value, not a cached or derived representation
 - When verification fails, suspect the observation method before suspecting the system
+- Every changed file that ships is an output, check scripts included. Rerun each after its last edit, even when the main artifact's hash is unchanged.
+- Never hand-edit a file a run is meant to produce, such as a results file or its date. Rerun the run.
 
 ## Script the check when you can
 
 The strongest proof is a deterministic script that re-runs the same comparison, not a one-time eyeball. Write the script, run it, and keep its output as an artifact a reviewer can re-run instead of trusting your word.
+
+A green check proves nothing until it has gone red. Run it on the unfixed version first and watch it fail. Read the tool's exit status before its output, because a run that crashed leaves its input untouched, which reads as "preserved". Confirm the edited code path actually ran, since a check on inputs that skip the edited branch passes for free.
 
 Keep the artifact visible for the human. Commit it only for large or complex work where the trail has to be auditable later, like a big port or migration (the **show-me-your-work** skill).

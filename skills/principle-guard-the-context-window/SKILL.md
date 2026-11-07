@@ -10,3 +10,4 @@ disable-model-invocation: true
 
 **Pattern:**
 - **Size phases and cap scope.** Limit files per phase, set turn budgets, account for mechanism costs.
+- **Tile many images into contact sheets.** To read many rendered pages or screenshots, combine them into a few grid images and open a single image at full size only where a judgement needs it.
