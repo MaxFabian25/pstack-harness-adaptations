@@ -1,6 +1,6 @@
 ---
 name: principle-explain-the-number
-description: "Apply before you measure, and before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, an eval result, or a score or ranking from a panel of agents. Find what limits it, and rule out that it measured something other than the work you think."
+description: "Apply before you measure, and before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, an eval result, or a score or ranking from a panel of agents. Also apply before you choose a cap, limit or setting from measurements, and before you put a size, saving or cost figure in a question for the user's approval. Find what limits it, and rule out that it measured something other than the work you think."
 disable-model-invocation: true
 ---
 
