@@ -18,6 +18,8 @@ Examples of the pattern:
 
 Read the active transcript at <ABSOLUTE_PATH> (or use the digest below if no path is given).
 
+Before you claim the agent left something out, open the raw file, because the digest cuts long fields. Mark a claim that the agent never said something as unproven, because a raw transcript can lack assistant text.
+
 Scan for:
 - Tool invocations and command flags the agent had to discover
 - Library / framework quirks (config, lockfiles, env-var behavior, version-specific gotchas)

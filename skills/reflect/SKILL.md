@@ -23,7 +23,7 @@ for f in $(ls -t ~/.codex/sessions/*/*/*/rollout-*.jsonl 2>/dev/null | head -50)
 
 That covers the Claude Code session (`<id>.jsonl`) and subagent (`<id>/subagents/<child>.jsonl`) layouts and the Codex rollout layout. For each candidate, read its first user turns, using the record shape harnesses.md gives. Take the file whose opening user turn contains the conversation's opening user prompt. If none matches, pass a tight digest of the session instead.
 
-Then write one digest of it for all three reviewers, outside the workspace: `python3 -I scripts/digest.py <transcript> > <digest>`. It reads both layouts, adds a Claude Code session's subagents, drops images and metadata, and starts each entry with its line number in the raw file. Where a template asks for the transcript's path, give the digest's path, followed by the raw file's for checking a quote.
+Then write one digest of it for all three reviewers, outside the workspace: `python3 -I scripts/digest.py <transcript> > <digest>`. It reads both layouts, adds a Claude Code session's subagents, drops images and metadata, and starts each entry with its line number in the raw file. Where a template asks for the transcript's path, give the digest's path, followed by the raw file's for checking a quote or an omission.
 
 ## 2. Spawn three reviewers in parallel
 
