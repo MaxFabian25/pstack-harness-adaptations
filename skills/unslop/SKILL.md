@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Unslop
 
-Edit text to remove AI patterns. For a pass over a whole repository, and before a public draft such as a post, thread, reply or email goes to the user for approval, have a fresh reviewer check the text against the current [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) and the [tropes.fyi directory](https://tropes.fyi/directory), because their lists change. When the text promotes or rewrites the author's own published writing, start from their approved sentences rather than writing new ones. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone.
+Edit text to remove AI patterns. For a pass over a whole repository, and before a public draft such as a post, thread, reply or email goes to the user for approval, have a fresh reviewer check the text against the current [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) and the [tropes.fyi directory](https://tropes.fyi/directory), because their lists change. When the text promotes or rewrites the author's own published writing, start from their approved sentences rather than writing new ones. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone. After the pass, check each rewritten sentence that says "only" or "every", or that sums up another section, against that section.
 
 ## Patterns to detect and fix
 

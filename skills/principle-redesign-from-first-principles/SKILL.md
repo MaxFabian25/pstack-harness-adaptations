@@ -11,6 +11,7 @@ When integrating a change, don't bolt it onto the existing design. Redesign as i
 - Read all affected files and understand the current design
 - Ask: "if we were writing this from scratch with this new requirement, what would we build?"
 - Propagate the change through every reference: types, docs, examples, rationale sections
+- After you accept a correction, recheck every result and every remaining failure for the same cause before you reply
 - Think about the whole redesign, then deliver it incrementally
 
 This is the method for preserving option value when integrating changes into an existing design.
