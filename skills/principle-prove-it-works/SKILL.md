@@ -1,6 +1,6 @@
 ---
 name: principle-prove-it-works
-description: "Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'"
+description: "Apply after completing a task, before declaring done, and before any safety claim that a delete, archive or overwrite rests on. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'"
 disable-model-invocation: true
 ---
 
@@ -15,6 +15,7 @@ Verify every task output by checking the real thing directly. Do not infer from 
 Check the real thing, not a proxy:
 - Check process liveness directly, not indirectly through derived state
 - Read the actual value, not a cached or derived representation
+- Before a delete, archive or overwrite, prove the claim it rests on against the real data. Matching refs or commit hashes leave the content unproven, because a remote can hold the commits and lack the large files they point to.
 - When verification fails, suspect the observation method before suspecting the system
 - Every changed file that ships is an output, check scripts included. Rerun each after its last edit, even when the main artifact's hash is unchanged.
 - Never hand-edit a file a run is meant to produce, such as a results file or its date. Rerun the run.
