@@ -7,4 +7,4 @@ disable-model-invocation: true
 # Laziness Protocol
 
 - **Consolidate decisions.** Do not repeat the same choice in several places. Put it behind one source of truth and pass the result as a simple flag.
-- **Minimize the diff.** Make the smallest change that solves the problem. Fewer lines beat "elegant" boilerplate.
+- **Minimize the diff.** Make the smallest change that solves the problem. Fewer lines beat "elegant" boilerplate. Report every gap you leave, and when done means matching a reference, such as a template or spec, treat any remaining difference as the defect.

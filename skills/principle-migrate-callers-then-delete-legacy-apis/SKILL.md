@@ -7,6 +7,7 @@ disable-model-invocation: true
 # Migrate Callers Then Delete Legacy APIs
 
 - Update tests to assert the new contract, and delete tests that only protect pre-refactor implementation details
+- Before you state a caller count for approval, search every spelling of the old name: path, hyphenated id, spaced id and title. Reuse that pattern for the final stale-reference check.
 
 **When this applies:**
 - No external users depend on backward compatibility
