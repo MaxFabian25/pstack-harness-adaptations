@@ -19,7 +19,7 @@ Copy `references/decision-log-template.tsv` (the header row) to start a clean lo
 - **decision.** What was chosen or done, one line.
 - **why.** The reason in plain words. If a principle drove it, say it plainly, not as a jargon tag.
 - **evidence.** A link or path that proves it: commit SHA, PR number, `file:line`, or an artifact, trace, or screenshot path. Never a paragraph.
-- **result.** The outcome or predicate state: `tests green`, `reverted`, `pixel-diff 0`, `INCONCLUSIVE`, `open`. Claim no more than the evidence shows. Write the timeline or comparison you observed, such as "its run failed at 16:33, before my change at 16:35", not a guarantee such as "my change broke nothing".
+- **result.** The outcome or predicate state: `tests green`, `reverted`, `pixel-diff 0`, `INCONCLUSIVE`, `open`. Claim no more than the evidence shows. When the row reports a reviewer's verdict, use the reviewer's own status words, such as `partly resolved`. Check an "all" or "none" claim against the exceptions the work documented before you write it. Write the timeline or comparison you observed, such as "its run failed at 16:33, before my change at 16:35", not a guarantee such as "my change broke nothing".
 
 An example, plain-spoken so a reviewer reads it at a glance.
 
@@ -50,6 +50,7 @@ Commit it only when the work is ambitious enough that a reviewer needs the trail
 ## Rules
 
 - Append-only. A wrong call gets a new row that supersedes it. Never edit or delete history.
+- Back a claim that something did not change, such as "only these words changed", with full output saved to a file. A `cut` or `head` preview can hide the very change the claim rules out.
 - Prefer evidence produced by committed scripts over hand-made one-offs (the **encode-lessons-in-structure** principle skill).
 - Evidence must outlive cleanup and other runs. Point a row only at files this run owns, never into a scratch folder, `/tmp` or another session's folder. Prefer the smallest lasting artifact, such as a commit, a patch or a log. Before cleanup, copy each cited file next to the log, except bulk output such as renders that a commit or patch already reproduces. Write each kept script so it runs from the project, not from scratch paths.
 

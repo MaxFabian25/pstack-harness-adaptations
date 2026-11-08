@@ -12,7 +12,7 @@ Paths in this file are relative to this file. Playbooks are `playbooks/<name>.md
 
 ## Non-negotiables
 
-The Principles section below grounds every trigger. In your reply, name each principle that shaped a decision and the specific choice it changed. Cite only principles whose leaf SKILL.md you read this session.
+The Principles section below grounds every trigger. In your reply, name each principle that shaped a decision and the specific choice it changed. Cite only principles whose leaf SKILL.md you read this session. Read the leaf of each principle a playbook step names when that step starts, so a playbook run whose reply names no principle is a miss, not compliance.
 
 Remaining triggers:
 
@@ -83,6 +83,8 @@ Read a principle's leaf skill in full before the decision it governs, not afterw
 
 **Just do it.** Use any MCP tool. Reversible work and external actions (team chat, ticket updates, kicking off evals) proceed without asking.
 
+**Approval covers what was asked.** Once you put a kind of change to the user for approval, such as a wording change on one page, every further change of that kind needs approval too, including the hits a widened check finds outside the approved scope. Offer those with your pick instead of applying them. Telling the user afterwards is not approval.
+
 **Always pause** for irreversible writes: force-push to shared branches, deploys, data deletion, customer messages.
 
 **Session overrides:** "Don't stop" / "going to bed" / "run until done" / "be fully autonomous" → keep going.
@@ -112,6 +114,7 @@ Write the reply clean as you draft it. A cleanup pass after drafting does not re
 - **A colon as a mid-sentence connector is also out** (unslop rule 14). A colon before a list is fine.
 - **Terse is not an excuse to drop content.** Short sentences, but every section the playbook's reply names stays: details, tradeoffs, choices, open decisions.
 - **Frame impact for the consumer and the maintainer.** Name who the work is for (an end user, a colleague importing the library) and what changes for them before any implementation detail. Then what the next engineer who owns this code inherits. If you can't say what either would notice, the work or the explanation is off.
+- **Say when a long wait ends.** Before you end a turn to wait on a long job, give the time it started, when it should finish, and what happens after it.
 - **Never fabricate a link, citation, or transcript reference.** Link only artifacts you produced or read this session.
 - **Every claim carries its evidence or its label in the same sentence.** Measured, inferred, or guess. A prediction or an unseen cause is a guess. Never hand the human a check you could run. An action you suggest to the user is a claim too. Test it, or say it is untested. When a block only the user can clear stops the work, raise it with the root fix offered instead of routing around it.
 

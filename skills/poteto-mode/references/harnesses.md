@@ -113,7 +113,7 @@ claude -p --model <model> --effort <effort> --permission-mode <mode> --output-fo
 - When a later step reads the seat's transcript (Eval), drop `--ephemeral` so Codex keeps the rollout. Its `session_meta` cwd is the `-C` directory. A `claude -p` run keeps its transcript by default.
 - When the check exits 1, a Claude seat that did start fails the same way, or the `codex` CLI is missing or not signed in, run the seat in this harness on the strongest native model, say so, and mark the panel as single-family in the reply. Agreement between same-family seats is weaker evidence.
 
-In a T3 Code session, the T3 `delegate_task` tool is the cross-family seat. Resolve the model and its effort values with `orchestrator_capabilities` first, then pass them in `target`. The child runs with full access, and no sandbox setting exists. A "read-only" brief holds only by its words, so prove it afterwards by diffing the target against a saved copy.
+In a T3 Code session, the T3 `delegate_task` tool is the cross-family seat. Resolve the model and its effort values with `orchestrator_capabilities` first, then pass them in `target`. Copy each option's key and value exactly as `orchestrator_capabilities` lists them, because keys differ by provider, such as `reasoningEffort` for Codex where the tool's own example shows `effort`. Call it again after a compaction rather than reusing a key from memory. The child runs with full access, and no sandbox setting exists. A "read-only" brief holds only by its words, so prove it afterwards by diffing the target against a saved copy.
 
 ### Speed
 
@@ -134,6 +134,8 @@ A Cursor cloud agent is a worker in its own VM on its own branch. The equivalent
 | Remote cloud worker | `Agent` with `isolation: "remote"` when the tool offers it and the account has a cloud environment. Where the only environments are Remote Control bridges, a remote agent runs on this same machine in the same directory, so it isolates nothing. Probe with `pwd` and `uname -n` first, and use the worktree row for any writer. | `codex cloud exec --env <env-id> --branch <base> "<brief>"`, then `codex cloud status`, `diff`, `apply`. Needs a configured Codex Cloud environment. Otherwise the worktree row. |
 | Liveness of running workers | the `ListAgents` tool for background agents, or `claude.ai/code` for remote sessions | `list_agents`, and `codex cloud list` for cloud tasks |
 | A cloud agent's URL to resume from | a `claude.ai/code` session link | a Codex Cloud task id or link |
+
+In a T3 Code session, give a writer its own checkout with `delegate_task` and `isolation: "worktree"`, which prepares a checkout from the parent commit. Commit first, because uncommitted edits stay out of it. A checkout made in the shell for a child breaks T3's rules.
 
 Local background agents end when the session ends. Cloud and remote work survives it. Plan resumes around that.
 
