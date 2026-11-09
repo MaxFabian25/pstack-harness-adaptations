@@ -24,6 +24,8 @@ The Codex custom agents (`poteto-agent`, `comment-sicko`, `pstack-reader`) are i
 
 A skill parameter named `readonly: true` means a read-only row. Pick the row by what the agent does. `readonly: false` or "agent mode" means the general-purpose row, which keeps MCP access. Neither harness has a `readonly` parameter. Never pass one.
 
+Ask a Claude Code subagent for its report as its final message, and save the file yourself, because Claude Code can refuse a subagent's write of a report file. A T3 or cross-harness delegate can write its own.
+
 Both harnesses allow nested spawns. Claude Code allows three levels below the main chat by default. Codex agents can spawn their own agents.
 
 Both harnesses cap concurrent agents. Claude Code allows 20 background agents by default. Codex caps the open agent threads in a session and refuses the next spawn with `agent thread limit reached`. This machine allowed 19. Run a larger fan-out in waves, spawning the next agent as an earlier one finishes.
@@ -113,7 +115,7 @@ claude -p --model <model> --effort <effort> --permission-mode <mode> --output-fo
 - When a later step reads the seat's transcript (Eval), drop `--ephemeral` so Codex keeps the rollout. Its `session_meta` cwd is the `-C` directory. A `claude -p` run keeps its transcript by default.
 - When the check exits 1, a Claude seat that did start fails the same way, or the `codex` CLI is missing or not signed in, run the seat in this harness on the strongest native model, say so, and mark the panel as single-family in the reply. Agreement between same-family seats is weaker evidence.
 
-In a T3 Code session, the T3 `delegate_task` tool is the cross-family seat. Resolve the model and its effort values with `orchestrator_capabilities` first, then pass them in `target`. Copy each option's key and value exactly as `orchestrator_capabilities` lists them, because keys differ by provider, such as `reasoningEffort` for Codex where the tool's own example shows `effort`. Call it again after a compaction rather than reusing a key from memory. The child runs with full access, and no sandbox setting exists. A "read-only" brief holds only by its words, so prove it afterwards by diffing the target against a saved copy.
+In a T3 Code session, the T3 `delegate_task` tool is the cross-family seat. Take the seat's model and effort from its role's line in `models.md`, or the default above, as for any seat. Then call `orchestrator_capabilities` for the provider instance that serves that model and the exact option keys, and pass them in `target`. Copy each option's key and value exactly as `orchestrator_capabilities` lists them, because keys differ by provider, such as `reasoningEffort` for Codex where the tool's own example shows `effort`. Call it again after a compaction rather than reusing a key from memory. The child runs with full access, and no sandbox setting exists. A "read-only" brief holds only by its words, so prove it afterwards by diffing the target against a saved copy. A `[completed]` notice says only that the child's turn ended, which can be a pause in the middle of the job, and a T3 restart sends earlier notices again. Before acting on one, read the task's `status`, `workState` and `latestTerminalRunId` with `task_status`, or read the child thread, and compare a notice that arrives after a restart with what you already handled.
 
 ### Speed
 

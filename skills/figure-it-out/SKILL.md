@@ -18,7 +18,7 @@ Open a todolist whose first item is to read the Principles section of the **pote
 
 Ground first, then commit. Don't start the run until you can state:
 
-- The definition of done as a falsifiable predicate (the **prove-it-works** principle skill).
+- The definition of done as a falsifiable predicate (the **prove-it-works** principle skill). When the user names skills or plugins to apply, the predicate holds one verdict per named skill: a finding, meets, or does not apply. "All relevant" skills of a family means every matching skill in the listing.
 - Scope, quantified: rough units and effort, plus the blockers grounding surfaced.
 - The rigor level, biased high. One-way doors and high blast radius get more. Reversible low-stakes steps get less. Rigor is gates and artifacts, not "try harder".
 - Who else works on the target: other live sessions, worktrees, temporary run folders and recent commits. Plan around them before you write into it (the **separate-before-serializing-shared-state** principle skill).
@@ -29,7 +29,7 @@ Present the framing and tradeoffs before committing to a long run. Reversible wo
 
 Decompose into atomic, independently-landable units. Sequence riskiest-unknown-first. Scaffold and verification come before features (the **foundational-thinking** principle skill).
 
-- Build the verification harness before the work, with the baseline captured from the pre-change state, so the check reads as "old value vs new value".
+- Build the verification harness before the work, with the baseline captured from the pre-change state, so the check reads as "old value vs new value". Each gate names the user invariant it stands for. Before a builder depends on it, watch it fail on a planted fault that is asserted to have landed, and pass on one change the plan intends. A gate is a proxy for its invariant, so when it would rule out a fix the invariant allows, widen or replace the gate.
 - For one-way-door design decisions, run the **architect** skill (it runs **arena**). Skip it for mechanical work whose shape is already concrete. A second arena over a settled design is over-engineering (the **laziness-protocol** principle skill).
 - Decide what fans out. Parallelize only across seams, and give each worker its own worktree or branch (the **separate-before-serializing-shared-state** principle skill). Don't over-fan. In a folder with no git, either commit a copy to a throwaway repo so workers get real worktrees, or give each worker a copy of one saved baseline. Merge each copy back against that baseline over the whole tree, and fail on any changed file the merge did not handle, because a hand-written file list misses the files a worker created. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 - Write the designed phase list down. That list is what the human reviews.

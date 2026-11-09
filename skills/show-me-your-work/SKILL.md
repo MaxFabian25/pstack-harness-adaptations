@@ -61,17 +61,20 @@ At the end of the run, before handing back, check the log told the truth. Read t
 - Check that every row maps to a real decision or action.
 - Check that each row's evidence resolves and shows what the row claims.
 - A fork, pivot, or abandoned approach that shaped the work but isn't logged is a gap. Add it.
+- Check the run against the skills that governed it, such as poteto-mode: each subagent's agent type, model and effort match what they prescribe, each principle the reply cites had its leaf read before the decision, and each cleanup or review pass ran on the final head, after the last fix. Duties like these lapse silently after a compaction.
 
 Correct the log, not the story. The audit never edits or removes a row, even an invented one. When a row records neither a real decision nor a real action, or its claim or evidence is wrong, add a row that supersedes it with what actually happened and a pointer that resolves. This audit does not check rows outside this run's stretches. If this run's own work shows one of them is wrong, supersede it like any wrong call.
 
 ## Cross-model review of the trail
 
-Before handing back, run a reviewer on a different model family from the one that did the work. Use a read-only cross-harness seat per [harnesses.md](../poteto-mode/references/harnesses.md) (Cross-harness seats), and put the log and transcript paths in its brief. Self-review is not a substitute. A model whose verdicts are evidence in the trail, such as a sparring partner or an earlier judge, did part of the work. Pick another family, or say in the Attention line that the reviewer also sparred. The reviewer reads the audit trail and the run's transcript, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
+Before handing back, run a reviewer on a different model family from the one that did the work. Use a read-only cross-harness seat per [harnesses.md](../poteto-mode/references/harnesses.md) (Cross-harness seats), on the model and effort of the `arena cross-judge pool` role, its first entry from another family, resolved per [harnesses.md](../poteto-mode/references/harnesses.md) (Models). A model picked from whatever the tool lists is a silent downgrade. Put the log and transcript paths in its brief. Self-review is not a substitute. A model whose verdicts are evidence in the trail, such as a sparring partner or an earlier judge, did part of the work. Pick another family, or say in the Attention line that the reviewer also sparred. The reviewer reads the audit trail and the run's transcript, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 - Decisions logged with weak or absent evidence.
 - Verification steps skipped or claimed without proof in the transcript.
 - Choices that look risky in hindsight (premature, scope-creeping, papering over a symptom).
 - Gaps the user would otherwise miss on a casual skim.
+
+A change made after the review is unreviewed. Before handing back, send the diff since the reviewed commit to a fresh reviewer with a brief sized to that diff, however small. Naming it in the Attention section does not stand in for that review.
 
 Every reply for a run that produced a trail ends with an "Attention" section. Lead with the reviewer's model on its own line (`reviewed by <model>`), then list each flag pointing to specific rows or moments. "No flags" is a valid value. The model name is not.
 

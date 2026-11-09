@@ -19,11 +19,16 @@ Check the real thing, not a proxy:
 - When verification fails, suspect the observation method before suspecting the system
 - Every changed file that ships is an output, check scripts included. Rerun each after its last edit, even when the main artifact's hash is unchanged.
 - Never hand-edit a file a run is meant to produce, such as a results file or its date. Rerun the run.
+- An empty search proves absence only where the tool looked. `rg` skips ignored files even under a directory you name, so search dependency code such as `node_modules` with `rg -uu`.
 
 ## Script the check when you can
 
 The strongest proof is a deterministic script that re-runs the same comparison, not a one-time eyeball. Write the script, run it, and keep its output as an artifact a reviewer can re-run instead of trusting your word.
 
 A green check proves nothing until it has gone red. Run it on the unfixed version first and watch it fail. Read the tool's exit status before its output, because a run that crashed leaves its input untouched, which reads as "preserved". Confirm the edited code path actually ran, since a check on inputs that skip the edited branch passes for free.
+
+A check reports through its exit status. It exits non-zero on any failure it records and on any shortfall from the count it expects, such as 431 of 432 states measured. Prove that by stubbing one failing step and watching the whole run, wrapper included, exit non-zero.
+
+For interactive behaviour, the unit of proof is a sequence of inputs, such as press, Escape, then move, with the state asserted after each step. A sweep of end states, such as every element hovered once, passes while the bugs live in the transitions.
 
 Keep the artifact visible for the human. Commit it only for large or complex work where the trail has to be auditable later, like a big port or migration (the **show-me-your-work** skill).
