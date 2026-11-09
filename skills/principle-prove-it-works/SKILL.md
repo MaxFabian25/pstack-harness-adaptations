@@ -1,6 +1,6 @@
 ---
 name: principle-prove-it-works
-description: "Apply after completing a task, before declaring done, and before any safety claim that a delete, archive or overwrite rests on. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'"
+description: "Apply after completing a task, before declaring done, and before any safety claim that a delete, archive or overwrite rests on, or before you report that a search, scan or lane found nothing. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'"
 disable-model-invocation: true
 ---
 
@@ -25,7 +25,7 @@ Check the real thing, not a proxy:
 
 The strongest proof is a deterministic script that re-runs the same comparison, not a one-time eyeball. Write the script, run it, and keep its output as an artifact a reviewer can re-run instead of trusting your word.
 
-A green check proves nothing until it has gone red. Run it on the unfixed version first and watch it fail. Read the tool's exit status before its output, because a run that crashed leaves its input untouched, which reads as "preserved". Confirm the edited code path actually ran, since a check on inputs that skip the edited branch passes for free.
+A green check proves nothing until it has gone red. Run it on the unfixed version first and watch it fail. Read the tool's exit status before its output, because a run that crashed leaves its input untouched, which reads as "preserved". A non-zero exit or a missing output file is a failed run, not "found nothing". Confirm the edited code path actually ran, since a check on inputs that skip the edited branch passes for free.
 
 A check reports through its exit status. It exits non-zero on any failure it records and on any shortfall from the count it expects, such as 431 of 432 states measured. Prove that by stubbing one failing step and watching the whole run, wrapper included, exit non-zero.
 

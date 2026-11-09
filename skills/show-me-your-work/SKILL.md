@@ -52,7 +52,10 @@ Commit it only when the work is ambitious enough that a reviewer needs the trail
 - Append-only. A wrong call gets a new row that supersedes it. Never edit or delete history.
 - Back a claim that something did not change, such as "only these words changed", with full output saved to a file. A `cut` or `head` preview can hide the very change the claim rules out.
 - Prefer evidence produced by committed scripts over hand-made one-offs (the **encode-lessons-in-structure** principle skill).
-- Evidence must outlive cleanup and other runs. Point a row only at files this run owns, never into a scratch folder, `/tmp` or another session's folder. Prefer the smallest lasting artifact, such as a commit, a patch or a log. Before cleanup, copy each cited file next to the log, except bulk output such as renders that a commit or patch already reproduces. Write each kept script so it runs from the project, not from scratch paths.
+- A row that records the user's approval quotes the full text of the option they chose, because a label alone loses what they approved.
+- Write a re-run's output to a new file, so the earlier result stays readable as evidence.
+- When a correction removes the reason a decision rested on, reopen that decision with a new row.
+- Evidence must outlive cleanup and other runs. Point a row only at files this run owns, never into a scratch folder, `/tmp` or another session's folder. Prefer the smallest lasting artifact, such as a commit, a patch or a log. Before cleanup, copy each cited file next to the log, except bulk output such as renders that a commit or patch already reproduces. Delete scratch files only after the transcript audit below, because the audit follows their pointers. Write each kept script so it runs from the project, not from scratch paths.
 
 ## Audit the log against the transcript
 
@@ -67,7 +70,7 @@ Correct the log, not the story. The audit never edits or removes a row, even an 
 
 ## Cross-model review of the trail
 
-Before handing back, run a reviewer on a different model family from the one that did the work. Use a read-only cross-harness seat per [harnesses.md](../poteto-mode/references/harnesses.md) (Cross-harness seats), on the model and effort of the `arena cross-judge pool` role, its first entry from another family, resolved per [harnesses.md](../poteto-mode/references/harnesses.md) (Models). A model picked from whatever the tool lists is a silent downgrade. Put the log and transcript paths in its brief. Self-review is not a substitute. A model whose verdicts are evidence in the trail, such as a sparring partner or an earlier judge, did part of the work. Pick another family, or say in the Attention line that the reviewer also sparred. The reviewer reads the audit trail and the run's transcript, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
+Before handing back, run a reviewer on a different model family from the one that did the work. Use a read-only cross-harness seat per [harnesses.md](../poteto-mode/references/harnesses.md) (Cross-harness seats), on the model and effort of the `trail review` role, its first entry from another family, resolved per [harnesses.md](../poteto-mode/references/harnesses.md) (Models). A model picked from whatever the tool lists is a silent downgrade. Put the log and transcript paths in its brief. Self-review is not a substitute. A model whose verdicts are evidence in the trail, such as a sparring partner or an earlier judge, did part of the work. Pick another family, or say in the Attention line that the reviewer also sparred. The reviewer reads the audit trail and the run's transcript, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 - Decisions logged with weak or absent evidence.
 - Verification steps skipped or claimed without proof in the transcript.
@@ -76,7 +79,7 @@ Before handing back, run a reviewer on a different model family from the one tha
 
 A change made after the review is unreviewed. Before handing back, send the diff since the reviewed commit to a fresh reviewer with a brief sized to that diff, however small. Naming it in the Attention section does not stand in for that review.
 
-Every reply for a run that produced a trail ends with an "Attention" section. Lead with the reviewer's model on its own line (`reviewed by <model>`), then list each flag pointing to specific rows or moments. "No flags" is a valid value. The model name is not.
+Every reply for a run that produced a trail ends with an "Attention" section. Lead with the reviewer's model and what its brief gave it, on its own line (`reviewed by <model>, given <inputs>`), then list each flag pointing to specific rows or moments. "No flags" is a valid value. The model name is not.
 
 ## Reviewing the trail
 

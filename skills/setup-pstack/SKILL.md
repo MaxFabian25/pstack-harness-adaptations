@@ -39,7 +39,7 @@ When the current config has roles whose values differ from the defaults, or reco
 **(c) Show the roles and confirm.** Ask this as its own question after (b), so the user confirms the values step 5 will write, not a table the budget then changes. Show one row per role, never grouped, because the user edits by role: its Claude Code value, its Codex value, and what it runs, from the Defaults table in harnesses.md. Mark `(was X)` on each value that differs from the current config, and mark any value that step 1 could not confirm as needing a choice. Also list each line step 2 dropped. If the existing file's header names other readers of the file, such as a hook that limits which models subagents may use, state how the new values affect them. Ask whether to accept as-is or change specific roles, offering the detected models, the cross-harness forms (`codex:<model>` from Claude Code, `claude:<model>` from Codex), and `inherit-parent` as the options. Use the question tool over free text. After any change, show the updated table again before writing.
 
 - Panel roles (`arena runners`, `architect runners`, `interrogate reviewers`) take a list. One seat runs per entry, alias entries included, so the list length sets the count and multiplies the role's cost. Say each panel's seat count. Keep at least one entry from each model family unless the user chooses a single family. A single-family panel gives weaker agreement signal. Say so when the user picks it.
-- `arena cross-judge pool` is also a list. Arena runs one judge and tries only entries whose family differs from the parent's, in list order. An `auto` or `inherit-parent` entry never judges.
+- `arena cross-judge pool` and `trail review` are also lists. Each runs one judge and tries only entries whose family differs from the parent's, in list order. An `auto` or `inherit-parent` entry never judges.
 - `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ### 4. Validate
@@ -73,6 +73,7 @@ reflect tooling: sonnet@xhigh
 reflect judgment, divergent, synthesizer: opus@xhigh
 arena runners: opus@xhigh, codex:gpt-6.1-sol@xhigh
 arena cross-judge pool: opus@xhigh, codex:gpt-6.1-sol@xhigh
+trail review: opus@xhigh, codex:gpt-6.1-sol@xhigh
 swarm workers: sonnet@xhigh
 architect runners: opus@xhigh, codex:gpt-6.1-sol@xhigh
 interrogate reviewers: opus@xhigh, codex:gpt-6.1-sol@xhigh
@@ -93,6 +94,7 @@ reflect tooling: inherit-parent@xhigh
 reflect judgment, divergent, synthesizer: inherit-parent@xhigh
 arena runners: inherit-parent@xhigh, claude:opus@xhigh
 arena cross-judge pool: inherit-parent@xhigh, claude:opus@xhigh
+trail review: inherit-parent@xhigh, claude:opus@xhigh
 swarm workers: inherit-parent@xhigh
 architect runners: inherit-parent@xhigh, claude:opus@xhigh
 interrogate reviewers: inherit-parent@xhigh, claude:opus@xhigh

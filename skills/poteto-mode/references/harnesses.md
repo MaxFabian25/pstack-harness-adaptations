@@ -63,6 +63,7 @@ Each value is `<model>@<effort>` or a comma list of them for a panel role. The e
 | `reflect judgment, divergent, synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` | `reflect`'s judgment and divergent reviewers and its synthesizer |
 | `arena runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | One `arena` candidate per entry, all given the same task |
 | `arena cross-judge pool` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | `arena`'s one judge: the first entry from a family other than the parent's |
+| `trail review` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | `show-me-your-work`'s one trail reviewer: the first entry from a family other than the parent's |
 | `swarm workers` | `sonnet@xhigh` | `inherit-parent@xhigh` | Every `swarm` worker, and poteto-mode's verification lanes |
 | `architect runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | One `architect` design sketch per entry |
 | `interrogate reviewers` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | One `interrogate` adversary per entry, each trying to break the change |
