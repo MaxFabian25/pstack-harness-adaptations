@@ -79,7 +79,7 @@ Before handing back, run a reviewer on a different model family from the one tha
 
 A change made after the review is unreviewed. Before handing back, send the diff since the reviewed commit to a fresh reviewer with a brief sized to that diff, however small. Naming it in the Attention section does not stand in for that review.
 
-Every reply for a run that produced a trail ends with an "Attention" section. Lead with the reviewer's model and what its brief gave it, on its own line (`reviewed by <model>, given <inputs>`), then list each flag pointing to specific rows or moments. "No flags" is a valid value. The model name is not.
+Every reply for a run that produced a trail ends with an "Attention" section. Lead with the reviewer's model and what its brief gave it, on its own line (`reviewed by <model>, given <inputs>`), then list each flag pointing to specific rows or moments. A flag for a gap you left open names the attempt you made to close it and the error that stopped it. A gap with no attempt behind it goes back to work before the reply, because the user returns it with "fix". "No flags" is a valid value. The model name is not.
 
 ## Reviewing the trail
 

@@ -16,7 +16,7 @@ A "spawn" or "Task call" in any skill means the harness's subagent tool.
 | Comment cleanup agent | `subagent_type: "pstack:comment-sicko"` | `agent_type: "comment-sicko"` |
 | Read-only agent that locates code or gathers facts | `subagent_type: "Explore"` (read-only built-in) | `agent_type: "pstack-reader"` (read-only sandbox) |
 | Read-only agent that reviews, judges, explains, or needs MCP | `general-purpose`, and put "Do not edit files." in the prompt | `agent_type: "pstack-reader"` (keeps MCP) |
-| Background | `run_in_background: true` | always asynchronous; collect with `wait_agent` |
+| Background | `run_in_background: true`. The `poteto-agent` delegate always runs in the background, because its definition sets `background: true`, so wait for its notification. | always asynchronous; collect with `wait_agent` |
 | Fresh context | default for a new `Agent` call | `fork_turns: "none"` |
 | Resume an agent | `SendMessage` to its id | `followup_task` to its id |
 

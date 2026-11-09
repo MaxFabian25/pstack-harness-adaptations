@@ -18,10 +18,10 @@ Open a todolist whose first item is to read the Principles section of the **pote
 
 Ground first, then commit. Don't start the run until you can state:
 
-- The definition of done as a falsifiable predicate (the **prove-it-works** principle skill). When the user names skills or plugins to apply, the predicate holds one verdict per named skill: a finding, meets, or does not apply. "All relevant" skills of a family means every matching skill in the listing.
+- The definition of done as a falsifiable predicate (the **prove-it-works** principle skill). When the user names skills or plugins to apply, the predicate holds one verdict per named skill: a finding, meets, or does not apply. "All relevant" skills of a family means every matching skill in the listing. Run it on the unchanged artifact first. If it passes there, it guards against regressions but does not measure what the user asked for, so add a check that does.
 - Scope, quantified: rough units and effort, plus the blockers grounding surfaced.
 - Which surfaces stay. Before any implementer starts, ask the owner to keep, reshape or retire each major surface the work touches, with at least one option that retires it, unless the owner has already settled it. A behavior-preserving brief cannot see that the largest deletion is a product decision.
-- The rigor level, biased high. One-way doors and high blast radius get more. Reversible low-stakes steps get less. Rigor is gates and artifacts, not "try harder".
+- The rigor level, biased high. One-way doors and high blast radius get more. Reversible low-stakes steps get less. Rigor is gates and artifacts, not "try harder". Write it as the decision log's first row, with what it caps, such as review rounds and full reruns of a long gate.
 - Who else works on the target: other live sessions, worktrees, temporary run folders and recent commits. Plan around them before you write into it (the **separate-before-serializing-shared-state** principle skill).
 
 Present the framing and tradeoffs before committing to a long run. Reversible work proceeds (the **never-block-on-the-human** principle skill), but a multi-hour run earns one checkpoint.
@@ -45,6 +45,7 @@ Each unit is an experiment. State the hypothesis, make the smallest change, meas
 
 - Verify by inspecting the artifact, never a self-report. When something passes too easily, suspect the observation method before the system.
 - Pair delegated work with a judge. If a worker games the gate, reset and harden the contract. If the gate itself is wrong, fix the gate in its own change rather than routing around it.
+- Run cheap read-only reviews before a long gate that holds a shared resource, such as a 30-minute test run, because a review that changes the work makes the gate's result stale. Rerun the gate only when what it checks has changed. Stop review rounds when your written comparison finds nothing new, within the cap from Phase A.
 - A verdict is VERIFIED, NOT VERIFIED, or INCONCLUSIVE. Inconclusive is not a pass. Don't hide a negative.
 
 ## Phase D: Keep the audit trail

@@ -25,7 +25,7 @@ Check the real thing, not a proxy:
 
 The strongest proof is a deterministic script that re-runs the same comparison, not a one-time eyeball. Write the script, run it, and keep its output as an artifact a reviewer can re-run instead of trusting your word.
 
-A green check proves nothing until it has gone red. Run it on the unfixed version first and watch it fail. Read the tool's exit status before its output, because a run that crashed leaves its input untouched, which reads as "preserved". A non-zero exit or a missing output file is a failed run, not "found nothing". Confirm the edited code path actually ran, since a check on inputs that skip the edited branch passes for free.
+A green check proves nothing until it has gone red. Run it on the unfixed version first and watch it fail. Read the tool's exit status before its output, because a run that crashed leaves its input untouched, which reads as "preserved". A non-zero exit or a missing output file is a failed run, not "found nothing". Confirm the edited code path actually ran, since a check on inputs that skip the edited branch passes for free. A check changed in the same edit as the thing it checks proves only that the two agree, so have someone read the new claims against their sources before you quote its count.
 
 A check reports through its exit status. It exits non-zero on any failure it records and on any shortfall from the count it expects, such as 431 of 432 states measured. Prove that by stubbing one failing step and watching the whole run, wrapper included, exit non-zero.
 
