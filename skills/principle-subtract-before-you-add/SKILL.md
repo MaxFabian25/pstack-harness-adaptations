@@ -16,3 +16,4 @@ Make simplification a continual investment. Leave the design slightly simpler an
 - No speculative validators, parsers, or guards beyond what the spec demands
 - Simplify prompts (remove redundant instructions, excessive templates)
 - When a reference has no novel content, delete it rather than leaving a stub
+- Before retiring a surface, list the data and tools inside it that must outlive it. Move them first, by exact rename where you can, and check they arrived intact before deleting the rest

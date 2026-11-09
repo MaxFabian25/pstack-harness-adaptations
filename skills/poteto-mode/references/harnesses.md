@@ -137,7 +137,7 @@ A Cursor cloud agent is a worker in its own VM on its own branch. The equivalent
 | Liveness of running workers | the `ListAgents` tool for background agents, or `claude.ai/code` for remote sessions | `list_agents`, and `codex cloud list` for cloud tasks |
 | A cloud agent's URL to resume from | a `claude.ai/code` session link | a Codex Cloud task id or link |
 
-In a T3 Code session, give a writer its own checkout with `delegate_task` and `isolation: "worktree"`, which prepares a checkout from the parent commit. Commit first, because uncommitted edits stay out of it. A checkout made in the shell for a child breaks T3's rules.
+In a T3 Code session, give a writer its own checkout with `delegate_task` and `isolation: "worktree"`, which prepares a checkout from the parent commit. Commit first, because uncommitted edits stay out of it. A checkout made in the shell for a child breaks T3's rules. A child's completion wakes you each time it ends a turn, even while its own checks still run. Tell each child to wait for its final check before it ends a turn, and read the evidence in its message before you accept its branch.
 
 Local background agents end when the session ends. Cloud and remote work survives it. Plan resumes around that.
 

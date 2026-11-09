@@ -20,6 +20,7 @@ Ground first, then commit. Don't start the run until you can state:
 
 - The definition of done as a falsifiable predicate (the **prove-it-works** principle skill). When the user names skills or plugins to apply, the predicate holds one verdict per named skill: a finding, meets, or does not apply. "All relevant" skills of a family means every matching skill in the listing.
 - Scope, quantified: rough units and effort, plus the blockers grounding surfaced.
+- Which surfaces stay. Before any implementer starts, ask the owner to keep, reshape or retire each major surface the work touches, with at least one option that retires it, unless the owner has already settled it. A behavior-preserving brief cannot see that the largest deletion is a product decision.
 - The rigor level, biased high. One-way doors and high blast radius get more. Reversible low-stakes steps get less. Rigor is gates and artifacts, not "try harder".
 - Who else works on the target: other live sessions, worktrees, temporary run folders and recent commits. Plan around them before you write into it (the **separate-before-serializing-shared-state** principle skill).
 
