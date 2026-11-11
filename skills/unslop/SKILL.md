@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Unslop
 
-Edit text to remove AI patterns. For a pass over a whole repository, and before a public draft such as a post, thread, reply or email goes to the user for approval, have a fresh reviewer check the text against the current [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) and the [tropes.fyi directory](https://tropes.fyi/directory), because their lists change. When the text promotes or rewrites the author's own published writing, start from their approved sentences rather than writing new ones. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone. After the pass, check each rewritten sentence that says "only" or "every", or that sums up another section, against that section.
+Edit text to remove AI patterns. For a pass over a whole repository, and before a public draft such as a post, thread, reply or email goes to the user for approval, have a fresh reviewer check the text against the current [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) and the [tropes.fyi directory](https://tropes.fyi/directory), because their lists change. When the text promotes or rewrites the author's own published writing, start from their approved sentences rather than writing new ones. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone. Fix meaning and clarity first, with the Plain speech rules, and the other tells after that. Keep a pattern when removing it would make the sentence less clear or would only swap in a synonym. After the pass, check each rewritten sentence that says "only" or "every", or that sums up another section, against that section.
 
 ## Patterns to detect and fix
 
@@ -19,7 +19,7 @@ Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 
 ### Language
 
-7. **AI vocabulary.** Additionally, crucial, delve, enduring, enhance, fostering, garner, interplay, intricate, landscape (abstract), pivotal, showcase, tapestry (abstract), testament, underscore, vibrant. Replace with plain words.
+7. **AI vocabulary.** Additionally, crucial, delve, enduring, enhance, fostering, garner, gated (restricted), interplay, intricate, landscape (abstract), load-bearing (important), pivotal, quietly, showcase, tapestry (abstract), testament, underscore, vibrant. Replace with plain words.
 8. **Fancy ways to say "is".** "serves as", "stands as", "boasts", "features". Say "is" or "has".
 9. **Bare contrast.** "Not just X, but Y", "X, not Y", and stock limit phrases such as "does not establish". State the point directly, and restate any limit in plain words so that it stays. After a large pass, compare these counts with human prose of the same genre, because a pass can create a new pattern.
 10. **Rule of three.** Don't force ideas into groups of three. Use the natural number.
@@ -32,7 +32,7 @@ Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 14. **Colon overuse.** Colons are fine before a list or example, not as mid-sentence connectors. "If you're coming from traditional automation: instead of registering event handlers, you describe conditions" adds nothing with the colon. Rewrite to let the point stand on its own without comparison framing. "Describing when the scheduler should fire works best as plain English." Same meaning, no crutch punctuation.
 15. **Boldface overuse.** Don't bold every proper noun or acronym.
 16. **Inline-header lists.** The tell is a bold label and colon that restates the line: "**Performance:** Performance improved...". Convert those to prose. A bold lead-in that ends in a period, names the item, and is followed by genuinely new detail ("**Schema in TypeScript.** Tables live in one file.") is fine, not a tell.
-17. **Title case headings.** Use sentence case.
+17. **Title case headings.** Use sentence case. A heading names its subject and doesn't open with Where, What, Why or How: "Where the market is stuck today" becomes "Obstacles in the market".
 18. **Decorative emojis.** Remove from headings and bullets.
 19. **Curly quotes.** Use straight quotes.
 
@@ -40,6 +40,7 @@ Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 
 20. **Chatbot phrases.** "I hope this helps!", "Let me know if...", "Of course!", "Certainly!", "Found the smoking gun!" Remove.
 22. **Sycophantic tone.** "Great question! You're absolutely right!" Respond directly.
+35. **Announcing and re-arguing.** Make the point, without a sentence that says what the text is about to do, decide or cover. "Two constraints shape the design" and "What that changes is worth being precise about" go, and the constraints themselves stay. Don't give the count before a list. Put a question before its evidence, and give the evidence once. Don't defend a point that nobody questioned. Stop when the answer is given, so cut "So, to answer your question, ...".
 
 ### Filler
 
