@@ -12,7 +12,7 @@ Write so a tired engineer understands on the first read. Apply all four layers.
 
 Three rules sit above the layers:
 
-- **Cut every word that does no work.** If the sentence survives without a word, the word goes. "In order to" is "to". "It is important to note that" is nothing.
+- **Cut every word that carries neither meaning nor structure.** Filler goes. The small words that show how a sentence is built stay, as the Global English layer says. "In order to" is "to". "It is important to note that" is nothing.
 - **Use the short, everyday word.** "Use", not "utilize". "Help", not "facilitate". "Do", not "perform". A long word has to buy its length with precision.
 - **When a rule makes a sentence worse, fix the sentence another way or leave it alone.** A sentence that follows every rule and sounds like a machine wrote it has failed.
 
