@@ -1,6 +1,6 @@
 ---
 name: benchmark-checklist
-description: "Vet a perf measurement (limiter, tuning, limits, errors, repeatability, relevance, and whether the work happened) before you report or act on it. Use when you run a benchmark or report a speedup or regression you measured, and when you compare tools, agents or setups, design a pilot for that comparison, or choose its run settings."
+description: "Vet a perf measurement (limiter, tuning, limits, errors, repeatability, relevance, and whether the work happened) before you report or act on it. Use when you run a benchmark or report a speedup or regression you measured, when you answer why a lock, queue or pipeline is slow, when you time a correctness fix, such as a new cache, and when you compare tools, agents or setups, design a pilot for that comparison, or choose its run settings."
 disable-model-invocation: true
 ---
 
@@ -15,6 +15,7 @@ For a quick ballpark the user asked for, one run is enough. Still check question
 - Write down the claim you expect to make, in the words you would ship ("export is 30% faster at p50 on the 60k-row dataset"). The questions test that sentence.
 - Read the measurement script. Note what it times, counts, and ignores.
 - Check the load average with `uptime` and the core count with `nproc` (`sysctl -n hw.ncpu` on macOS). If the machine is busy, find out what is running. If you cannot stop it, interleave the sides so both see the same noise, and say so in the report. A parallelism claim on a busy host also records total CPU time or an idle control run and names the cost to the other work, because part of the wall-clock gain is CPU taken from it.
+- List what else the host carries, such as CI runners and their updaters or other sessions' jobs. When one of them must finish within a time limit, such as a runner update, measure on another machine, or take one measurement at a time with no parallel workers, still alternating the sides as question 5 says. When one side is a busy machine whose history already holds its figures, such as its CI or job logs, use those figures, say in the report that they come from that history and were not interleaved, and ask the user before a fresh control run there.
 
 ## The questions
 
