@@ -159,7 +159,7 @@ Some playbooks keep durable state in "the agent store". Use `${PSTACK_STORE:-$HO
 
 The current session is the newest transcript for this workspace by modification time. Stay inside this workspace's transcripts. Reading other projects' transcripts crosses into unrelated private work.
 
-Some hosts archive idle transcripts and delete the plaintext, so a dated folder that is missing does not mean the session never existed. Search through the host's archive tool or skill before you report a transcript as unavailable.
+Some hosts archive idle transcripts and delete the plaintext, so a dated folder that is missing does not mean the session never existed. Search through the host's archive tool or skill before you report a transcript as unavailable. Where the `agent-logs` skill is installed, use it for any session idle for more than a day, which it says the host has archived and `recall`'s plaintext search misses.
 
 ## Skills
 
@@ -210,7 +210,7 @@ Neither harness has Cursor's sticky custom modes. The standing-instruction line 
 | Cursor skill | Claude Code | Codex |
 |---|---|---|
 | `create-skill` (built-in) | `skill-creator` | `$skill-creator` |
-| `deslop` (`cursor-team-kit`) | `/deslop` from the installed `cursor-team-kit` plugin (`/cursor-team-kit:deslop` if another plugin uses the name). Not `/simplify`, which spawns its own reviewers. Without the plugin, pstack's `no-comments`, then a self-review of the diff for dead code, needless abstraction, and defensive noise. | `$deslop` from the installed `cursor-team-kit` plugin. Without it, pstack's `no-comments`, then the same self-review. |
+| `deslop` (`cursor-team-kit`) | `/deslop` from the installed `cursor-team-kit` plugin (`/cursor-team-kit:deslop` if another plugin uses the name). It is explicit-only, so from a playbook `Read` its `SKILL.md` and follow it, as the Skills table says. Not `/simplify`, which spawns its own reviewers. Without the plugin, a self-review of the diff for dead code, needless abstraction, and defensive noise. Spawn no subagent for either. | `$deslop` from the installed `cursor-team-kit` plugin. When it is explicit-only, open its `SKILL.md` and follow it. Without the plugin, the same self-review, with no subagent. |
 | `control-ui` (`cursor-team-kit`) | `/control-ui` from the installed `cursor-team-kit` plugin. Its harness can drive the built-in browser pane, the Chrome DevTools MCP (CDP, also for Electron), or the `agent-browser` skill. | `$control-ui` from the installed `cursor-team-kit` plugin, driving the `playwright` or `agent-browser` skill, or computer use |
 | `control-cli` (`cursor-team-kit`) | `/control-cli` from the installed `cursor-team-kit` plugin. Without it, `tmux`: `new-session -d`, `send-keys`, `capture-pane -p` | `$control-cli` from the installed `cursor-team-kit` plugin. Without it, the same `tmux` commands |
 | Cursor's built-in babysit skill | none. pstack's Babysit playbook is the only one. | none |
