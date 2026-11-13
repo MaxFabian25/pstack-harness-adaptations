@@ -1,6 +1,6 @@
 ---
 name: principle-boundary-discipline
-description: "Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions."
+description: "Apply when wiring validation, error handling, or framework adapters, and when reviews keep finding one more malformed input in a hook or parser. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions."
 disable-model-invocation: true
 ---
 
@@ -22,6 +22,7 @@ Validation and error handling:
 - Parse raw data into domain types at the boundary
 - Do not re-export transport, storage, framework, or wire types through the public surface
 - No redundant nil checks deep in call chains if the boundary already validated
+- When each review round finds one more malformed input in a hook or parser, add one guard at the boundary that handles every input outside the shape the code expects in one place, in place of one fix per input shape
 
 Code organization:
 - Business logic in pure functions with no framework dependencies

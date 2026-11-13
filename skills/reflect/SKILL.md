@@ -49,7 +49,7 @@ Move any Accepted item that a lint rule, script, metadata flag, or runtime check
 
 Also move to Backlog, with its target path, any Accepted item that can't land here: one whose skill exists only as a locked installed copy with no editable source, or one routed through `skill-creator` where the project doesn't permit that skill.
 
-On a second pass over a session an earlier reflect already reviewed, read that pass's rows and their status first, and give them to the synthesizer, so it rejects repeats as duplicates.
+When an earlier reflect already reviewed this session or the same failures, read that pass's rows and their status first, and give them to the synthesizer. A finding that repeats a row not yet applied is a duplicate. A failure that came after a row was applied, and that the row should have stopped, shows that the row's form failed, so the synthesizer accepts it in a stronger form, such as a hook, a script or a check, instead of rejecting it as a duplicate.
 
 ## 5. Apply
 
@@ -65,6 +65,8 @@ Follow each approved row's Routing exactly:
 - Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to the `skill-creator` skill, per [harnesses.md](../poteto-mode/references/harnesses.md) (Skills), and run its draft / test / iterate loop.
 - `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to `skill-creator` and run its description-optimization loop.
 - `new skill via skill-creator: <kebab-name>`: hand creation to `skill-creator`, and place the new skill where both harnesses discover it, per [harnesses.md](../poteto-mode/references/harnesses.md) (Skills). Do not invent the shape ad hoc.
+
+Test each new skill and each substantive edit on the incident that produced it. Run the baseline, the old text or no skill, on that incident and see it fail first, then run the new text. A trial on a task the baseline already passes shows only that the edit does no harm. For a description tune, put the incident's own words among the should-trigger queries.
 
 If your environment ships a SKILL.md validator, run it on every touched skill before declaring done.
 

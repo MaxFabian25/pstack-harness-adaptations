@@ -1,6 +1,6 @@
 ---
 name: blast-radius
-description: "Find what a change could break somewhere else before it ships, beyond the diff, and prove the one fact it's safe because of by running real code instead of writing it up. Use for 'blast radius of X', 'what could this break', a small diff you don't trust, or a fix that unblocks a stuck queue, pull or pipeline, whose release ships everything queued behind the blocker."
+description: "Find what a change could break somewhere else before it ships, beyond the diff, and prove the one fact it's safe because of by running real code instead of writing it up. Use for 'blast radius of X', 'what could this break', a small diff you don't trust, a change to a gate, test runner, hook or release tool that other sessions run, a fix that unblocks a stuck queue, pull or pipeline, whose release ships everything queued behind the blocker, and before you ask to delete code as unreachable."
 disable-model-invocation: true
 ---
 

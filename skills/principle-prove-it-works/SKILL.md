@@ -19,7 +19,8 @@ Check the real thing, not a proxy:
 - When verification fails, suspect the observation method before suspecting the system
 - Every changed file that ships is an output, check scripts included. Rerun each after its last edit, even when the main artifact's hash is unchanged.
 - Never hand-edit a file a run is meant to produce, such as a results file or its date. Rerun the run.
-- An empty search proves absence only where the tool looked. `rg` skips ignored files even under a directory you name, so search dependency code such as `node_modules` with `rg -uu`.
+- An empty search proves absence only where the tool looked. `rg` skips ignored files even under a directory you name, so search dependency code such as `node_modules` with `rg -uu`. Output cut short by `head` or another cap proves absence only in the lines shown, so a "none", "only" or "not stated" names the files or pages read and the cap.
+- A claim about production rests on the production entry point. A function called with arguments production never passes, a test harness that stands in for the real program, and reading a file writer's source instead of the files it wrote are proxies for it.
 
 ## Script the check when you can
 

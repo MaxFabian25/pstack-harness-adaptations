@@ -1,6 +1,6 @@
 ---
 name: setup-pstack
-description: Configure which models pstack uses per role and at what reasoning budget, in Claude Code and Codex. Detects your available models, writes the shared pstack model config, and installs pstack's Codex custom agents. Use for /setup-pstack, "configure pstack models", "pstack budget", or changing pstack's model choices.
+description: Configure which models pstack uses per role and at what reasoning budget, in Claude Code and Codex. Detects your available models, writes the shared pstack model config, and installs pstack's Codex custom agents. Use for /setup-pstack, "configure pstack models", "pstack budget", changing pstack's model choices or effort defaults, listing the pstack roles, or editing a role in `~/.config/pstack/models.md`.
 ---
 
 # Setup pstack

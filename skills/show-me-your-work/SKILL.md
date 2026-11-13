@@ -35,7 +35,7 @@ ts	phase	decision	why	evidence	result
 
 Write each entry the way you'd tell a teammate what you did. Plain words, concrete actions, no AI speak or abstract jargon (the **unslop** skill applies to log text too).
 
-Use the helper `scripts/log.sh <logfile> <phase> <decision> <why> <evidence> <result>`. It stamps `ts`, writes the header on first use, strips stray tabs/newlines, and prefixes any cell starting with `=`, `+`, `-`, or `@` with a single quote. A bare `printf` appending a row works too, but mind those same bytes if cells come from generated or user-supplied text.
+Use the helper `scripts/log.sh <logfile> <phase> <decision> <why> <evidence> <result>`. It stamps `ts`, writes the header on first use, strips stray tabs/newlines, and prefixes any cell starting with `=`, `+`, `-`, or `@` with a single quote. A bare `printf` appending a row works too, but mind those same bytes if cells come from generated or user-supplied text, and take its `ts` from `date -u +%Y-%m-%dT%H:%M:%SZ` in the same command, as the helper does.
 
 Log decision points and checkpoints, not every action: a fork chosen, a unit completed with its verification result, a pivot or revert with its trigger, a blocker surfaced, a gate fixed. For loop runs, one row per iteration. Skip the trivial and self-evident.
 
@@ -53,6 +53,8 @@ Commit it only when the work is ambitious enough that a reviewer needs the trail
 - Back a claim that something did not change, such as "only these words changed", with full output saved to a file. A `cut` or `head` preview can hide the very change the claim rules out.
 - Prefer evidence produced by committed scripts over hand-made one-offs (the **encode-lessons-in-structure** principle skill).
 - A row that records the user's approval quotes the full text of the option they chose, because a label alone loses what they approved.
+- A deferral gets its own row, whose decision names who owns the deferred work and the point it is due, such as a named release, review or date.
+- A row that closes an approved item quotes that approval and names any part of it left undone.
 - Write a re-run's output to a new file, so the earlier result stays readable as evidence.
 - When a correction removes the reason a decision rested on, reopen that decision with a new row.
 - Evidence must outlive cleanup and other runs. Point a row only at files this run owns, never into a scratch folder, `/tmp` or another session's folder. Prefer the smallest lasting artifact, such as a commit, a patch or a log. Before cleanup, copy each cited file next to the log, except bulk output such as renders that a commit or patch already reproduces. Delete scratch files only after the transcript audit below, because the audit follows their pointers. Write each kept script so it runs from the project, not from scratch paths.
@@ -70,7 +72,7 @@ Correct the log, not the story. The audit never edits or removes a row, even an 
 
 ## Cross-model review of the trail
 
-Before handing back, run a reviewer on a different model family from the one that did the work. Use a read-only cross-harness seat per [harnesses.md](../poteto-mode/references/harnesses.md) (Cross-harness seats), on the model and effort of the `trail review` role, its first entry from another family, resolved per [harnesses.md](../poteto-mode/references/harnesses.md) (Models). A model picked from whatever the tool lists is a silent downgrade. Put the log and transcript paths in its brief. Self-review is not a substitute. A model whose verdicts are evidence in the trail, such as a sparring partner or an earlier judge, did part of the work. Pick another family, or say in the Attention line that the reviewer also sparred. The reviewer reads the audit trail and the run's transcript, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
+Before handing back, run a reviewer on a different model family from the one that did the work. A run that publishes along the way, such as a release or a push, runs this review before each publish, over the rows that publish covers. Use a read-only cross-harness seat per [harnesses.md](../poteto-mode/references/harnesses.md) (Cross-harness seats), on the model and effort of the `trail review` role, its first entry from another family, resolved per [harnesses.md](../poteto-mode/references/harnesses.md) (Models). A model picked from whatever the tool lists is a silent downgrade. Put the log and transcript paths in its brief. Self-review is not a substitute. A model whose verdicts are evidence in the trail, such as a sparring partner or an earlier judge, did part of the work. Pick another family, or say in the Attention line that the reviewer also sparred. The reviewer reads the audit trail and the run's transcript, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 - Decisions logged with weak or absent evidence.
 - Verification steps skipped or claimed without proof in the transcript.
