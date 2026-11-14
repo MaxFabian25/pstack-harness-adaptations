@@ -12,7 +12,7 @@ Use [`/bro`](../bro/SKILL.md)'s voice, not its task: plain words, short sentence
 
 ## Gather what changed
 
-A "proceed" that answers one offer you made approves exactly what that offer's sentence said. Do that work and skip this catch-up. Anything you find on the way that the sentence did not name becomes a new action item, not part of the work.
+A "proceed" that answers one offer you made approves exactly what that offer's sentence said. Do that work and skip this catch-up. Anything you find on the way that the sentence did not name becomes a new action item when it would need approval of its own, such as a change to a shared file, another owner's code or an irreversible step. In the user's own repositories, do other reversible work you find on the way and list it in the report.
 
 Otherwise, keep this turn read-only. Make visuals only from what you already have: do not change code, start an app or a job, or post anything. Collect your own work since that message, reports from subagents, and messages from anyone else in this chat. Check the current state of each PR, CI run, or agent this chat touched. Read the task's decisions file when it has one, and give each item the status the user's answers there set, so an item they agreed to stays agreed. Check each number you will show against the facts it comes from, and say so when you correct one.
 
