@@ -21,7 +21,7 @@ If you cannot detect anything for a harness, ask the user to paste the models th
 
 ### 2. Load current state
 
-Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.md` exists, read it and treat its `# budget:` line and its role values as the current choices. If the legacy Cursor rule `~/.cursor/rules/pstack-models.mdc` exists and the new file does not, read its role lines as hints for the user, but never copy a Grok or other unavailable model into the new file. A line whose role is not in the Defaults table, such as `how critics`, is from a retired role. Drop it.
+Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.md` exists, read it and treat its `# budget:` line and its role values as the current choices. A line whose role is not in the Defaults table, such as `how critics`, is from a retired role. Drop it.
 
 ### 3. Budget, map, and confirm
 
