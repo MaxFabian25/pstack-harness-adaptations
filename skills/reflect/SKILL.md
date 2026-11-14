@@ -27,7 +27,7 @@ Then write one digest of it for all three reviewers, outside the workspace: `pyt
 
 ## 2. Spawn three reviewers in parallel
 
-One message, three subagent calls, each a read-only agent that keeps MCP access, per [harnesses.md](../poteto-mode/references/harnesses.md) (Subagents). That is `general-purpose` in Claude Code, and `pstack-reader` (which keeps MCP) or `default` in Codex. Reviewers need MCP access to look up the tickets, chat threads, and observability traces the transcript references, and the search-only agent (Claude Code `Explore`) strips MCPs.
+One message, three subagent calls, each a read-only agent that keeps MCP access, per [harnesses.md](../poteto-mode/references/harnesses.md) (Subagents). That is `general-purpose` in Claude Code, and `default` in Codex, each prompt saying "Do not edit files." Reviewers need MCP access to look up the tickets, chat threads, and observability traces the transcript references, and the search-only agent (Claude Code `Explore`) strips MCPs.
 
 Each reviewer and the synthesizer name a role. Resolve it from `~/.config/pstack/models.md` and apply it per [harnesses.md](../poteto-mode/references/harnesses.md) (Models), which holds the defaults. A reviewer on a cross-harness seat gets the other CLI's MCP servers, not yours. List them (`codex mcp list` from Claude Code, `claude mcp list` from Codex) and name them in its brief. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
