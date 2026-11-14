@@ -66,7 +66,7 @@ At the end of the run, before handing back, check the log told the truth. Read t
 - Check that every row maps to a real decision or action.
 - Check that each row's evidence resolves and shows what the row claims.
 - A fork, pivot, or abandoned approach that shaped the work but isn't logged is a gap. Add it.
-- Check the run against the skills that governed it, such as poteto-mode: each subagent's agent type, model and effort match what they prescribe, each principle the reply cites had its leaf read before the decision, and each cleanup or review pass ran on the final head, after the last fix. Duties like these lapse silently after a compaction.
+- Check the run against the skills that governed it, such as poteto-mode: each subagent's agent type, model and effort match what they prescribe, each principle the reply cites had its leaf read before the decision, and each cleanup or review pass ran on the final head, after the last code fix, with each later text fix checked as the paragraph on changes after the review says. Duties like these lapse silently after a compaction.
 
 Correct the log, not the story. The audit never edits or removes a row, even an invented one. When a row records neither a real decision nor a real action, or its claim or evidence is wrong, add a row that supersedes it with what actually happened and a pointer that resolves. This audit does not check rows outside this run's stretches. If this run's own work shows one of them is wrong, supersede it like any wrong call.
 
@@ -79,7 +79,7 @@ Before handing back, run a reviewer on a different model family from the one tha
 - Choices that look risky in hindsight (premature, scope-creeping, papering over a symptom).
 - Gaps the user would otherwise miss on a casual skim.
 
-A change made after the review is unreviewed. Before handing back, send the diff since the reviewed commit to a fresh reviewer with a brief sized to that diff, however small. Naming it in the Attention section does not stand in for that review.
+A change made after the review is unreviewed. Before handing back, send a code change's diff since the reviewed commit to a fresh reviewer with a brief sized to that diff, however small. Check each text fix yourself against its finding and its source, and send it to one fresh reviewer only when it changes what a reader is told to do, such as a command, a path or a figure. Any further re-check of that text needs the user's yes. Naming a change in the Attention section does not stand in for its review.
 
 Every reply for a run that produced a trail ends with an "Attention" section. Lead with the reviewer's model and what its brief gave it, on its own line (`reviewed by <model>, given <inputs>`), then list each flag pointing to specific rows or moments. A flag for a gap you left open names the attempt you made to close it and the error that stopped it. A gap with no attempt behind it goes back to work before the reply, because the user returns it with "fix". "No flags" is a valid value. The model name is not.
 
