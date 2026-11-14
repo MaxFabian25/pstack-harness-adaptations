@@ -14,13 +14,15 @@ A "spawn" or "Task call" in any skill means the harness's subagent tool.
 | General-purpose agent | `subagent_type: "general-purpose"` | omit `agent_type` (built-in `default`) |
 | pstack delegate | `subagent_type: "pstack:poteto-agent"` | `agent_type: "poteto-agent"` |
 | Comment cleanup agent | `subagent_type: "pstack:comment-sicko"` | `agent_type: "comment-sicko"` |
-| Read-only agent that locates code or gathers facts | `subagent_type: "Explore"` (read-only built-in) | `agent_type: "pstack-reader"` (read-only sandbox) |
+| Read-only agent that locates code or gathers facts | `subagent_type: "Explore"` (no edit tools, but keeps `Bash`) | `agent_type: "pstack-reader"` (read-only by its instructions) |
 | Read-only agent that reviews, judges, explains, or needs MCP | `general-purpose`, and put "Do not edit files." in the prompt | `agent_type: "pstack-reader"` (keeps MCP) |
 | Background | `run_in_background: true`. The `poteto-agent` delegate always runs in the background, because its definition sets `background: true`, so wait for its notification. | always asynchronous; collect with `wait_agent` |
 | Fresh context | default for a new `Agent` call | `fork_turns: "none"` |
 | Resume an agent | `SendMessage` to its id | `followup_task` to its id |
 
 The Codex custom agents (`poteto-agent`, `comment-sicko`, `pstack-reader`) are installed into `~/.codex/agents/` by `/setup-pstack` from this plugin's `agents/codex/` folder. If `spawn_agent` rejects one as an unknown `agent_type`, spawn without `agent_type` and start the message with the matching instruction: for `poteto-agent`, "Read the pstack plugin's `agents/poteto-agent.md` and follow it"; for `comment-sicko`, "Read the pstack plugin's `agents/comment-sicko.md` and follow it"; for `pstack-reader`, "Read-only task. Do not create, edit, or delete files." Then tell the user once that `/setup-pstack` installs the real agents.
+
+No read-only row is enforced. Codex drops sandbox settings from an agent file, and a spawned agent runs in its parent's sandbox, per `codex-rs/core/src/agent/role.rs` and its tests at Codex 0.169.0-alpha.6. On 14 November 2026 a test agent whose file set `sandbox_mode = "read-only"` wrote a file under a `workspace-write` parent, and the same agent under a `read-only` parent got `Read-only file system`. When read-only work must not be able to write, such as a review of a tree that tests will run on, run it as its own `codex exec -s read-only` process, launched as Cross-harness seats describes. Otherwise check `git status` after the agent finishes.
 
 A skill parameter named `readonly: true` means a read-only row. Pick the row by what the agent does. `readonly: false` or "agent mode" means the general-purpose row, which keeps MCP access. Neither harness has a `readonly` parameter. Never pass one.
 
