@@ -45,7 +45,7 @@ Installing changes nothing until the user invokes a skill. Only `/setup-pstack` 
 
 If cost is the worry, say where the tokens go and how to spend fewer. pstack spends extra tokens on subagents and review panels. Rerun `/setup-pstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/poteto-mode` for work that needs rigor.
 
-pstack runs in Claude Code and Codex. [harnesses.md](../poteto-mode/references/harnesses.md) maps each subagent, model role, and tool to both. Its skills use the Agent Skills format, so other tools can read them. But most workflow skills, including `/poteto-mode`, `/how`, `/why`, and `/teach`, spawn subagents with per-role models through Claude Code's or Codex's subagent tools, so those parts may not work elsewhere.
+pstack runs in Claude Code and Codex. [harnesses.md](../poteto-mode/references/harnesses.md) maps each subagent, model role, and tool to both. Its skills use the Agent Skills format, so other tools can read them. But most workflow skills, including `/poteto-mode`, `/how`, and `/teach`, spawn subagents, some with per-role models, through Claude Code's or Codex's subagent tools, so those parts may not work elsewhere.
 
 ## Start a task with `/poteto-mode`
 

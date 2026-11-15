@@ -21,7 +21,7 @@ If you cannot detect anything for a harness, ask the user to paste the models th
 
 ### 2. Load current state
 
-Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.md` exists, read it and treat its `# budget:` line and its role values as the current choices. A line whose role is not in the Defaults table, such as `how critics`, is from a retired role. Drop it.
+Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.md` exists, read it and treat its `# budget:` line and its role values as the current choices. A line whose role is not in the Defaults table, such as `how explorer` or `why investigators`, is from a retired role. Drop it.
 
 ### 3. Budget, map, and confirm
 
@@ -34,12 +34,12 @@ Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.
 
 When the current config has roles whose values differ from the defaults, or records a custom budget, put `keep current mix` first and drop the preset farthest from the current efforts, so keeping the user's choices takes one click within the tool's option limit.
 
-**(b) Apply it.** Build the working table from the defaults, then lay the current config's role values over it. A preset (`unlimited`, `large`, `medium`, or `small`) sets the `@<effort>` of each value still at its default, panel entries and cross-harness entries included, to `max`, `xhigh`, `high`, or `medium`. `recall readers` keeps its default effort under every preset, because `recall` runs several readers at once and each only searches and summarizes. It leaves each role the user changed as it is, because a re-run is usually about one setting, not a reset. Name the changed roles it left alone, and change them too only when the user asks for the preset on every role. A model that cannot run at that effort uses its highest effort below it. `inherit-parent` and `auto` keep their meaning and take the new effort. `keep current mix` changes nothing.
+**(b) Apply it.** Build the working table from the defaults, then lay the current config's role values over it. A preset (`unlimited`, `large`, `medium`, or `small`) moves the `@<effort>` of each value still at its default, panel entries and cross-harness entries included, from that default's effort: `large` keeps it, `unlimited` raises it one step, `medium` lowers it one step, and `small` lowers it two steps, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. A target at either end of the ladder stays there. Most defaults are at `xhigh`, and each budget label names where those land. `recall readers` keeps its default effort under every preset, because `recall` runs several readers at once and each only searches and summarizes. It leaves each role the user changed as it is, because a re-run is usually about one setting, not a reset. Name the changed roles it left alone, and change them too only when the user asks for the preset on every role. A model that cannot run at that effort uses its highest effort below it. `inherit-parent` and `auto` keep their meaning and take the new effort. `keep current mix` changes nothing.
 
 **(c) Show the roles and confirm.** Ask this as its own question after (b), so the user confirms the values step 5 will write, not a table the budget then changes. Show one row per role, never grouped, because the user edits by role: its Claude Code value, its Codex value, and what it runs, from the Defaults table in harnesses.md. Mark `(was X)` on each value that differs from the current config, and mark any value that step 1 could not confirm as needing a choice. Also list each line step 2 dropped. If the existing file's header names other readers of the file, such as a hook that limits which models subagents may use, state how the new values affect them. Ask whether to accept as-is or change specific roles, offering the detected models, the cross-harness forms (`codex:<model>` from Claude Code, `claude:<model>` from Codex), and `inherit-parent` as the options. Use the question tool over free text. After any change, show the updated table again before writing.
 
-- Panel roles (`arena runners`, `architect runners`, `interrogate reviewers`) take a list. One seat runs per entry, alias entries included, so the list length sets the count and multiplies the role's cost. Say each panel's seat count. Keep at least one entry from each model family unless the user chooses a single family. A single-family panel gives weaker agreement signal. Say so when the user picks it.
-- `arena cross-judge pool` and `trail review` are also lists. Each runs one judge and tries only entries whose family differs from the parent's, in list order. An `auto` or `inherit-parent` entry never judges.
+- Panel roles (`arena runners`, `architect runners`, `interrogate reviewers`) take a list. One seat runs per entry, alias entries included, so the list length sets the count and multiplies the role's cost. Say each panel's seat count. Families are the ones Phase A of the **arena** skill defines, so Fable is its own family. Keep at least one entry from each model family unless the user chooses a single family. A single-family panel gives weaker agreement signal. Say so when the user picks it.
+- `arena cross-judge pool` and `trail review` are also lists. Each runs one judge and tries only entries whose vendor differs from the parent's, in list order. Fable and the other Claude models are one vendor. An `auto` or `inherit-parent` entry never judges.
 - `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ### 4. Validate
@@ -58,25 +58,21 @@ If the existing file's header names a source that manages it, such as a dotfiles
 # budget: large (xhigh)
 
 ## claude-code
-feature, refactoring: sonnet@xhigh
-bug-fix: sonnet@xhigh
-perf-issue: sonnet@xhigh
-hillclimb: sonnet@xhigh
+feature, refactoring: opus@xhigh
+bug-fix: opus@xhigh
+perf-issue: opus@xhigh
+hillclimb: opus@xhigh
 judgment and prose: opus@xhigh
-hardest tasks: opus@xhigh
-how explorer: sonnet@xhigh
-how explainer: opus@xhigh
-why investigators: sonnet@xhigh
-why synthesizer: opus@xhigh
+hardest tasks: fable@max
 recall readers: haiku@medium
-reflect tooling: sonnet@xhigh
+reflect tooling: opus@high
 reflect judgment, divergent, synthesizer: opus@xhigh
-arena runners: opus@xhigh, codex:gpt-6.1-sol@xhigh
-arena cross-judge pool: opus@xhigh, codex:gpt-6.1-sol@xhigh
-trail review: opus@xhigh, codex:gpt-6.1-sol@xhigh
-swarm workers: sonnet@xhigh
-architect runners: opus@xhigh, codex:gpt-6.1-sol@xhigh
-interrogate reviewers: opus@xhigh, codex:gpt-6.1-sol@xhigh
+arena runners: fable@high, opus@high, codex:gpt-6.1-sol@high
+arena cross-judge pool: fable@high, opus@high, codex:gpt-6.1-sol@high
+trail review: fable@high, opus@high, codex:gpt-6.1-sol@high
+swarm workers: opus@high
+architect runners: fable@high, opus@high, codex:gpt-6.1-sol@high
+interrogate reviewers: fable@high, opus@high, codex:gpt-6.1-sol@high
 
 ## codex
 feature, refactoring: inherit-parent@xhigh
@@ -84,20 +80,16 @@ bug-fix: inherit-parent@xhigh
 perf-issue: inherit-parent@xhigh
 hillclimb: inherit-parent@xhigh
 judgment and prose: inherit-parent@xhigh
-hardest tasks: inherit-parent@xhigh
-how explorer: inherit-parent@xhigh
-how explainer: inherit-parent@xhigh
-why investigators: inherit-parent@xhigh
-why synthesizer: inherit-parent@xhigh
+hardest tasks: inherit-parent@max
 recall readers: inherit-parent@medium
-reflect tooling: inherit-parent@xhigh
+reflect tooling: inherit-parent@high
 reflect judgment, divergent, synthesizer: inherit-parent@xhigh
-arena runners: inherit-parent@xhigh, claude:opus@xhigh
-arena cross-judge pool: inherit-parent@xhigh, claude:opus@xhigh
-trail review: inherit-parent@xhigh, claude:opus@xhigh
-swarm workers: inherit-parent@xhigh
-architect runners: inherit-parent@xhigh, claude:opus@xhigh
-interrogate reviewers: inherit-parent@xhigh, claude:opus@xhigh
+arena runners: inherit-parent@high, claude:fable@high, claude:opus@high
+arena cross-judge pool: inherit-parent@high, claude:fable@high, claude:opus@high
+trail review: inherit-parent@high, claude:fable@high, claude:opus@high
+swarm workers: inherit-parent@high
+architect runners: inherit-parent@high, claude:fable@high, claude:opus@high
+interrogate reviewers: inherit-parent@high, claude:fable@high, claude:opus@high
 ```
 
 ### 6. Install the Codex custom agents

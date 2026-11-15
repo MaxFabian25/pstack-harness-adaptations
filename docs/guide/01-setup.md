@@ -32,7 +32,7 @@ In Codex, run `$setup-pstack`.
 
 [`/setup-pstack`](../../skills/setup-pstack/SKILL.md) detects the models you have access to, asks for a reasoning budget, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes `~/.config/pstack/models.md`, a small file every pstack skill reads, with one section for Claude Code and one for Codex. In Codex it also installs pstack's custom agents into `~/.codex/agents/`.
 
-The defaults run at `xhigh` reasoning, the same as the `large` budget. `unlimited` lifts each model to its highest tier, up to `max`. Opus goes to `max`. A model that tops out lower stays at its highest effort. `medium` and `small` lower the reasoning and spend fewer tokens.
+The defaults are the same as the `large` budget. Most roles run at `xhigh` reasoning. The hardest changes run at `max`, and the review panels and swarm workers run at `high`. `unlimited` raises each role one level, up to `max`. A model that tops out lower stays at its highest effort. `medium` lowers each role one level and `small` lowers it two, and both spend fewer tokens.
 
 You only override what you care about. A role with no line in the file keeps the skill's default. To restore a default, delete that role's line. A rerun of `/setup-pstack` keeps any role whose model differs from the default. When a default changes, a file written before the change still pins the old default, so delete those role lines, or delete the file, then run `/setup-pstack` again.
 

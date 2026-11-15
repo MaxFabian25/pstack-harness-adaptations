@@ -34,11 +34,11 @@ Both harnesses cap concurrent agents. Claude Code allows 20 background agents by
 
 ## Models
 
-A role is a named seat such as `how explorer` or `interrogate reviewers`. Resolve each role to a model before you spawn.
+A role is a named seat such as `bug-fix` or `interrogate reviewers`. Resolve each role to a model before you spawn.
 
 ### Configuration
 
-`/setup-pstack` writes `~/.config/pstack/models.md`. Read it when a skill names a role. It has one section per harness, `## claude-code` and `## codex`, and one line per role, for example `how explorer: sonnet@xhigh`. Use the section for the harness you run in. A missing file, section, or line means the default below. If the user's own rules forbid the model a role resolves to, run the role on a model they allow. Never skip the step over its model.
+`/setup-pstack` writes `~/.config/pstack/models.md`. Read it when a skill names a role. It has one section per harness, `## claude-code` and `## codex`, and one line per role, for example `bug-fix: opus@xhigh`. Use the section for the harness you run in. A missing file, section, or line means the default below. If the user's own rules forbid the model a role resolves to, run the role on a model they allow. Never skip the step over its model.
 
 Each value is `<model>@<effort>` or a comma list of them for a panel role. The effort ladder is `max` > `xhigh` > `high` > `medium` > `low`.
 
@@ -50,27 +50,23 @@ Each value is `<model>@<effort>` or a comma list of them for a panel role. The e
 
 | Role | Claude Code | Codex | What it runs |
 |---|---|---|---|
-| `feature, refactoring` | `sonnet@xhigh` | `inherit-parent@xhigh` | The code-writing subagent of poteto-mode's Feature and Refactoring playbooks |
-| `bug-fix` | `sonnet@xhigh` | `inherit-parent@xhigh` | The code-writing subagent of the Bug fix playbook |
-| `perf-issue` | `sonnet@xhigh` | `inherit-parent@xhigh` | The subagent that implements a fix in the Perf issue playbook |
-| `hillclimb` | `sonnet@xhigh` | `inherit-parent@xhigh` | One subagent per attempt in the Hillclimb loop, often several in parallel |
+| `feature, refactoring` | `opus@xhigh` | `inherit-parent@xhigh` | The code-writing subagent of poteto-mode's Feature and Refactoring playbooks |
+| `bug-fix` | `opus@xhigh` | `inherit-parent@xhigh` | The code-writing subagent of the Bug fix playbook |
+| `perf-issue` | `opus@xhigh` | `inherit-parent@xhigh` | The subagent that implements a fix in the Perf issue playbook |
+| `hillclimb` | `opus@xhigh` | `inherit-parent@xhigh` | One subagent per attempt in the Hillclimb loop, often several in parallel |
 | `judgment and prose` | `opus@xhigh` | `inherit-parent@xhigh` | poteto-mode subagents that write prose or make a judgment call |
-| `hardest tasks` | `opus@xhigh` | `inherit-parent@xhigh` | Code delegates for the hardest changes: cross-cutting design, concurrency, subtle algorithms |
-| `how explorer` | `sonnet@xhigh` | `inherit-parent@xhigh` | `how`'s parallel code readers, one per area |
-| `how explainer` | `opus@xhigh` | `inherit-parent@xhigh` | `how`'s explainer, which writes the explanation |
-| `why investigators` | `sonnet@xhigh` | `inherit-parent@xhigh` | `why`'s evidence gatherers, one per source |
-| `why synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` | `why`'s synthesizer, which writes the cited answer |
+| `hardest tasks` | `fable@max` | `inherit-parent@max` | Code delegates for the hardest changes: cross-cutting design, concurrency, subtle algorithms |
 | `recall readers` | `haiku@medium` | `inherit-parent@medium` | `recall`'s parallel transcript readers, which search and summarize |
-| `reflect tooling` | `sonnet@xhigh` | `inherit-parent@xhigh` | `reflect`'s tooling reviewer |
+| `reflect tooling` | `opus@high` | `inherit-parent@high` | `reflect`'s tooling reviewer |
 | `reflect judgment, divergent, synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` | `reflect`'s judgment and divergent reviewers and its synthesizer |
-| `arena runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | One `arena` candidate per entry, all given the same task |
-| `arena cross-judge pool` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | `arena`'s one judge: the first entry from a family other than the parent's |
-| `trail review` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | `show-me-your-work`'s one trail reviewer: the first entry from a family other than the parent's |
-| `swarm workers` | `sonnet@xhigh` | `inherit-parent@xhigh` | Every `swarm` worker, and poteto-mode's verification lanes |
-| `architect runners` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | One `architect` design sketch per entry |
-| `interrogate reviewers` | `opus@xhigh, codex:gpt-6.1-sol@xhigh` | `inherit-parent@xhigh, claude:opus@xhigh` | One `interrogate` adversary per entry, each trying to break the change |
+| `arena runners` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | One `arena` candidate per entry, all given the same task |
+| `arena cross-judge pool` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | `arena`'s one judge: the first entry from a vendor other than the parent's |
+| `trail review` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | `show-me-your-work`'s one trail reviewer: the first entry from a vendor other than the parent's |
+| `swarm workers` | `opus@high` | `inherit-parent@high` | Every `swarm` worker, and poteto-mode's verification lanes |
+| `architect runners` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | One `architect` design sketch per entry |
+| `interrogate reviewers` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | One `interrogate` adversary per entry, each trying to break the change |
 
-The fast-code roles map to Sonnet in Claude Code. The judgment roles map to Opus. Panel roles mix families through the other harness's CLI, so "two models agree" still means two model families agree.
+The code and judgment roles map to Opus in Claude Code, and the hardest changes to Fable. Panel roles mix families through the other harness's CLI, so "two models agree" still means two model families agree. Fable is its own family, and Fable and the other Claude models are one vendor, as the **arena** skill's Phases A and C say.
 
 A skill's own text may still describe a role by its old meaning ("the fast code model", "the strongest judgment model"). Those phrases name the role, and this table names the model.
 
@@ -128,7 +124,7 @@ Cursor's `-fast` model variants have no per-subagent equivalent. Claude Code's f
 
 ### Budget
 
-`/setup-pstack` stores a `# budget:` line. `unlimited` means `max`, `large` `xhigh`, `medium` `high`, and `small` `medium`. Its step 3(b) says which roles a preset changes. A model that cannot run at that effort uses its highest effort below it.
+`/setup-pstack` stores a `# budget:` line. `large` keeps each default's effort, `unlimited` raises it one step, `medium` lowers it one step, and `small` lowers it two, so the `xhigh` defaults land on `max`, `xhigh`, `high`, and `medium`. Its step 3(b) says which roles a preset changes. A model that cannot run at that effort uses its highest effort below it.
 
 ## Cloud and isolated work
 
