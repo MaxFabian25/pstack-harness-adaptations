@@ -57,7 +57,7 @@ Present the synthesizer's full Accepted / Rejected / Backlog output and wait for
 
 File each Backlog item to your team's devex or backlog tracker without waiting. Only the Accepted list waits for approval.
 
-Never edit an installed plugin copy, such as one under `plugins/cache/` or `marketplaces/`. Before approval, show each row's real destination: the skill's source repository or fork when one exists, otherwise a user or project skill folder per [harnesses.md](../poteto-mode/references/harnesses.md) (Skills), such as `.claude/skills/<skill>/`, `~/.claude/skills/<skill>/`, `.cursor/skills/<skill>/` or `~/.cursor/skills/<skill>/`. After approval, edit the source, or copy the skill folder to that folder and edit the copy. Never open a PR or push.
+Never edit an installed plugin copy, such as one under `plugins/cache/` or `marketplaces/`. Before approval, show each row's real destination: the skill's source repository or fork when one exists, otherwise a user or project skill folder per [harnesses.md](../poteto-mode/references/harnesses.md) (Skills), such as `.claude/skills/<skill>/`, `~/.claude/skills/<skill>/`, `.agents/skills/<skill>/` or `~/.agents/skills/<skill>/`. After approval, edit the source, or copy the skill folder to that folder and edit the copy. Never open a PR or push.
 
 Follow each approved row's Routing exactly:
 
