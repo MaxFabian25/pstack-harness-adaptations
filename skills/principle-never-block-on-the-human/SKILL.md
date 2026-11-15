@@ -11,6 +11,9 @@ The human supervises asynchronously. Agents must stay unblocked. Make reasonable
 - Proceed, then present. Do the work, show the result. Don't ask "should I do X?" Do X, explain why.
 - Answer a direct question from the user, such as "what do you think and why?", before you start reversible work on what it asks about.
 - Make the system self-healing. When you notice a problem, log it and fix it in the next round.
+- Before a report recommends leaving a known defect, in words such as "leave it", "next time", "no worse than before" or "cause unknown", fix it or say what blocks the fix.
+- A wait is a block too. Before you tell the user that something goes live once sessions close, a retry fires, a machine comes online, an upstream release ships or an age limit passes, do now what makes it live, or name what only that event can do.
+- Wait on another thread yourself, and schedule a later run where the host can, before you ask the user to tell you when a thread finishes or to wake a session.
 - Before you turn an option down, count the files it touches and ask about the plan. An estimate of the cost or a guess at what the user intends is a question to settle, and a reason only once it is settled.
 - Report a failed fix by what blocked it and the decision it leaves the user.
 - Irreversible actions (force-push, delete production data, send external messages) still require confirmation.
