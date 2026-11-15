@@ -47,7 +47,7 @@ Codex has no URL and no sender key. Skip to **Host the page on this computer**.
 
 ## Request the sender key
 
-Do not accept the sender key in chat. There is no secret-request card. Give the user one command to run in their own terminal, then stop. That command is the whole turn.
+Do not accept the sender key in chat. Where the session has a secret-request tool, such as T3 Code's `request_secret`, ask for the key with it and have it land in `<ui-dir>/sender-key` with mode `600`, per [harnesses.md](../poteto-mode/references/harnesses.md) (Automations and webhooks). Otherwise give the user one command to run in their own terminal, then stop. That command is the whole turn.
 
 ```
 (umask 077; read -rs KEY && printf %s "$KEY" > <ui-dir>/sender-key)
