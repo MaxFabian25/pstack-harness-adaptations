@@ -172,12 +172,12 @@ Some hosts archive idle transcripts and delete the plaintext, so a dated folder 
 | Invoke a pstack skill | `/name`, or `/pstack:name` when another plugin has the same name (for example `tdd`, `teach`) | `$name` |
 | Load a skill from inside another | `Read` its `SKILL.md` and follow it. The `Skill` tool refuses explicit-only skills. | open the skill's `SKILL.md` and follow it |
 | Project skill location | `.claude/skills/<name>/` | `.agents/skills/<name>/` |
-| User skill location | `~/.claude/skills/<name>/` | `~/.codex/skills/<name>/` |
+| User skill location | `~/.claude/skills/<name>/` | `~/.agents/skills/<name>/`, or `~/.codex/skills/<name>/` |
 | Explicit-only skill | frontmatter `disable-model-invocation: true` | `agents/openai.yaml` with `policy: allow_implicit_invocation: false` |
 | Author or edit a skill | the `skill-creator` skill | `$skill-creator` |
 | A path a skill names (`scripts/...`, `playbooks/...`, `references/...`) | relative to that skill's installed directory, printed as its base directory when the skill loads | relative to that skill's installed directory, the folder of the `SKILL.md` path in the skills list |
 
-To make one project skill serve both harnesses, write it to `.agents/skills/<name>/` and symlink `.claude/skills/<name>` to `../../.agents/skills/<name>`. Do the same for user skills between `~/.codex/skills/` and `~/.claude/skills/`.
+To make one project skill serve both harnesses, write it to `.agents/skills/<name>/` and symlink `.claude/skills/<name>` to `../../.agents/skills/<name>`. Do the same for user skills between `~/.agents/skills/` and `~/.claude/skills/`.
 
 ## Standing instructions and modes
 
@@ -228,4 +228,4 @@ A Cursor routine is an agent woken by a schedule or a webhook.
 | Skills inside a run | a routine loads only skills committed to the cloned repository's `.claude/skills/`. Installed plugins, and plugins a repository's `.claude/settings.json` turns on, do not load. Team and Enterprise orgs can enable plugins through server-managed settings. | an automation runs on this machine with the installed plugins |
 | Wake payload | the fire returns HTTP 200 with the run's session id. The POST body `{"text": "..."}` arrives as a separate message after the routine prompt, in a `<routine-fire-payload>` block. The prompt must say to wait for that block. A run always ends with a visible reply, so a no-op replies with one short line. | the prompt argument the local server builds |
 
-Neither harness has Cursor's secret-request card. When the user must supply a key, give them a command to run in their own terminal that writes it to a file with mode `600` (for example `read -rs KEY && printf %s "$KEY" > ~/.config/<app>/key && chmod 600 ~/.config/<app>/key`). Read the file from code. Never ask for the value in chat, and never print it.
+Neither harness has Cursor's secret-request card. A host such as T3 Code may offer one, such as its `request_secret` tool, so use that where the session has it. Otherwise, when the user must supply a key, give them a command to run in their own terminal that writes it to a file with mode `600` (for example `read -rs KEY && printf %s "$KEY" > ~/.config/<app>/key && chmod 600 ~/.config/<app>/key`). Read the file from code. Never ask for the value in chat, and never print it.
