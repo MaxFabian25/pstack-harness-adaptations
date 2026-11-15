@@ -9,7 +9,7 @@ import { afterEach, test } from "node:test";
 const script = join(import.meta.dirname, "claude-seat-check.mjs");
 const stubbed = { skip: process.platform === "win32" && "stub claude is a shell script" };
 const limitLine = "You've hit your weekly limit · resets Oct 24, 1pm (UTC)";
-const advice = "Tell the user before dispatching, run the seat natively, and mark the panel single-family.";
+const advice = "Tell the user before dispatching, run the seat natively, and mark the panel single-vendor.";
 
 const dirs = [];
 afterEach(() => {

@@ -60,7 +60,7 @@ const result = spawnSync(
 const why = reason(result);
 console.log(
 	why
-		? `Claude seat unavailable: ${why}. Tell the user before dispatching, run the seat natively, and mark the panel single-family.`
+		? `Claude seat unavailable: ${why}. Tell the user before dispatching, run the seat natively, and mark the panel single-vendor.`
 		: `Claude seat ready: ${cli} answered.`,
 );
 process.exit(why ? 1 : 0);
