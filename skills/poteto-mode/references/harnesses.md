@@ -28,7 +28,7 @@ A skill parameter named `readonly: true` means a read-only row. Pick the row by 
 
 Ask a Claude Code subagent for its report as its final message, and save the file yourself, because Claude Code can refuse a subagent's write of a report file. A T3 or cross-harness delegate can write its own.
 
-Both harnesses allow nested spawns. Claude Code allows three levels below the main chat by default. Codex agents can spawn their own agents.
+Use the active host's delegation rules and limits. A T3 child's brief must explicitly authorize nested work.
 
 Both harnesses cap concurrent agents. Claude Code allows 20 background agents by default. Codex caps the open agent threads in a session and refuses the next spawn with `agent thread limit reached`. Run a larger fan-out in waves, spawning the next agent as an earlier one finishes.
 
@@ -83,7 +83,9 @@ If a tool rejects a model or effort, retry once with the default for that role a
 
 ### Cross-harness seats
 
-A cross-harness seat is a headless run of the other CLI, launched from the shell. Write the full brief to a file first. The seat gets no chat context, so the brief carries everything, exactly like a fresh subagent.
+In T3 Code, take the seat's model and effort from its role in `models.md`, then follow the host's current delegation instructions and tool descriptions. They own provider discovery, routing, isolation, runtime modes, completion, and waits. A supervised or isolated child is not thereby read-only. Give a read-only brief and verify that its target did not change.
+
+Outside T3 Code, a cross-harness seat is a headless run of the other CLI, launched from the shell as below. Write the full brief to a file first. The seat gets no chat context, so the brief carries everything, exactly like a fresh subagent.
 
 From Claude Code, run Codex:
 
@@ -115,10 +117,6 @@ claude -p --model <model> --effort <effort> --permission-mode <mode> --output-fo
 - When the check exits 1, a Claude seat that did start fails the same way, or the `codex` CLI is missing or not signed in, run the seat in this harness on the strongest native model, say so, and mark the panel as single-vendor in the reply. Agreement between same-vendor seats is weaker evidence.
 
 When the user names the model for a seat, a label such as `gpt-6-astra-max` is usually a model name plus an effort. Look the model up by its base name, pass the effort as a setting, and say how you read the label so the user can correct it. When that model or provider is unavailable, say so and do not switch to another one unasked.
-
-In a T3 Code session, the T3 `delegate_task` tool is the cross-family seat. Take the seat's model and effort from its role's line in `models.md`, or the default above, as for any seat. Then call `orchestrator_capabilities` for the provider instance that serves that model and the exact option keys, and pass them in `target`. Copy each option's key and value exactly as `orchestrator_capabilities` lists them, because keys differ by provider, such as `reasoningEffort` for Codex where the tool's own example shows `effort`. The child runs with full access, and no sandbox setting exists. A "read-only" brief holds only by its words, so prove it afterwards by diffing the target against a saved copy. A `[completed]` notice says only that the child's turn ended, which can be a pause in the middle of the job, and a T3 restart sends earlier notices again. Before acting on one, read the task's `status`, `workState` and `latestTerminalRunId` with `task_status`, or read the child thread, and compare a notice that arrives after a restart with what you already handled. A child's completion wakes you each time it ends a turn, even while its own checks still run, so tell each child to wait for its final check before it ends a turn. A Claude child passes each background run's task ID to `t3_background_wait`, which keeps its thread Working while the run goes on, per the tool's description read on 2026-11-13. A call that day returned at once while its run went on, so it does not block the child. The same description says the tool is Claude only, so a Codex child waits inside its turn, per Tools (`/loop`).
-
-Use `t3_thread_send` with `mode: "queue"` for a message that needs no reply to a sibling thread whose turn is running, because `auto` steers a running turn, per the tool's description read on 2026-11-13. A steer can cancel the sibling's pending tool call with text that reads like the user's refusal.
 
 ### Speed
 
@@ -172,10 +170,16 @@ Some hosts archive idle transcripts and delete the plaintext, so a dated folder 
 | Project skill location | `.claude/skills/<name>/` | `.agents/skills/<name>/` |
 | User skill location | `~/.claude/skills/<name>/` | `~/.agents/skills/<name>/`, or `~/.codex/skills/<name>/` |
 | Explicit-only skill | frontmatter `disable-model-invocation: true` | `agents/openai.yaml` with `policy: allow_implicit_invocation: false` |
-| Author or edit a skill | the `skill-creator` skill | `$skill-creator` |
+| Author or edit a skill | the available `skill-creator` in the current catalog, with the authoring route below | the authoring route below |
 | A path a skill names (`scripts/...`, `playbooks/...`, `references/...`) | relative to that skill's installed directory, printed as its base directory when the skill loads | relative to that skill's installed directory, the folder of the `SKILL.md` path in the skills list |
 
 To make one project skill serve both harnesses, write it to `.agents/skills/<name>/` and symlink `.claude/skills/<name>` to `../../.agents/skills/<name>`. Do the same for user skills between `~/.agents/skills/` and `~/.claude/skills/`.
+
+### Skill authoring and description tuning
+
+Use the current skill catalog to locate authoring material. Claude Code uses its available `skill-creator`. Codex uses `writing-for-agents` and its `SKILL-MECHANICS.md`. Keep disabled skills disabled. Edit the reviewed source and follow the project's release workflow before installing it.
+
+For a behavioral change, use the authoring skill's draft, test, and iterate procedure, or the [Eval playbook](../playbooks/eval.md) when that procedure is unavailable. For a description tune, retain should-trigger and should-not-trigger queries, the missed incident among them. Compare the old and new descriptions through the actual harness, inspect invocation in the transcripts, then revise and rerun affected cases. Use the creator's description-optimization loop when available. A frontmatter check alone does not test triggering. Subjective prose follows the caller's user-review procedure.
 
 ## Standing instructions and modes
 
@@ -195,8 +199,8 @@ Neither harness has Cursor's sticky custom modes. The standing-instruction line 
 | `/loop` (self-paced) | `/loop <prompt>` with no interval | no command. Keep working in the turn. Wait between checks with one blocking call that has a time limit, not a `sleep` followed by a status read. Use `wait_agent` for agents. For anything else, start a shell loop with `exec_command` that exits when the condition holds or its own deadline passes, such as `for i in $(seq 60); do test -e done.flag && break; sleep 5; done; test -e done.flag`, whose exit status says which happened. Collect it with `write_stdin` with empty input and a `yield_time_ms` of 300000, the most it allows, which still returns as soon as the command exits. If it returns while the command still runs, the poll ended before the loop did, so poll again. In code mode, put `// @exec: {"yield_time_ms": 300000}` on the first line of the `exec` cell that waits, with a yield at least as long as the whole wait. Without that line, the cell returns after about 30 s. In the Codex app, a heartbeat automation on the thread repeats the prompt. |
 | `/loop <interval>` | `/loop 1h <prompt>` | a heartbeat automation on the thread at that interval, or the blocking wait above |
 | Restart of a loop | a `/loop` ends with its session. Re-arm it after a restart. | a shell loop or wait ends with its turn. Re-arm it after a restart. |
-| Wait inside a T3 Code session | T3 wakes the thread itself, so end the turn after `delegate_task`, after `watch_pull_request`, or after you pass a background command's or `Monitor`'s task ID to `t3_background_wait`. Start no `/loop`, watcher subagent or heartbeat for those. For a check at a set time with nothing to watch, use `schedule_task` with `bindToCurrentThread`, which posts its prompt into this thread at that time. | T3 wakes the thread for a delegate and for a watched pull request, so end the turn on those. For anything else, the blocking wait above. |
-| Wait on a pull request's checks and reviews | the Babysit watcher under `/loop`. In a T3 Code session, T3's `watch_pull_request` instead, as T3's own PR rule says: push first, watch, and end the turn, then read status once with the watcher's `--status-only` when T3 wakes you. A delegated child never watches. | the blocking wait above. In a T3 Code session, the same T3 rule. |
+| Wait inside a T3 Code session | Follow the current T3 instructions and the relevant wait tool's description. The standalone loops above do not apply. | the same |
+| Wait on a pull request's checks and reviews | In T3 Code, the parent's persistent host watch, with one-shot readiness reads under the Babysit playbook. Outside T3 Code, the Babysit watcher under `/loop`. | In T3 Code, the same host route. Outside it, the blocking wait above. |
 | Watch a process or log | the `Monitor` tool, or `Bash` with `run_in_background: true` | a backgrounded `exec_command`, then `write_stdin` with empty input and a long `yield_time_ms` on its session. For a log line, a shell loop with its own deadline that exits when the line appears. |
 | List available MCPs | the `mcp__<server>__*` tools in your tool list, including deferred ones found with `ToolSearch`. `claude mcp list` from the shell. | the MCP tools in your tool list. `codex mcp list` from the shell. |
 | Image generation | the `imagegen` skill when installed. Otherwise draw SVG or Mermaid and render it to a file. | `$imagegen` |
@@ -212,7 +216,7 @@ Neither harness has Cursor's sticky custom modes. The standing-instruction line 
 
 | Cursor skill | Claude Code | Codex |
 |---|---|---|
-| `create-skill` (built-in) | `skill-creator` | `$skill-creator` |
+| `create-skill` (built-in) | Skill authoring and description tuning, above | the same |
 | `deslop` (`cursor-team-kit`) | `/deslop` from the installed `cursor-team-kit` plugin (`/cursor-team-kit:deslop` if another plugin uses the name). It is explicit-only, so from a playbook `Read` its `SKILL.md` and follow it, as the Skills table says. Not `/simplify`, which spawns its own reviewers. Without the plugin, a self-review of the diff for dead code, needless abstraction, and defensive noise. Spawn no subagent for either. | `$deslop` from the installed `cursor-team-kit` plugin. When it is explicit-only, open its `SKILL.md` and follow it. Without the plugin, the same self-review, with no subagent. |
 | `control-ui` (`cursor-team-kit`) | `/control-ui` from the installed `cursor-team-kit` plugin. Its harness can drive the built-in browser pane, the Chrome DevTools MCP (CDP, also for Electron), or the `agent-browser` skill. | `$control-ui` from the installed `cursor-team-kit` plugin, driving the `playwright` or `agent-browser` skill, or computer use |
 | `control-cli` (`cursor-team-kit`) | `/control-cli` from the installed `cursor-team-kit` plugin. Without it, `tmux`: `new-session -d`, `send-keys`, `capture-pane -p` | `$control-cli` from the installed `cursor-team-kit` plugin. Without it, the same `tmux` commands |

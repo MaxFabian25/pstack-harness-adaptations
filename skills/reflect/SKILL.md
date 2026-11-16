@@ -47,7 +47,7 @@ One subagent call on the same MCP-keeping agent, `model` from the `reflect judgm
 
 Move any Accepted item that a lint rule, script, metadata flag, or runtime check would enforce more reliably to Backlog. See the **encode-lessons-in-structure** principle skill.
 
-Also move to Backlog, with its target path, any Accepted item that can't land here: one whose skill exists only as a locked installed copy with no editable source, or one routed through `skill-creator` where the project doesn't permit that skill.
+Also move to Backlog, with its target path, any Accepted item that can't land here: one whose skill exists only as a locked installed copy with no editable source, or whose project has no permitted authoring route.
 
 When an earlier reflect already reviewed this session or the same failures, read that pass's rows and their status first, and give them to the synthesizer. A finding that repeats a row not yet applied is a duplicate. A failure that came after a row was applied, and that the row should have stopped, shows that the row's form failed, so the synthesizer accepts it in a stronger form, such as a hook, a script or a check, instead of rejecting it as a duplicate.
 
@@ -62,9 +62,9 @@ Never edit an installed plugin copy, such as one under `plugins/cache/` or `mark
 Follow each approved row's Routing exactly:
 
 - Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): the parent does it directly.
-- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to the `skill-creator` skill, per [harnesses.md](../poteto-mode/references/harnesses.md) (Skills), and run its draft / test / iterate loop.
-- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to `skill-creator` and run its description-optimization loop.
-- `new skill via skill-creator: <kebab-name>`: hand creation to `skill-creator`, and place the new skill where both harnesses discover it, per [harnesses.md](../poteto-mode/references/harnesses.md) (Skills). Do not invent the shape ad hoc.
+- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): follow [harnesses.md](../poteto-mode/references/harnesses.md) (Skill authoring and description tuning), and run its draft, test, and iterate procedure.
+- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): follow that route's description-tuning procedure.
+- `new skill: <kebab-name>`: follow that authoring route, and place the new skill where both harnesses discover it, per that file's Skills section. Do not invent the shape ad hoc.
 
 Test each new skill and each substantive edit on the incident that produced it. Run the baseline, the old text or no skill, on that incident and see it fail first, then run the new text. A trial on a task the baseline already passes shows only that the edit does no harm. For a description tune, put the incident's own words among the should-trigger queries.
 
