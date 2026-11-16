@@ -115,7 +115,7 @@ Not in pstack:
 
 - `/deslop`, `control-cli`, and `control-ui` ship in the `cursor-team-kit` plugin, which runs unchanged in Claude Code and Codex. [harnesses.md](../poteto-mode/references/harnesses.md) (Skills from other Cursor plugins) says how to call each one.
 - `/loop` is a Claude Code built-in. Codex has no `/loop`. Its equivalent is in [harnesses.md](../poteto-mode/references/harnesses.md) (Tools).
-- Skill authoring is the `skill-creator` skill (`/skill-creator`, Codex `$skill-creator`).
+- Skill authoring follows [harnesses.md](../poteto-mode/references/harnesses.md) (Skill authoring and description tuning).
 - pstack has no `/orchestrate` skill. Orchestrate is a `/poteto-mode` playbook. If the slash menu shows `/orchestrate`, another plugin provides it.
 
 ## Playbooks and principles
