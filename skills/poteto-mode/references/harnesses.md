@@ -61,12 +61,13 @@ Each value is `<model>@<effort>` or a comma list of them for a panel role. The e
 | `trail review` | `opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:opus@high` | `show-me-your-work`'s one trail reviewer: the first entry from a vendor other than the parent's |
 | `swarm workers` | `opus@high` | `inherit-parent@high` | Every `swarm` worker, poteto-mode's verification lanes, and trivial mechanical edits |
 | `interrogate reviewers` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | One `interrogate` adversary per entry, each trying to break the change |
+| `fable escalation` | `fable@high` | `claude:fable@high` | A run on Fable outside a panel, as "Fable outside a panel" below allows |
 
 A role with no row here is retired. `/setup-pstack` drops its line, and no skill reads it.
 
 The code and judgment roles map to Opus in Claude Code. Panel roles mix families through the other harness's CLI, so "two models agree" still means two model families agree. Fable is its own family, and Fable and the other Claude models are one vendor, as the **arena** skill's Phases A and C say. A single judge comes from a vendor other than the parent's, so the cross-judge pool and trail review list no Fable entry, because Fable could judge only where the Opus entry also could.
 
-**Fable outside a panel.** Outside the `arena runners` and `interrogate reviewers` panels, a role runs on Fable only when the user named Fable for this task, or when two Opus `xhigh` runs of the same brief failed its check. Say which. Difficulty alone never qualifies. In Claude Code that run is `Agent` with `model: "fable"`. In Codex it is a `claude:fable@<effort>` cross-harness seat. A role line in `models.md` that names Fable counts as the user naming it for that role.
+**Fable outside a panel.** Outside the `arena runners` and `interrogate reviewers` panels, a role runs on Fable only when the user named Fable for this task, or when two Opus `xhigh` runs of the same brief failed its check. Say which. Difficulty alone never qualifies. The `fable escalation` line sets that run's model and effort: in Claude Code an `Agent` call with `model: "fable"`, in Codex a `claude:fable@<effort>` cross-harness seat. A role line in `models.md` that names Fable counts as the user naming it for that role.
 
 A skill's own text may still describe a role by its old meaning ("the fast code model", "the strongest judgment model"), or by a Cursor default slug such as `claude-opus-5-5-xhigh-fast`. Those phrases name the role, and this table names the model.
 

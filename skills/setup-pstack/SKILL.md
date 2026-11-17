@@ -69,6 +69,7 @@ arena cross-judge pool: opus@high, codex:gpt-6.1-sol@high
 trail review: opus@high, codex:gpt-6.1-sol@high
 swarm workers: opus@high
 interrogate reviewers: fable@high, opus@high, codex:gpt-6.1-sol@high
+fable escalation: fable@high
 
 ## codex
 feature, refactoring: inherit-parent@xhigh
@@ -82,6 +83,7 @@ arena cross-judge pool: inherit-parent@high, claude:opus@high
 trail review: inherit-parent@high, claude:opus@high
 swarm workers: inherit-parent@high
 interrogate reviewers: inherit-parent@high, claude:fable@high, claude:opus@high
+fable escalation: claude:fable@high
 ```
 
 ### 6. Install the Codex custom agents
