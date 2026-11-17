@@ -21,7 +21,7 @@ If you cannot detect anything for a harness, ask the user to paste the models th
 
 ### 2. Load current state
 
-Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.md` exists, read it and treat its `# budget:` line and its role values as the current choices. A line whose role is not in the Defaults table, such as `hardest tasks`, `architect runners`, `reflect tooling`, or `why investigators`, is from a retired role. Drop it.
+Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.md` exists, read it and treat its `# budget:` line and its role values as the current choices. A line whose role is not in the Defaults table, such as `hardest tasks`, `architect runners`, `reflect tooling`, or `why investigators`, is from a retired role. Drop it. An `arena cross-judge pool` or `trail review` value that equals an earlier default at one effort E, `fable@E, opus@E, codex:gpt-6.1-sol@E` in Claude Code or `inherit-parent@E, claude:fable@E, claude:opus@E` in Codex, is that old default, not a choice: replace it with the current default at E, because a single judge never comes from Fable, and tell the user.
 
 ### 3. Budget, map, and confirm
 
