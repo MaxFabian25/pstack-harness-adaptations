@@ -6,60 +6,38 @@ disable-model-invocation: true
 
 # Unslop
 
-Edit text to remove AI patterns. For a pass over a whole repository, and before a public draft such as a post, thread, reply or email goes to the user for approval, have a fresh reviewer check the text against the current [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) and the [tropes.fyi directory](https://tropes.fyi/directory), because their lists change. When the text promotes or rewrites the author's own published writing, start from their approved sentences rather than writing new ones. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone. Fix meaning and clarity first, with the Plain speech rules, and the other tells after that. Keep a pattern when removing it would make the sentence less clear or would only swap in a synonym. After the pass, check each rewritten sentence that says "only" or "every", or that sums up another section, against that section.
-
-## Patterns to detect and fix
+Edit text to remove AI patterns. For a pass over a whole repository, and before a public draft such as a post, thread, reply or email goes to the user for approval, have a fresh reviewer check the text against the current [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) and the [tropes.fyi directory](https://tropes.fyi/directory), because their lists change. When the text promotes or rewrites the author's own published writing, start from their approved sentences rather than writing new ones. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone. Fix meaning and clarity first, with rules 27 to 34, and the other tells after that. Keep a pattern when removing it would make the sentence less clear or would only swap in a synonym. After the pass, check each rewritten sentence that says "only" or "every", or that sums up another section, against that section.
 
 Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 
-### Content
-
-3. **Superficial -ing phrases.** "highlighting...", "ensuring...", "reflecting...", "showcasing...", "fostering...". Delete or expand with real sources.
-5. **Vague attributions.** "Experts believe", "Industry reports suggest", "Some critics argue". Name the source or delete.
-36. **Inflated stakes and selling.** Describe the subject at its real size. Cut a claim that it matters more than the text shows, such as "This will fundamentally reshape how we think about pricing" or "a pivotal moment for the field". Replace sales wording with what the thing does and for whom: "an all-in-one solution that unlocks unprecedented productivity" becomes "one app for the team's tasks, calendar and notes". Cut "a classic", "famously", "notoriously" and "as we all know", or name the source that shows it is well known.
-
-### Language
-
-7. **AI vocabulary.** Additionally, crucial, delve, enduring, enhance, fostering, garner, gated (restricted), interplay, intricate, landscape (abstract), load-bearing (important), pivotal, quietly, showcase, tapestry (abstract), testament, underscore, vibrant. Replace with plain words.
-8. **Fancy ways to say "is".** "serves as", "stands as", "boasts", "features". Say "is" or "has".
-9. **Bare contrast.** "Not just X, but Y", "X, not Y", and stock limit phrases such as "does not establish". State the point directly, and restate any limit in plain words so that it stays. After a large pass, compare these counts with human prose of the same genre, because a pass can create a new pattern.
-10. **Rule of three.** Don't force ideas into groups of three. Use the natural number.
-11. **Synonym cycling.** Protagonist, main character, central figure, hero all in one paragraph. Pick one, repeat it.
-12. **False ranges.** "from X to Y" where X and Y aren't on a meaningful scale. List topics directly.
-
-### Style
-
-13. **Em dash overuse.** Avoid em dashes entirely. Use periods or commas only (no parentheses, no en dashes, no hyphen-as-dash substitutes). If a thought needs separation, end the sentence or use a comma.
-14. **Colon overuse.** Colons are fine before a list or example, not as mid-sentence connectors. "If you're coming from traditional automation: instead of registering event handlers, you describe conditions" adds nothing with the colon. Rewrite to let the point stand on its own without comparison framing. "Describing when the scheduler should fire works best as plain English." Same meaning, no crutch punctuation.
-15. **Boldface overuse.** Don't bold every proper noun or acronym.
-16. **Inline-header lists.** The tell is a bold label and colon that restates the line: "**Performance:** Performance improved...". Convert those to prose. A bold lead-in that ends in a period, names the item, and is followed by genuinely new detail ("**Schema in TypeScript.** Tables live in one file.") is fine, not a tell.
-17. **Title case headings.** Use sentence case. A heading names its subject and doesn't open with Where, What, Why or How: "Where the market is stuck today" becomes "Obstacles in the market".
-18. **Decorative emojis.** Remove from headings and bullets.
-19. **Curly quotes.** Use straight quotes.
-
-### Communication artifacts
-
-20. **Chatbot phrases.** "I hope this helps!", "Let me know if...", "Of course!", "Certainly!", "Found the smoking gun!" Remove.
-22. **Sycophantic tone.** "Great question! You're absolutely right!" Respond directly.
-35. **Announcing and re-arguing.** Make the point, without a sentence that says what the text is about to do, decide or cover. "Two constraints shape the design" and "What that changes is worth being precise about" go, and the constraints themselves stay. Don't give the count before a list. Put a question before its evidence, and give the evidence once. Don't defend a point that nobody questioned. Stop when the answer is given, so cut "So, to answer your question, ...". Don't deliver a list as paragraphs that open "The first...", "The second...", "The third...". Use a list, or prose that needs no counting. Sum up once, for the whole text, and not again at the end of each section.
-
-### Filler
-
-23. **Filler phrases.** "In order to" becomes "To". "Due to the fact that" becomes "Because". Delete "It is important to note that".
-24. **Excessive hedging.** "could potentially possibly be argued that it might" becomes "may".
-25. **Generic conclusions.** "The future looks bright." State specific plans or facts.
-
-### Jargon
-
-26. **Abstract metaphor nouns.** Substrate (base), wedge, wedge in (add), vector (way, method), locus, vantage, nexus, primitive as a noun, harness as a metaphor, surface as in "API surface", bedrock, scaffolding as a metaphor, modality, paradigm, gold-plating (more than the job needs), ratchet as a metaphor (the mechanism's real name, or a limit that only tightens), evacuate for moving code (move out), endgame (the last phase), north star, flywheel. These read as technical but usually have a plainer concrete word. Pick the concrete word.
-
-### Plain speech
-
-27. **Say what it does, not how it feels.** "the database stays close at hand", "SQL you can read", "types that follow your schema" name a feeling. The fix names the mechanism or a number: "`.toSQL()` returns the exact string sent to the database", "a column rename fails the build". Ask what the sentence tells the reader to do or know, then write that. If you can't restate it as a concrete instruction, fact, or number, cut it. Say what each number measures: "same numbers within 2%" becomes "run times within 2% of each other". One more check: if the sentence could appear unchanged in another project's docs, it says nothing about this one. Cut it.
-28. **Shorten or split dense sentences.** If the reader has to backtrack to parse a sentence, break it in two or drop clauses. One idea per sentence. When you split, keep the connectives that carry cause, contrast and sequence, so the sentences still read as one argument rather than a list of claims.
-29. **Active voice.** Prefer it. Catch "is/are/was/were + past participle" and name the actor: "queries are validated" becomes "the compiler validates queries", "the file is parsed by the loader" becomes "the loader parses the file". Passive is fine only when the actor is unknown or genuinely doesn't matter.
-30. **Cut adverbs, or use a stronger verb.** "runs quickly" becomes "is fast" or the number, and "significantly improves" becomes the measured delta. An adverb propping up a weak verb means the verb is wrong.
-31. **Prefer the plain word.** "utilize" and "leverage" become "use", "facilitate" becomes "help", "numerous" becomes "many", "in the event that" becomes "if". The fancier synonym is rarely clearer.
-32. **Mannered prose.** Metaphor or flourish where a literal phrase exists: aphorisms ("wire it or delete it"), rhetorical fragments for effect, personified code ("the plan holds it"), figurative verbs ("rides along", "stands on"), stock framing phrases. "A dial worth turning" becomes "a parameter worth varying". "Where the complexity actually lives" becomes the place itself: "most of the branches are in the retry code". Say what you mean. Rule 26 covers the metaphor nouns.
-33. **Over-compression.** Dropped articles, verbless fragments, symbol-speak, and abbreviations that make the reader decode instead of read. "Parser rejects bad date → exit 2, no write" becomes "The parser rejects a bad date, exits with code 2, and writes nothing." Write whole sentences with their articles and verbs, and spell out arrows and abbreviations. Keep "that" at the start of a clause: "Check the token the server sent is valid" becomes "Check that the token that the server sent is valid". Don't turn a noun into a verb for the occasion: "calendar it" becomes "put it in the calendar". Replace a phrase you made up for this text, such as "the warm-cache gap", with what it describes.
-34. **Buried point.** Put the point of a sentence in its main clause, with whoever acts as the subject and what they did as the verb. "Nothing else is waiting on anything but the build, so I'll report once it finishes" becomes "I'll report when the build finishes." A passive-voice scan misses a sentence with no action in it: "the retry logic is now in the client" becomes "I moved the retry logic into the client".
+3. No trailing "-ing" phrases that add no fact ("highlighting...", "ensuring...").
+5. No vague attributions ("experts believe"). Name the source or delete.
+36. No inflated stakes or selling. Describe the subject at its real size, and cut a claim that it matters more than the text shows, such as "a pivotal moment for the field". Say what the thing does and for whom: "an all-in-one solution that unlocks unprecedented productivity" becomes "one app for the team's tasks, calendar and notes". Cut "a classic", "famously", "notoriously" and "as we all know", or name the source that shows it is well known.
+7. No AI vocabulary: additionally, crucial, delve, enhance, foster, gated (restricted), landscape, load-bearing (important), pivotal, quietly, showcase, testament, underscore, vibrant.
+8. Say "is" or "has", not "serves as", "stands as", "boasts", "features".
+9. No bare contrast: "not just X, but Y", "X, not Y", or stock limit phrases such as "does not establish". State the point, and restate any limit in plain words so that it stays. After a large pass, compare these counts with human prose of the same genre, because a pass can create a new pattern.
+10. Don't force ideas into threes.
+11. One name per thing. Repeat it.
+12. No "from X to Y" unless X and Y sit on a real scale.
+13. No em dashes, en dashes, or hyphens used as dashes, and no parentheses in their place. Use a period or a comma.
+14. A colon goes before a list or an example, never mid-sentence as a connector.
+15. Don't bold every proper noun or acronym.
+16. No bold label and colon that restates its line ("**Performance:** Performance improved..."). A bold lead-in that ends in a period and adds new detail is fine.
+17. Sentence case headings. A heading names its subject and doesn't open with Where, What, Why or How: "Where the market is stuck today" becomes "Obstacles in the market".
+18. No decorative emojis.
+19. Straight quotes.
+20. No chatbot phrases ("I hope this helps!", "Let me know if...").
+22. No praise or agreement openers. Respond directly.
+35. Make the point without announcing or re-arguing it. Cut a sentence that says what the text is about to do, decide or cover, such as "Two constraints shape the design", and keep the constraints. Don't give the count before a list or defend a point nobody questioned. Put a question before its evidence, give the evidence once, and stop when the answer is given. Use a list, or prose that needs no counting, in place of paragraphs that open "The first...", "The second...". Sum up once, for the whole text.
+23. Cut filler. "In order to" becomes "to". Delete "it is important to note that".
+24. One hedge at most: "may".
+25. No generic conclusions. State specific plans or facts.
+26. No abstract metaphor nouns: substrate, wedge, vector, nexus, primitive, harness, surface, scaffolding, paradigm, ratchet, north star, flywheel. Use the concrete word.
+27. Say what it does, not how it feels. Name the mechanism or the number. Cut a sentence that could appear unchanged in another project's docs. Say what each number measures: "same numbers within 2%" becomes "run times within 2% of each other".
+28. One idea per sentence. Split a sentence the reader has to reread. When you split, keep the connectives that carry cause, contrast and sequence, so the sentences still read as one argument rather than a list of claims.
+29. Active voice. Name the actor unless it is unknown or doesn't matter.
+30. Cut adverbs or use a stronger verb. Give the number.
+31. Use the plain word: "use", not "utilize" or "leverage".
+32. No metaphor, aphorism, personified code, or figurative verb where a literal phrase exists. "Where the complexity actually lives" becomes the place itself: "most of the branches are in the retry code".
+33. Write whole sentences with their articles and verbs. Spell out arrows and abbreviations. Keep "that" at the start of a clause: "Check the token the server sent is valid" becomes "Check that the token that the server sent is valid". Don't turn a noun into a verb for the occasion, such as "calendar it". Replace a phrase you made up for this text, such as "the warm-cache gap", with what it describes.
+34. Put the point of a sentence in its main clause, with whoever acts as the subject and what they did as the verb. "Nothing else is waiting on anything but the build, so I'll report once it finishes" becomes "I'll report when the build finishes." A passive-voice scan misses a sentence with no action in it: "the retry logic is now in the client" becomes "I moved the retry logic into the client".

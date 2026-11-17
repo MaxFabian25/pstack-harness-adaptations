@@ -21,7 +21,7 @@ If you cannot detect anything for a harness, ask the user to paste the models th
 
 ### 2. Load current state
 
-Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.md` exists, read it and treat its `# budget:` line and its role values as the current choices. A line whose role is not in the Defaults table, such as `how explorer` or `why investigators`, is from a retired role. Drop it.
+Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.md` exists, read it and treat its `# budget:` line and its role values as the current choices. A line whose role is not in the Defaults table, such as `hardest tasks`, `architect runners`, `reflect tooling`, or `why investigators`, is from a retired role. Drop it.
 
 ### 3. Budget, map, and confirm
 
@@ -34,11 +34,11 @@ Start from the defaults in harnesses.md (Defaults). If `~/.config/pstack/models.
 
 When the current config has roles whose values differ from the defaults, or records a custom budget, put `keep current mix` first and drop the preset farthest from the current efforts, so keeping the user's choices takes one click within the tool's option limit.
 
-**(b) Apply it.** Build the working table from the defaults, then lay the current config's role values over it. A preset (`unlimited`, `large`, `medium`, or `small`) moves the `@<effort>` of each value still at its default, panel entries and cross-harness entries included, from that default's effort. A value counts as still at its default when it equals the default as the config's `# budget:` preset moved it, so a second preset moves the roles the first one moved. With no `# budget:` line, or a custom one, only the default itself counts. The moves: `large` keeps it, `unlimited` raises it one step, `medium` lowers it one step, and `small` lowers it two steps, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. A target at either end of the ladder stays there. Most defaults are at `xhigh`, and each budget label names where those land. `recall readers` keeps its default effort under every preset, because `recall` runs several readers at once and each only searches and summarizes. It leaves each role the user changed as it is, because a re-run is usually about one setting, not a reset. Name the changed roles it left alone, and change them too only when the user asks for the preset on every role. A model that cannot run at that effort uses its highest effort below it. `inherit-parent` and `auto` keep their meaning and take the new effort. `keep current mix` changes nothing.
+**(b) Apply it.** Build the working table from the defaults, then lay the current config's role values over it. A preset (`unlimited`, `large`, `medium`, or `small`) moves the `@<effort>` of each value still at its default, panel entries and cross-harness entries included, from that default's effort. A value counts as still at its default when it equals the default as the config's `# budget:` preset moved it, so a second preset moves the roles the first one moved. With no `# budget:` line, or a custom one, only the default itself counts. The moves: `large` keeps it, `unlimited` raises it one step, `medium` lowers it one step, and `small` lowers it two steps, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. A target at either end of the ladder stays there. Most defaults are at `xhigh`, and each budget label names where those land. No default sits above `xhigh`, so a role runs at `max` only under `unlimited` or when the user picks it, and that value wins in both harnesses. `recall readers` keeps its default effort under every preset, because `recall` runs several readers at once and each only searches and summarizes. It leaves each role the user changed as it is, because a re-run is usually about one setting, not a reset. Name the changed roles it left alone, and change them too only when the user asks for the preset on every role. A model that cannot run at that effort uses its highest effort below it. `inherit-parent` and `auto` keep their meaning and take the new effort. `keep current mix` changes nothing.
 
 **(c) Show the roles and confirm.** Ask this as its own question after (b), so the user confirms the values step 5 will write, not a table the budget then changes. Show one row per role, never grouped, because the user edits by role: its Claude Code value, its Codex value, and what it runs, from the Defaults table in harnesses.md. Mark `(was X)` on each value that differs from the current config, and mark any value that step 1 could not confirm as needing a choice. Also list each line step 2 dropped. If the existing file's header names other readers of the file, such as a hook that limits which models subagents may use, state how the new values affect them. Ask whether to accept as-is or change specific roles, offering the detected models, the cross-harness forms (`codex:<model>` from Claude Code, `claude:<model>` from Codex), and `inherit-parent` as the options. Use the question tool over free text. After any change, show the updated table again before writing.
 
-- Panel roles (`arena runners`, `architect runners`, `interrogate reviewers`) take a list. One seat runs per entry, alias entries included, so the list length sets the count and multiplies the role's cost. Say each panel's seat count. Families are the ones Phase A of the **arena** skill defines, so Fable is its own family. Keep at least one entry from each model family unless the user chooses a single family. A single-family panel gives weaker agreement signal. Say so when the user picks it.
+- Panel roles (`arena runners`, `interrogate reviewers`) take a list. One seat runs per entry, alias entries included, so the list length sets the count and multiplies the role's cost. Say each panel's seat count. Families are the ones Phase A of the **arena** skill defines, so Fable is its own family. Keep at least one entry from each model family unless the user chooses a single family. A single-family panel gives weaker agreement signal. Say so when the user picks it.
 - `arena cross-judge pool` and `trail review` are also lists. Each runs one judge and tries only entries whose vendor differs from the parent's, in list order. Fable and the other Claude models are one vendor. An `auto` or `inherit-parent` entry never judges.
 - `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
@@ -63,15 +63,11 @@ bug-fix: opus@xhigh
 perf-issue: opus@xhigh
 hillclimb: opus@xhigh
 judgment and prose: opus@xhigh
-hardest tasks: fable@max
 recall readers: haiku@medium
-reflect tooling: opus@high
-reflect judgment, divergent, synthesizer: opus@xhigh
 arena runners: fable@high, opus@high, codex:gpt-6.1-sol@high
-arena cross-judge pool: fable@high, opus@high, codex:gpt-6.1-sol@high
-trail review: fable@high, opus@high, codex:gpt-6.1-sol@high
+arena cross-judge pool: opus@high, codex:gpt-6.1-sol@high
+trail review: opus@high, codex:gpt-6.1-sol@high
 swarm workers: opus@high
-architect runners: fable@high, opus@high, codex:gpt-6.1-sol@high
 interrogate reviewers: fable@high, opus@high, codex:gpt-6.1-sol@high
 
 ## codex
@@ -80,15 +76,11 @@ bug-fix: inherit-parent@xhigh
 perf-issue: inherit-parent@xhigh
 hillclimb: inherit-parent@xhigh
 judgment and prose: inherit-parent@xhigh
-hardest tasks: inherit-parent@max
 recall readers: inherit-parent@medium
-reflect tooling: inherit-parent@high
-reflect judgment, divergent, synthesizer: inherit-parent@xhigh
 arena runners: inherit-parent@high, claude:fable@high, claude:opus@high
-arena cross-judge pool: inherit-parent@high, claude:fable@high, claude:opus@high
-trail review: inherit-parent@high, claude:fable@high, claude:opus@high
+arena cross-judge pool: inherit-parent@high, claude:opus@high
+trail review: inherit-parent@high, claude:opus@high
 swarm workers: inherit-parent@high
-architect runners: inherit-parent@high, claude:fable@high, claude:opus@high
 interrogate reviewers: inherit-parent@high, claude:fable@high, claude:opus@high
 ```
 

@@ -55,20 +55,20 @@ Each value is `<model>@<effort>` or a comma list of them for a panel role. The e
 | `perf-issue` | `opus@xhigh` | `inherit-parent@xhigh` | The subagent that implements a fix in the Perf issue playbook |
 | `hillclimb` | `opus@xhigh` | `inherit-parent@xhigh` | One subagent per attempt in the Hillclimb loop, often several in parallel |
 | `judgment and prose` | `opus@xhigh` | `inherit-parent@xhigh` | poteto-mode subagents that write prose or make a judgment call |
-| `hardest tasks` | `fable@max` | `inherit-parent@max` | Code delegates for the hardest changes: cross-cutting design, concurrency, subtle algorithms |
 | `recall readers` | `haiku@medium` | `inherit-parent@medium` | `recall`'s parallel transcript readers, which search and summarize |
-| `reflect tooling` | `opus@high` | `inherit-parent@high` | `reflect`'s tooling reviewer |
-| `reflect judgment, divergent, synthesizer` | `opus@xhigh` | `inherit-parent@xhigh` | `reflect`'s judgment and divergent reviewers and its synthesizer |
 | `arena runners` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | One `arena` candidate per entry, all given the same task |
-| `arena cross-judge pool` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | `arena`'s one judge: the first entry from a vendor other than the parent's |
-| `trail review` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | `show-me-your-work`'s one trail reviewer: the first entry from a vendor other than the parent's |
-| `swarm workers` | `opus@high` | `inherit-parent@high` | Every `swarm` worker, and poteto-mode's verification lanes |
-| `architect runners` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | One `architect` design sketch per entry |
+| `arena cross-judge pool` | `opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:opus@high` | `arena`'s one judge: the first entry from a vendor other than the parent's |
+| `trail review` | `opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:opus@high` | `show-me-your-work`'s one trail reviewer: the first entry from a vendor other than the parent's |
+| `swarm workers` | `opus@high` | `inherit-parent@high` | Every `swarm` worker, poteto-mode's verification lanes, and trivial mechanical edits |
 | `interrogate reviewers` | `fable@high, opus@high, codex:gpt-6.1-sol@high` | `inherit-parent@high, claude:fable@high, claude:opus@high` | One `interrogate` adversary per entry, each trying to break the change |
 
-The code and judgment roles map to Opus in Claude Code, and the hardest changes to Fable. Panel roles mix families through the other harness's CLI, so "two models agree" still means two model families agree. Fable is its own family, and Fable and the other Claude models are one vendor, as the **arena** skill's Phases A and C say.
+A role with no row here is retired. `/setup-pstack` drops its line, and no skill reads it.
 
-A skill's own text may still describe a role by its old meaning ("the fast code model", "the strongest judgment model"). Those phrases name the role, and this table names the model.
+The code and judgment roles map to Opus in Claude Code. Panel roles mix families through the other harness's CLI, so "two models agree" still means two model families agree. Fable is its own family, and Fable and the other Claude models are one vendor, as the **arena** skill's Phases A and C say. A single judge comes from a vendor other than the parent's, so the cross-judge pool and trail review list no Fable entry, because Fable could judge only where the Opus entry also could.
+
+**Fable outside a panel.** Outside the `arena runners` and `interrogate reviewers` panels, a role runs on Fable only when the user named Fable for this task, or when two Opus `xhigh` runs of the same brief failed its check. Say which. Difficulty alone never qualifies. In Claude Code that run is `Agent` with `model: "fable"`. In Codex it is a `claude:fable@<effort>` cross-harness seat. A role line in `models.md` that names Fable counts as the user naming it for that role.
+
+A skill's own text may still describe a role by its old meaning ("the fast code model", "the strongest judgment model"), or by a Cursor default slug such as `claude-opus-5-5-xhigh-fast`. Those phrases name the role, and this table names the model.
 
 ### Applying a value
 
@@ -120,11 +120,13 @@ When the user names the model for a seat, a label such as `gpt-6-astra-max` is u
 
 ### Speed
 
-Cursor's `-fast` model variants have no per-subagent equivalent. Claude Code's fast mode (`/fast`) is a session setting, and Codex's spawn tool takes only a model and a reasoning effort. Run every subagent at standard speed on the role's model, and never change a session setting for one subagent. A playbook's fast-mode exception therefore changes nothing here.
+Cursor's `-fast` model variants, which its defaults use for every Opus role, have no per-subagent equivalent. Claude Code's fast mode (`/fast`) is a session setting, and Codex's spawn tool takes only a model and a reasoning effort. Run every subagent at standard speed on the role's model, and never change a session setting for one subagent. A `-fast` slug in a skill means the same model and effort at standard speed.
 
 ### Budget
 
 `/setup-pstack` stores a `# budget:` line. `large` keeps each default's effort, `unlimited` raises it one step, `medium` lowers it one step, and `small` lowers it two, so the `xhigh` defaults land on `max`, `xhigh`, `high`, and `medium`. Its step 3(b) says which roles a preset changes. A model that cannot run at that effort uses its highest effort below it.
+
+No default runs above `xhigh`. Cursor's `pstack-models.mdc` rule also caps every role at `xhigh` and has no `unlimited` budget. That cap belongs to Cursor's rule. In Claude Code and Codex, the value in `models.md` wins, `max` included, and `unlimited` stays a preset.
 
 ## Cloud and isolated work
 
@@ -135,6 +137,7 @@ A Cursor cloud agent is a worker in its own VM on its own branch. The equivalent
 | Isolated writer on its own branch | `Agent` with `isolation: "worktree"` and `run_in_background: true` | `git worktree add -b <branch> <path> <base>`, then `spawn_agent` told to work only in `<path>` |
 | Start from a non-default base branch | the brief's first step checks out `origin/<base>` (in a worktree agent) | `<base>` as the start point in `git worktree add`, or `--branch <base>` for `codex cloud exec` |
 | Remote cloud worker | `Agent` with `isolation: "remote"` when the tool offers it and the account has a cloud environment. Where the only environments are Remote Control bridges, a remote agent runs on this same machine in the same directory, so it isolates nothing. Probe with `pwd` and `uname -n` first, and use the worktree row for any writer. | `codex cloud exec --env <env-id> --branch <base> "<brief>"`, then `codex cloud status`, `diff`, `apply`. Needs a configured Codex Cloud environment. Otherwise the worktree row. |
+| Project worker (an agent that a Cursor Project's coordinator starts, often in the cloud) | the remote cloud worker row where it isolates, else the isolated writer row. In a T3 Code session, `delegate_task` with `isolation: "worktree"`. | the remote cloud worker row where configured, else the isolated writer row. In a T3 Code session, the same `delegate_task` route. |
 | Liveness of running workers | the `ListAgents` tool for background agents, or `claude.ai/code` for remote sessions | `list_agents`, and `codex cloud list` for cloud tasks |
 | A cloud agent's URL to resume from | a `claude.ai/code` session link | a Codex Cloud task id or link |
 
@@ -194,7 +197,7 @@ Neither harness has Cursor's sticky custom modes. The standing-instruction line 
 
 | Cursor term | Claude Code | Codex |
 |---|---|---|
-| `AskQuestion` | `AskUserQuestion`. A headless `claude -p` run has none, so decide per the Autonomy rules and report the call. | `request_user_input`. If it is unavailable, decide per the Autonomy rules and report the call; ask in chat and end the turn only for a decision those rules leave to the user. |
+| `AskQuestion`, or "a tool that shows a person a question" | `AskUserQuestion`. A headless `claude -p` run has none, so decide per the Autonomy rules and report the call. | `request_user_input`. If it is unavailable, decide per the Autonomy rules and report the call; ask in chat and end the turn only for a decision those rules leave to the user. |
 | todolist | `TaskCreate` and `TaskUpdate`, which `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` in the settings `env` turns on, or `TodoWrite` where a build has it. Otherwise a Markdown checklist (`- [ ]`, `- [x]`, `skip: <reason>`) at the top of each progress reply, mirrored to `todo.md` in the agent store for long runs. | `update_plan` when enabled (`[tools.update_plan] enabled = false` turns it off). Otherwise the same Markdown checklist. |
 | `/loop` (self-paced) | `/loop <prompt>` with no interval | no command. Keep working in the turn. Wait between checks with one blocking call that has a time limit, not a `sleep` followed by a status read. Use `wait_agent` for agents. For anything else, start a shell loop with `exec_command` that exits when the condition holds or its own deadline passes, such as `for i in $(seq 60); do test -e done.flag && break; sleep 5; done; test -e done.flag`, whose exit status says which happened. Collect it with `write_stdin` with empty input and a `yield_time_ms` of 300000, the most it allows, which still returns as soon as the command exits. If it returns while the command still runs, the poll ended before the loop did, so poll again. In code mode, put `// @exec: {"yield_time_ms": 300000}` on the first line of the `exec` cell that waits, with a yield at least as long as the whole wait. Without that line, the cell returns after about 30 s. In the Codex app, a heartbeat automation on the thread repeats the prompt. |
 | `/loop <interval>` | `/loop 1h <prompt>` | a heartbeat automation on the thread at that interval, or the blocking wait above |

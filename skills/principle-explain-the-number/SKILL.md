@@ -6,16 +6,12 @@ disable-model-invocation: true
 
 # Explain the Number
 
-- **Write the decision before you run.** Name the result that would change a decision, and the noise floor. Stop when the run-to-run spread is larger than the effect.
-- **Ask "why not double?"** Name the resource or code path that bounds the result, such as a core, a lock, the disk, the network, or the load generator itself. Get it from a profile or from system counters taken during a run, then map it to source. A guess from reading the code is not a limiter. If you cannot say why the number is not twice as good, you do not know what you measured.
-- **List what else the number could be measuring, and rule out each one with evidence.** The usual suspects are errors, skipped or cached work, code that never ran, an untuned side (one left on default settings), noise, and a piece too small to matter end to end. For a copied count, the usual suspects are duplicates across branches or manifests and entries the current code no longer has, so recount from the source.
+- **Write the decision before you run.** Name the result that would change it, and the noise floor. Stop when the run-to-run spread is larger than the effect.
+- **Ask "why not double?"** Name the resource or code path that bounds the result, from a profile or counters taken during a run. A guess from reading the code is not a limiter.
+- **List what else the number could be measuring** (errors, skipped or cached work, code that never ran, an untuned side, noise, a piece too small to matter) and rule out each one with evidence. For a copied count, the usual suspects are duplicates across branches or manifests and entries the current code no longer has, so recount from the source.
 - **Test a zero, and open the residual.** A search hit count or a classifier's bucket totals that are all zero need a query known to hit, and a residual bucket needs a sample opened.
 - **Read the limit before you work around it.** For a limit you hit, read the tool's config schema or source at the installed version first, because a limit is a setting until those say otherwise.
-- **Keep the evidence with the number.** Put the run count, the spread, and the limiter in the notes or a linked artifact.
+- **Keep the run count, the spread, and the limiter with the number.**
 - **Price time from the last comparable job.** A time or effort figure in a recommended option comes from the measured duration of the last comparable job, from its start to its push, with its review rounds and release queue included.
 
-For a performance number, run the full procedure with the [benchmark-checklist](../benchmark-checklist/SKILL.md) skill. For an eval result, ask the same of the trials: did every run do the task, does the gap hold across trials and models, and does the scenario matter.
-
-You skipped this when a run started without the result that would change a decision, when the evidence behind a number has no run count, no spread, or no named limiter, or when the time saved is larger than the time the changed piece took.
-
-Distinct from [Prove It Works](../principle-prove-it-works/SKILL.md), which checks that an output is real.
+For a performance number, run the [benchmark-checklist](../benchmark-checklist/SKILL.md) skill. For an eval result, ask whether every run did the task, whether the gap holds across trials and models, and whether the scenario matters.
