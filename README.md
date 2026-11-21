@@ -32,6 +32,8 @@ codex plugin add pstack@<marketplace>
 
 every harness-specific term the skills use maps to claude code and codex in [harnesses.md](skills/poteto-mode/references/harnesses.md).
 
+this build is made and installed by [MaxFabian25/dotfiles](https://github.com/MaxFabian25/dotfiles). [`setup/packages/pstack.toml`](https://github.com/MaxFabian25/dotfiles/blob/main/setup/packages/pstack.toml) pins the upstream release and this repository's commit, [`align_with_codex.py`](https://github.com/MaxFabian25/dotfiles/blob/main/align_with_codex.py) builds the claude code copy from the codex build, and [`pstack_runtime.py`](https://github.com/MaxFabian25/dotfiles/blob/main/pstack_runtime.py) checks `~/.config/pstack/models.md` against the models each harness accepts.
+
 ## get started
 
 two steps:

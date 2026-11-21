@@ -17,7 +17,7 @@ Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 8. Say "is" or "has", not "serves as", "stands as", "boasts", "features".
 9. No bare contrast: "not just X, but Y", "X, not Y", or stock limit phrases such as "does not establish". State the point, and restate any limit in plain words so that it stays. After a large pass, compare these counts with human prose of the same genre, because a pass can create a new pattern.
 10. Don't force ideas into threes.
-11. One name per thing. Repeat it.
+11. One name per thing. Keep the term consistent without opening consecutive sentences with the same subject noun when a clear pronoun or clause works.
 12. No "from X to Y" unless X and Y sit on a real scale.
 13. No em dashes, en dashes, or hyphens used as dashes, and no parentheses in their place. Use a period or a comma.
 14. A colon goes before a list or an example, never mid-sentence as a connector.
