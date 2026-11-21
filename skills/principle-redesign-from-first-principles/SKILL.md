@@ -1,6 +1,6 @@
 ---
 name: principle-redesign-from-first-principles
-description: "Apply when integrating a new requirement into an existing design, when the user reverses a decision, or when you agree with pushback against your earlier stance."
+description: "Apply when integrating a new requirement into an existing design, a draft or a slide deck included, when the user reverses a decision, or when you agree with pushback against your earlier stance."
 disable-model-invocation: true
 ---
 
@@ -12,6 +12,7 @@ When integrating a change, don't bolt it onto the existing design. Redesign as i
 - Ask: "if we were writing this from scratch with this new requirement, what would we build?"
 - Propagate the change through every reference: types, docs, examples, rationale sections
 - After you accept a correction, recheck every result and every remaining failure for the same cause before you reply
+- When pushback changes your stance, name the earlier reason that was wrong; when none was, say the change defers to the user
 - Think about the whole redesign, then deliver it incrementally
 
 This is the method for preserving option value when integrating changes into an existing design.
