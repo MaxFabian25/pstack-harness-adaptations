@@ -1,12 +1,12 @@
 ---
 name: principle-attack-the-premise
-description: "Apply when two or more fixes that share one premise have failed the same gate, and before a third compensating move against one condition, such as a third raised limit, timeout or retry, or a third redesign after the same outcome. Write the premise down and test it directly before you write another fix that assumes it."
+description: "Apply when two or more fixes that share one premise have failed the same gate, when a third review round on one change again says not ready with one more case of the same kind, and before a third compensating move against one condition, such as a third raised limit, timeout or retry, or a third redesign after the same outcome. Write the premise down and test it directly before you write another fix that assumes it."
 disable-model-invocation: true
 ---
 
 # Attack the Premise
 
-When two or more fixes that share one premise have failed the same gate, suspect the premise, not the fixes. Do the same before a third compensating move against one condition, such as a third raised limit or a third redesign after the same outcome, even when each earlier move passed.
+When two or more fixes that share one premise have failed the same gate, suspect the premise, not the fixes. Do the same before a third compensating move against one condition, such as a third raised limit or a third redesign after the same outcome, even when each earlier move passed. A third review round on one change that again says not ready with one more case of the same kind, such as one more misleading name, is the same gate failing, even though each finding looks new.
 
 - Write the premise down: the one sentence every failed fix, or every compensating move such as a raised limit, assumed.
 - Test it before the next fix. Find an observation that would come out differently if the premise were false, and make it. Look at how the failures are distributed, not only at how large they are.
