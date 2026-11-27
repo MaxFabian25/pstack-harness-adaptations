@@ -38,13 +38,13 @@ A role is a named seat such as `bug-fix` or `interrogate reviewers`. Resolve eac
 
 ### Configuration
 
-`/setup-pstack` writes `~/.config/pstack/models.md`. Read it when a skill names a role. It has one section per harness, `## claude-code` and `## codex`, and one line per role, for example `bug-fix: opus@xhigh`. Use the section for the harness you run in. A missing file, section, or line means the default below. If the user's own rules forbid the model a role resolves to, run the role on a model they allow. Never skip the step over its model.
+`/setup-pstack` writes `~/.config/pstack/models.md`. Read it when a skill names a role. It has one section per harness (`## claude-code`, `## codex`, and optionally `## opencode` or `## antigravity`), and one line per role, for example `bug-fix: opus@xhigh`. Use the section for the harness you run in. A missing file, section, or line means the default below. If the user's own rules forbid the model a role resolves to, run the role on a model they allow. Never skip the step over its model.
 
 Each value is `<model>@<effort>` or a comma list of them for a panel role. The effort ladder is `max` > `xhigh` > `high` > `medium` > `low`.
 
-- A plain model runs in this harness. In Claude Code it is an alias the `Agent` tool accepts (`opus`, `sonnet`, `haiku`, `fable`). Some Claude Code versions also accept full IDs such as `claude-opus-5-5`. Use one only when the tool lists it. In Codex it is a model slug such as `gpt-6.1-sol`.
+- A plain model runs in this harness. In Claude Code it is an alias the `Agent` tool accepts (`opus`, `sonnet`, `haiku`, `fable`). Some Claude Code versions also accept full IDs such as `claude-opus-5-5`. Use one only when the tool lists it. In Codex it is a model slug such as `gpt-6.1-sol`. In Antigravity it is a Gemini model slug such as `gemini-4-neon`.
 - `inherit-parent` runs the role on the parent chat's model. `auto` means the same.
-- `codex:<model>` (from Claude Code) or `claude:<model>` (from Codex) runs the seat in the other harness's CLI. This is how a panel gets a second vendor. See Cross-harness seats.
+- `codex:<model>`, `claude:<model>`, or `antigravity:<model>` runs the seat in that other harness. This is how a panel gets a second or third vendor. See Cross-harness seats.
 
 ### Defaults
 
@@ -79,6 +79,7 @@ A skill's own text may still describe a role by its old meaning ("the fast code 
 | `inherit-parent@<effort>` | omit `model`, pass `effort` | omit `model`. Pass `reasoning_effort` when the tool exposes it. |
 | `codex:<model>@<effort>` | Cross-harness seat, below | not used |
 | `claude:<model>@<effort>` | not used | Cross-harness seat, below |
+| `antigravity:<model>@<effort>` | Cross-harness seat, below | Cross-harness seat, below |
 
 If a tool rejects a model or effort, retry once with the default for that role and say so. If it rejects the default too, use `inherit-parent` and say so.
 
@@ -107,6 +108,14 @@ Only after exit 0, run Claude Code:
 ```bash
 claude -p --model <model> --effort <effort> --permission-mode <mode> --output-format text < <brief.md> > <out.md>
 ```
+
+For an `antigravity:<model>@<effort>` seat outside T3 Code, run the Antigravity CLI:
+
+```bash
+agy -p --model <model> --effort <effort> --output-format text < <brief.md> > <out.md>
+```
+
+Inside T3 Code, pass `providerInstanceId: "antigravity"`, `model`, and `options: {"thought_level": "<effort>"}` to `delegate_task` (or check `orchestrator_capabilities`).
 
 - `codex exec` appends piped stdin to its prompt and waits for end of input. Give it the brief on stdin (`- < brief.md`), or pass the prompt as an argument with `< /dev/null`. From a script or server with an open stdin pipe it otherwise hangs.
 - A read-only seat uses `-s read-only` (Codex) or `--permission-mode plan` (Claude Code). A read-only Codex seat can still run read-only commands. A plan-mode Claude seat cannot run commands at all, so put the evidence it needs (diffs, test output, logs) in its brief.
