@@ -167,6 +167,7 @@ Some playbooks keep durable state in "the agent store". Use `${PSTACK_STORE:-$HO
 |---|---|---|
 | Claude Code | `~/.claude/projects/<slug>/<session-id>.jsonl`, where `<slug>` is the working directory with every character that is not a letter or digit replaced by `-` (`/Users/me/app` becomes `-Users-me-app`). Subagent transcripts sit in `<session-id>/subagents/`. | One JSON record per line. Chat turns have `type` `user` or `assistant`. The text is in `message.content`, a string or a list of blocks whose `type` is `text`. Other `type` values are metadata. |
 | Codex | `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl` | Line 1 is `session_meta`. Its `payload.cwd` is the workspace. Current rollouts carry chat turns as `event_msg` records whose `payload.type` is `item_completed`, with `payload.item.type` `UserMessage` or `AgentMessage` and text in `payload.item.content[].text`. An `AgentMessage` also has a `phase`, `commentary` or `final_answer`. Older rollouts use `event_msg` records whose `payload.type` is `user_message` or `agent_message`, with text in `payload.message`. `response_item` records whose `payload.role` is `user` mostly hold injected context such as AGENTS.md, not what the user typed. |
+| Antigravity | `<appDataDir>/brain/<conversation-id>/.system_generated/logs/transcript.jsonl` (compact) and `transcript_full.jsonl` (full lines when `truncated_fields` is set). | One JSON record per line. User turns and delegate completions have `type` `USER_INPUT`, model turns have `PLANNER_RESPONSE` (with `content` and `tool_calls`), tool results have `GENERIC`, and injected reminders have `SYSTEM_MESSAGE`. |
 
 The current session is the newest transcript for this workspace by modification time. Stay inside this workspace's transcripts. Reading other projects' transcripts crosses into unrelated private work.
 
@@ -186,7 +187,7 @@ Some hosts archive idle transcripts and delete the plaintext, so a dated folder 
 | Author or edit a skill | the available `skill-creator` in the current catalog, with the authoring route below | the authoring route below |
 | A path a skill names (`scripts/...`, `playbooks/...`, `references/...`) | relative to that skill's installed directory, printed as its base directory when the skill loads | relative to that skill's installed directory, the folder of the `SKILL.md` path in the skills list |
 
-To make one project skill serve both harnesses, write it to `.agents/skills/<name>/` and symlink `.claude/skills/<name>` to `../../.agents/skills/<name>`. Do the same for user skills between `~/.agents/skills/` and `~/.claude/skills/`.
+To make one project skill serve both harnesses, check the repository's existing skill layout and any scripts or hooks that walk `.claude/skills/` or `.agents/skills/` (such as `find -type f` without `-L`) before choosing or flipping symlink direction. Keep canonical files in whichever root repo tooling scans, and symlink the mirror to it. When no repo convention or tooling dictates otherwise, write canonical files to `.agents/skills/<name>/` and symlink `.claude/skills/<name>` to `../../.agents/skills/<name>`. Do the same for user skills between `~/.agents/skills/` and `~/.claude/skills/`.
 
 ### Skill authoring and description tuning
 
